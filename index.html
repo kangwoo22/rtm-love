@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="1분이면 간편 신청 끝! 호스트 신원 확인, 상대 프로필 먼저 확인.">
+<meta property="og:title" content="리턴투미 소개팅 신청">
+<meta property="og:description" content="1분이면 간편 신청 끝! 상대 프로필 먼저 보고, 만남 원할 시 매칭.">
+<meta property="og:type" content="website">
+<style>body{margin:0}</style>
+</head>
+<body>
+<title>리턴투미 소개팅 신청</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Pinyon+Script&family=Gloock&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* 한 칼럼 이야기 흐름: 거울 속 하트 히어로(꽃잎이 흩날림) → 약속 → 2단계 신청서 → 완료. 의도적으로 밝은 한 가지 테마 */
+:root{
+  color-scheme:light;
+  --mist:#F1ECEA; --ink:#1E1428; --muted:#6E6170; --rose:#D23A55; --blush:#F4DCE1;
+  --gold:#C9A45C; --gold-hi:#F3E2B0; --paper:#FFFDF8; --leaf:#8EA487; --glass:rgba(255,255,255,.74); --line:rgba(30,20,40,.12);
+  --latin:"Bodoni Moda","Didot","Times New Roman",serif;
+  --script:"Pinyon Script","Snell Roundhand",cursive;
+  --display:"Gowun Batang","Nanum Myeongjo",serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+body{background:radial-gradient(120% 70% at 50% 0%,#FBF8F7 0%,var(--mist) 60%);background-color:var(--mist);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+[hidden]{display:none!important}
+.btn:disabled{opacity:.6;cursor:wait}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.page{position:relative;z-index:1;overflow-x:clip;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* 히어로 */
+.hero{padding-block:40px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px}
+.word{position:relative;display:flex;align-items:center;justify-content:center;font-family:"Gloock","Bodoni Moda",serif;font-weight:400;font-size:clamp(84px,27vw,230px);line-height:1;letter-spacing:0;color:var(--ink);perspective:700px}
+.word .script{position:absolute;left:-.08em;top:.06em;font-family:var(--script);font-size:.36em;color:var(--rose);transform:rotate(-12deg);letter-spacing:0;pointer-events:none}
+.mirror{position:relative;width:.62em;height:.86em;margin:0 .02em;border-radius:50%;padding:.045em;cursor:pointer;
+  background:conic-gradient(from 200deg,var(--gold),var(--gold-hi),var(--gold),#A9823E,var(--gold-hi),var(--gold));
+  box-shadow:0 .03em .08em rgba(120,80,30,.25),inset 0 0 0 .012em rgba(255,255,255,.6);border:0;font:inherit}
+.mirror::before{content:"";position:absolute;inset:-.03em;border-radius:50%;border:.008em solid var(--gold);opacity:.6}
+.glass{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  background:radial-gradient(60% 50% at 35% 30%,#FFE3EC,transparent),radial-gradient(70% 60% at 70% 75%,#DCE4FA,transparent),#F3EEF6;
+  box-shadow:inset 0 0 .06em rgba(80,50,90,.25)}
+.heart{width:62%;transition:transform .25s ease-out;transform-style:preserve-3d;filter:drop-shadow(0 .03em .03em rgba(110,70,20,.35))}
+.heart svg{display:block;width:100%;animation:float 4.5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-.03em)}}
+.mirror.beat .heart svg{animation:beat .5s ease-out}
+@keyframes beat{30%{transform:scale(1.18)}60%{transform:scale(.95)}}
+.tap{font-family:var(--latin);font-size:12px;letter-spacing:.24em;color:var(--muted);text-transform:uppercase;margin-top:-6px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(24px,6.4vw,34px);line-height:1.4;margin:6px 0 0;text-wrap:balance}
+.hero .lead{color:var(--muted);margin:0;max-width:30em}
+.cta{font:inherit;font-weight:600;border:0;border-radius:999px;padding:14px 30px;background:var(--ink);color:#fff;cursor:pointer;text-decoration:none;letter-spacing:.02em}
+.cta:hover{background:#34233F}
+
+/* 약속 */
+.vows{list-style:none;margin:8px auto 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:440px}
+.vows li{border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:6px 14px;font-size:14px}
+.vows li b{color:var(--rose);font-weight:600}
+
+/* 신청서 */
+.wrap{max-width:440px;margin:0 auto;padding-block:28px 56px;display:flex;flex-direction:column;gap:20px}
+.kicker{font-family:var(--latin);font-style:italic;font-size:15px;color:var(--rose);text-align:center}
+/* 청첩장 카드: 종이 + 금색 이중 테두리, 모서리에 소규모 웨딩 꽃장식 */
+.card{position:relative;margin:36px 10px 44px}
+form,.done{position:relative;z-index:1;background:var(--paper);border:1px solid var(--gold);
+  box-shadow:inset 0 0 0 6px var(--paper),inset 0 0 0 7px rgba(201,164,92,.55),0 24px 50px -26px rgba(60,30,60,.4);
+  border-radius:4px;padding:40px 24px 32px}
+form{display:flex;flex-direction:column;gap:18px}
+.invite{text-align:center;display:flex;flex-direction:column;gap:2px}
+.invite .script{font-family:var(--script);font-size:40px;line-height:1.1;color:var(--rose)}
+.invite p{margin:0;font-family:var(--display);font-size:14px;color:var(--muted)}
+.rule{display:flex;align-items:center;gap:10px;color:var(--gold);font-size:12px}
+.rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.floral{position:absolute;width:min(180px,46vw);pointer-events:none;z-index:2}
+.floral.tl{top:-78px;left:-52px}
+.floral.br{bottom:-74px;right:-52px;transform:rotate(180deg)}
+form{padding-top:64px}
+.floral.side{top:42%;right:-30px;width:min(120px,30vw);transform:rotate(100deg);z-index:0}
+.steps{display:flex;justify-content:center;gap:10px;color:var(--line)}
+.steps svg{width:22px;height:22px;transition:color .3s}
+.steps .on{color:var(--rose)}
+h2{font-family:var(--display);font-weight:700;font-size:22px;line-height:1.4;margin:0;text-align:center;text-wrap:balance}
+.stack{display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px;border:0;margin:0;padding:0;min-width:0}
+.field{align-items:center;text-align:center}
+.field>label,.field>legend{font-family:var(--display);font-weight:700;padding:0;margin:0 auto}
+.hint{font-size:13px;color:var(--muted);margin:-2px 0 2px}
+/* 청첩장 빈칸처럼 밑줄만 */
+input[type=text],input[type=tel],select{font-family:var(--display);font-size:20px;text-align:center;text-align-last:center;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--gold);border-radius:0;padding:6px 4px;width:80%;box-sizing:border-box}
+input::placeholder{color:rgba(110,97,112,.55)}
+.chips{justify-content:center}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,.chip input:focus-visible+span{outline:2px solid var(--rose);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:block;border:1px solid var(--line);border-radius:999px;padding:10px 22px;background:#fff;transition:background .2s,color .2s,border-color .2s}
+.chip input:checked+span{border-color:var(--rose);background:var(--rose);color:#fff;font-weight:600}
+.reassure{background:var(--blush);border-radius:16px;padding:14px;font-size:14px;text-align:center}
+.reassure b{color:var(--rose)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.consent input{width:20px;height:20px;margin-top:2px;accent-color:var(--rose);flex:none}
+details{font-size:13px;color:var(--muted)}
+details summary{cursor:pointer}
+details dl{margin:8px 0 0;display:grid;gap:6px}
+details dt{font-weight:600;color:var(--ink)}
+details dd{margin:0}
+.btn{font:inherit;font-weight:600;font-size:17px;border:0;border-radius:999px;padding:15px;background:var(--rose);color:#fff;cursor:pointer;width:100%}
+.btn:hover{background:#BC2F48}
+.btn.ghost{background:transparent;color:var(--muted);font-size:15px;padding:6px}
+.err{color:var(--rose);font-size:13px;min-height:1em;margin:0;text-align:center}
+.done{text-align:center;display:flex;flex-direction:column;gap:12px}
+.done .lead{color:var(--muted);margin:0}
+.rooms{display:grid;gap:8px;margin-top:6px}
+.rooms a{display:block;border:1px solid var(--line);border-radius:999px;padding:12px;color:var(--ink);text-decoration:none;background:#fff}
+.rooms a b{color:var(--rose)}
+footer{font-size:12px;color:var(--muted);text-align:center;padding-bottom:24px}
+footer span{font-family:var(--latin);letter-spacing:.2em;text-transform:uppercase}
+.panel{animation:rise .35s ease-out}
+@keyframes rise{from{transform:translateY(8px)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.heart svg,.panel,.mirror.beat .heart svg{animation:none}.heart{transition:none}}
+</style>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+<div class="page">
+  <section class="hero">
+    <div class="word" aria-label="Love">
+      <span aria-hidden="true">L</span>
+      <button type="button" class="mirror" id="mirror" aria-label="하트 누르기">
+        <span class="glass"><span class="heart" id="heart">
+          <svg viewBox="0 0 100 90" aria-hidden="true">
+            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#F6E7B8"/><stop offset=".45" stop-color="#C9A45C"/><stop offset=".7" stop-color="#E9D29A"/><stop offset="1" stop-color="#9C7434"/></linearGradient></defs>
+            <path fill="url(#g)" d="M50 86C22 64 4 48 4 27 4 13 15 3 28 3c9 0 17 5 22 13C55 8 63 3 72 3c13 0 24 10 24 24 0 21-18 37-46 59z"/>
+            <path fill="#fff" opacity=".45" d="M22 14c-8 3-12 10-11 18 4-7 9-12 17-14z"/>
+          </svg>
+        </span></span>
+      </button>
+      <span aria-hidden="true">VE</span>
+    </div>
+    <div class="tap">tap the heart</div>
+    <h1>사진과 프로필 먼저 보고,<br>마음에 들 때만 만나요</h1>
+    <p class="lead">1분이면 간편 신청 끝!</p>
+    <a class="cta" href="#apply">인연 찾기 시작</a>
+    <ul class="vows">
+      <li><b>01</b> 호스트 신원 확인</li>
+      <li><b>02</b> 상대 프로필 먼저 확인</li>
+      <li><b>03</b> 만남 원할 시 매칭</li>
+    </ul>
+  </section>
+
+  <div class="wrap">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="rose" viewBox="-20 -20 40 40">
+        <circle r="19" fill="currentColor"/>
+        <path d="M-12 4a12 12 0 0 0 24 0M-8-2a9 9 0 0 1 16 2M-5 5a6 6 0 0 0 10-1M-3-3a4 4 0 0 1 6 2" fill="none" stroke="rgba(60,10,25,.28)" stroke-width="1.6" stroke-linecap="round"/>
+        <circle r="3" cx="1" cy="0" fill="rgba(60,10,25,.22)"/>
+      </symbol>
+      <symbol id="bloom" viewBox="-12 -12 24 24">
+        <g fill="currentColor"><ellipse cy="-6" rx="4" ry="6"/><ellipse cy="-6" rx="4" ry="6" transform="rotate(72)"/><ellipse cy="-6" rx="4" ry="6" transform="rotate(144)"/><ellipse cy="-6" rx="4" ry="6" transform="rotate(216)"/><ellipse cy="-6" rx="4" ry="6" transform="rotate(288)"/></g>
+        <circle r="2.6" fill="#E9C46A"/>
+      </symbol>
+      <symbol id="leaf" viewBox="-6 -16 12 32"><path d="M0-16C7-6 7 6 0 16-7 6-7-6 0-16z" fill="currentColor"/><path d="M0-14V14" stroke="rgba(255,255,255,.35)"/></symbol>
+      <symbol id="bouquet" viewBox="0 0 220 170">
+        <g style="color:var(--leaf)">
+          <use href="#leaf" x="10" y="70" width="24" height="64" transform="rotate(-60 22 102)"/>
+          <use href="#leaf" x="150" y="20" width="22" height="58" transform="rotate(55 161 49)"/>
+          <use href="#leaf" x="100" y="100" width="20" height="54" transform="rotate(130 110 127)"/>
+          <use href="#leaf" x="40" y="20" width="18" height="50" transform="rotate(-20 49 45)"/>
+          <use href="#leaf" x="170" y="80" width="18" height="48" transform="rotate(100 179 104)"/>
+        </g>
+        <use href="#rose" x="52" y="48" width="58" height="58" style="color:#D23A55"/>
+        <use href="#rose" x="102" y="34" width="44" height="44" style="color:#F2B8C3"/>
+        <use href="#rose" x="22" y="90" width="38" height="38" style="color:#FFF6F2"/>
+        <use href="#rose" x="110" y="78" width="34" height="34" style="color:#EBA3B1"/>
+        <use href="#bloom" x="146" y="60" width="22" height="22" style="color:#fff"/>
+        <use href="#bloom" x="84" y="104" width="20" height="20" style="color:#FBE3E8"/>
+        <use href="#bloom" x="30" y="56" width="18" height="18" style="color:#fff"/>
+        <g fill="#fff" stroke="rgba(142,164,135,.6)" stroke-width=".6">
+          <circle cx="160" cy="40" r="3"/><circle cx="170" cy="50" r="2.5"/><circle cx="182" cy="44" r="3"/><circle cx="176" cy="62" r="2.5"/>
+          <circle cx="14" cy="128" r="3"/><circle cx="24" cy="140" r="2.5"/><circle cx="60" cy="130" r="2.5"/><circle cx="96" cy="30" r="2.5"/>
+        </g>
+      </symbol>
+    </svg>
+    <div class="kicker">your story begins here</div>
+    <div class="card">
+    <svg class="floral tl" viewBox="0 0 220 170" aria-hidden="true"><use href="#bouquet"/></svg>
+    <svg class="floral side" viewBox="0 0 220 170" aria-hidden="true"><use href="#bouquet"/></svg>
+    <svg class="floral br" viewBox="0 0 220 170" aria-hidden="true"><use href="#bouquet"/></svg>
+    <form id="apply" novalidate>
+      <div class="invite">
+        <div class="script">Invitation</div>
+        <p>새로운 인연의 자리에 당신을 초대합니다</p>
+      </div>
+      <div class="steps" aria-hidden="true">
+        <svg viewBox="0 0 100 90" class="on" id="h1"><path fill="currentColor" d="M50 86C22 64 4 48 4 27 4 13 15 3 28 3c9 0 17 5 22 13C55 8 63 3 72 3c13 0 24 10 24 24 0 21-18 37-46 59z"/></svg>
+        <svg viewBox="0 0 100 90" id="h2"><path fill="currentColor" d="M50 86C22 64 4 48 4 27 4 13 15 3 28 3c9 0 17 5 22 13C55 8 63 3 72 3c13 0 24 10 24 24 0 21-18 37-46 59z"/></svg>
+      </div>
+
+      <div class="panel" id="step1">
+        <div class="stack">
+          <h2>반가워요! 몇 가지만 알려주세요</h2>
+          <div class="field">
+            <label for="name">이름</label>
+            <p class="hint">성 빼고 이름만 적어도 괜찮아요</p>
+            <input type="text" id="name" autocomplete="given-name" placeholder="예: 다현" maxlength="10">
+          </div>
+          <fieldset class="field">
+            <legend>성별</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="gender" id="g-f" value="여성"><span>여성</span></label>
+              <label class="chip"><input type="radio" name="gender" id="g-m" value="남성"><span>남성</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="year">출생 연도</label>
+            <select id="year"><option value="">선택해 주세요</option></select>
+          </div>
+          <div class="reassure">호스트가 간편 신청서 확인 후,<br><b>이상형 상세 신청서</b>를 보내드려요!</div>
+          <p class="err" id="err1" role="alert"></p>
+          <button type="button" class="btn" id="next">다음</button>
+        </div>
+      </div>
+
+      <div class="panel" id="step2" hidden>
+        <div class="stack">
+          <h2>이제 한 걸음 남았어요</h2>
+          <fieldset class="field">
+            <legend>만나고 싶은 지역</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="region" id="r-seoul" value="서울"><span>서울</span></label>
+              <label class="chip"><input type="radio" name="region" id="r-jeju" value="제주"><span>제주</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="phone">연락처</label>
+            <p class="hint">프로필을 받을 카톡 번호예요</p>
+            <input type="tel" id="phone" inputmode="numeric" autocomplete="tel" placeholder="010-0000-0000" maxlength="13">
+          </div>
+          <div class="reassure">남겨주신 번호는 <b>호스트가 연락드릴 때만</b> 써요.<br>상대방과 매칭된 경우에는 카카오톡 ID를 따로 여쭤보니<br>걱정 안 하셔도 됩니다.</div>
+          <label class="consent" for="agree"><input type="checkbox" id="agree"><span>개인정보 수집·이용에 동의합니다 (필수)</span></label>
+          <details>
+            <summary>수집 항목과 보관 기간 보기</summary>
+            <dl>
+              <dt>수집 항목</dt><dd>이름, 성별, 출생 연도, 선호 지역, 휴대전화번호</dd>
+              <dt>이용 목적</dt><dd>소개팅 상대 매칭, 프로필 전달, 매칭 관련 안내 연락</dd>
+              <dt>보관 기간</dt><dd>매칭 서비스 종료 또는 탈퇴 요청 시까지 보관 후 바로 파기</dd>
+              <dt>동의 거부</dt><dd>동의하지 않으실 수 있으나, 이 경우 프로필을 보내드릴 수 없어요.</dd>
+            </dl>
+          </details>
+          <p class="err" id="err2" role="alert"></p>
+          <input type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button type="submit" class="btn" id="send">신청 완료</button>
+          <button type="button" class="btn ghost" id="back">이전으로</button>
+        </div>
+      </div>
+    </form>
+
+    <section class="done" id="done" hidden>
+      <div class="invite"><div class="script">Thank you</div></div>
+      <h2>초대에 응해 주셔서 고마워요</h2>
+      <p class="lead">내용을 확인하고 평일에 카톡으로 연락드릴게요. 신청이 많을 땐 1~2일 걸릴 수 있어요.</p>
+      <p class="lead">기다리는 동안 오픈채팅방에서 먼저 이야기 나눠 보세요.</p>
+      <div class="rooms">
+        <a href="https://open.kakao.com/o/gbFZ01Ti" target="_blank" rel="noopener"><b>서울</b> 2030 소개팅 오픈채팅</a>
+        <a href="https://open.kakao.com/o/gabl11Ti" target="_blank" rel="noopener"><b>제주</b> 2030 소개팅 오픈채팅</a>
+      </div>
+    </section>
+    </div>
+  </div>
+
+  <footer><span>Return to me</span><br>로테이션 소개팅 · 결정사 서비스</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// 꽃잎: 천천히 떨어지고, 하트를 누르면 거울에서 한 번 터져 나옴
+const cv=$('petals'),cx=cv.getContext('2d');let W,H,petals=[];
+function size(){const r=devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*r;cv.height=H*r;cx.setTransform(r,0,0,r,0,0);}
+function petal(x,y,burst){const a=Math.random()*Math.PI*2,s=burst?2+Math.random()*4:0;
+  return{x,y,r:5+Math.random()*7,rot:Math.random()*6,vr:(Math.random()-.5)*.04,vx:Math.cos(a)*s,vy:burst?Math.sin(a)*s-2:.4+Math.random()*.7,
+    sway:Math.random()*6,hue:['#D23A55','#D23A55','#EBA3B1','#FFFFFF','#F6D7DE'][Math.random()*5|0],bloom:Math.random()<.3,life:burst?1:Infinity};}
+// 작은 다섯 잎 꽃(부케 꽃) 또는 장미 꽃잎
+function draw(p){
+  if(!p.bloom){cx.beginPath();cx.ellipse(0,0,p.r,p.r*.6,0,0,Math.PI*2);cx.fill();return;}
+  const k=p.r*.55;for(let i=0;i<5;i++){cx.rotate(Math.PI*2/5);cx.beginPath();cx.ellipse(0,-k,k*.62,k,0,0,Math.PI*2);cx.fill();}
+  cx.fillStyle='#E9C46A';cx.beginPath();cx.arc(0,0,k*.4,0,Math.PI*2);cx.fill();}
+function frame(){cx.clearRect(0,0,W,H);
+  petals.forEach(p=>{p.sway+=.02;p.x+=p.vx+Math.sin(p.sway)*.4;p.y+=p.vy;p.rot+=p.vr;
+    if(p.life!==Infinity){p.vx*=.97;p.vy=p.vy*.97+.06;p.life-=.006;}
+    else if(p.y>H+20){p.y=-20;p.x=Math.random()*W;}
+    cx.save();cx.globalAlpha=Math.max(0,Math.min(1,p.life))*.85;cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.hue;
+    if(p.hue==='#FFFFFF'){cx.shadowColor='rgba(120,80,100,.25)';cx.shadowBlur=3;}
+    draw(p);cx.restore();});
+  petals=petals.filter(p=>p.life>0);
+  if(!calm)requestAnimationFrame(frame);}
+size();addEventListener('resize',size);
+for(let i=0;i<(W<600?18:34);i++)petals.push(petal(Math.random()*W,Math.random()*H,false));
+frame();
+
+// 하트: 포인터 쪽으로 살짝 기울고, 누르면 두근 + 꽃잎
+const mirror=$('mirror'),heart=$('heart');
+if(!calm)addEventListener('pointermove',e=>{
+  const b=mirror.getBoundingClientRect(),dx=(e.clientX-b.left-b.width/2)/innerWidth,dy=(e.clientY-b.top-b.height/2)/innerHeight;
+  heart.style.transform=`rotateY(${dx*40}deg) rotateX(${-dy*40}deg)`;});
+mirror.addEventListener('click',()=>{
+  mirror.classList.remove('beat');void mirror.offsetWidth;mirror.classList.add('beat');
+  if(calm)return;const b=mirror.getBoundingClientRect();
+  for(let i=0;i<26;i++)petals.push(petal(b.left+b.width/2,b.top+b.height/2,true));});
+
+// 신청서
+const thisYear=new Date().getFullYear();
+for(let y=thisYear-20;y>=thisYear-39;y--)$('year').add(new Option(y+'년생',y)); // 만 20~39세 대상
+const val=n=>(document.querySelector(`input[name=${n}]:checked`)||{}).value;
+function show(step){$('step1').hidden=step!==1;$('step2').hidden=step!==2;$('h2').classList.toggle('on',step===2);}
+$('next').onclick=()=>{
+  const miss=[!$('name').value.trim()&&'이름',!val('gender')&&'성별',!$('year').value&&'출생 연도'].filter(Boolean);
+  $('err1').textContent=miss.length?miss.join(', ')+'을(를) 입력해 주세요.':'';
+  if(!miss.length)show(2);};
+$('back').onclick=()=>show(1);
+$('phone').addEventListener('input',e=>{const d=e.target.value.replace(/\D/g,'').slice(0,11);
+  e.target.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);});
+// 구글 시트 접수 주소(Apps Script 웹 앱). 비어 있으면 미리보기라 저장하지 않음
+const ENDPOINT='https://script.google.com/macros/s/AKfycbxBDdde33r4IpmVHst1fU9zRLJaSHuyFfPqnT7X3yrmGYmWA3F1iidA8LLpwKTj1Fxtmw/exec';
+function finish(){$('apply').hidden=true;$('done').hidden=false;$('done').scrollIntoView({behavior:'smooth',block:'center'});
+  if(!calm)for(let i=0;i<40;i++)petals.push(petal(W/2,H/2,true));}
+$('apply').addEventListener('submit',async e=>{e.preventDefault();
+  const phoneOk=/^01[016789]-\d{3,4}-\d{4}$/.test($('phone').value);
+  const msg=!val('region')?'만나고 싶은 지역을 골라 주세요.':!phoneOk?'휴대전화번호를 다시 확인해 주세요.':!$('agree').checked?'개인정보 수집·이용에 동의해 주세요.':'';
+  $('err2').textContent=msg;if(msg)return;
+  if(!ENDPOINT)return finish();
+  const btn=$('send');btn.disabled=true;btn.textContent='보내는 중…';
+  try{
+    // text/plain 본문이라 Apps Script가 CORS 사전 요청 없이 받음
+    const res=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({name:$('name').value.trim(),gender:val('gender'),year:$('year').value,
+      region:val('region'),phone:$('phone').value,agree:$('agree').checked,website:$('website').value,ref:location.search.slice(0,200)})});
+    const out=await res.json();
+    if(!out.ok)throw new Error(out.error);
+    finish();
+  }catch(err){
+    $('err2').textContent='신청이 전송되지 않았어요. 잠시 후 다시 눌러 주세요.';
+    btn.disabled=false;btn.textContent='신청 완료';
+  }});
+</script>
+
+</body>
+</html>
