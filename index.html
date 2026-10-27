@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="호스트가 신원검증 철저히! 상대방 프로필 먼저 보고 매칭">
-<meta property="og:title" content="2030 상위 10% 소개팅 신청">
-<meta property="og:description" content="호스트가 신원검증 철저히! 상대방 프로필 먼저 보고 매칭">
+<meta name="description" content="복잡한 프로필 없이 2분 신청. 서로 마음이 맞는 상대가 나타나면, 그때 연결됩니다.">
+<meta property="og:title" content="나와 맞는 인연, 가치관 소개팅">
+<meta property="og:description" content="복잡한 프로필 없이 2분 신청. 서로 마음이 맞는 상대가 나타나면, 그때 연결됩니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://apply.return2me.co.kr/">
-<meta property="og:image" content="https://apply.return2me.co.kr/og.png">
+<meta property="og:image" content="https://apply.return2me.co.kr/og-easy.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<style>body{margin:0}</style>
+<style>body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>2030 상위 10% 소개팅 신청</title>
+<title>리턴투미 가벼운 소개팅 신청</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Pinyon+Script&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
 <style>
-/* 한 칼럼 흐름: 조용한 히어로(꽃잎이 드물게 흩날림) → 약속 → 2단계 신청서 → 완료. 여백 많은 밝은 한 가지 테마 */
+/* 한 칼럼 흐름: 조용한 히어로(꽃잎이 드물게 흩날림) → 약속 → 3단계 신청서(기본·연애 스타일·사진/연락) → 완료(내 카드 미리보기). 여백 많은 밝은 한 가지 테마 */
 :root{
   color-scheme:light;
   --bg:#FAF6F2; --ink:#2A2230; --muted:#8A7F86; --rose:#B85C6E; --rose-dk:#A24E60; --blush:#F5E8E8;
@@ -35,7 +35,7 @@ body{background:linear-gradient(180deg,#FDFAF7 0%,var(--bg) 40%,#F7EFEC 100%);ba
 .page{position:relative;z-index:1;overflow-x:clip;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 
 /* 히어로 */
-.hero{padding-block:72px 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.hero{padding-block:72px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
 /* with love: 손글씨로 써지고 e 끝획에서 이어 금빛 한 줄 하트를 천천히 그림. 8초마다 반복, 글자와 하트 모두 금빛이 흐름 */
 .hero .script{font-family:var(--script);font-size:34px;line-height:1.15;color:var(--rose);white-space:nowrap}
 .hero .script .pen{display:inline-block;animation:wwrite 8s ease-in-out infinite both}
@@ -58,13 +58,7 @@ body{background:linear-gradient(180deg,#FDFAF7 0%,var(--bg) 40%,#F7EFEC 100%);ba
 @media (prefers-reduced-motion:reduce){.touch::before,.touch::after{animation:none}}
 .hero .lead{color:var(--muted);margin:0;font-size:15px}
 .divider{width:1px;height:36px;background:linear-gradient(var(--gold),transparent);margin:6px 0}
-/* 인연찾기: 2px 테두리 위로 금빛·핑크가 흐름 (안쪽 바탕 + 바깥 그라데이션 두 겹) */
-.cta{font:inherit;font-weight:500;font-size:15px;border:2px solid transparent;border-radius:999px;padding:12px 32px;color:var(--ink);text-decoration:none;letter-spacing:.04em;
-  background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(90deg,var(--rose),#E3A08F,var(--gold),#E8A9B4,var(--rose)) border-box;
-  background-size:100% 100%,300% 100%;animation:ctaflow 5s linear infinite}
-.cta:hover{background-image:linear-gradient(var(--blush),var(--blush)),linear-gradient(90deg,var(--rose),#E3A08F,var(--gold),#E8A9B4,var(--rose))}
 @keyframes ctaflow{from{background-position:0 0,0 0}to{background-position:0 0,300% 0}}
-@media (prefers-reduced-motion:reduce){.cta{animation:none}}
 
 /* 약속 */
 .vows{list-style:none;margin:28px auto 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);max-width:420px;width:100%}
@@ -103,11 +97,7 @@ input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,.c
 .chip span,.btn{border:2px solid transparent;background-image:linear-gradient(var(--paper),var(--paper)),linear-gradient(90deg,var(--rose),#E3A08F,var(--gold),#E8A9B4,var(--rose));
   background-origin:padding-box,border-box;background-clip:padding-box,border-box;background-size:100% 100%,300% 100%;animation:ctaflow 5s linear infinite}
 .chip span{display:block;border-radius:999px;padding:9px 24px;color:var(--muted);transition:color .2s}
-.chips.one{flex-wrap:nowrap;gap:6px}
-.chips.one .chip span{padding:9px 14px}
 .chip input:checked+span{background-image:linear-gradient(var(--blush),var(--blush)),linear-gradient(90deg,var(--rose),#E3A08F,var(--gold),#E8A9B4,var(--rose));color:var(--rose-dk);font-weight:600}
-.reassure{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 4px;font-family:var(--display);font-size:14px;line-height:1.7;color:var(--muted);text-align:center}
-.reassure b{color:var(--rose-dk)}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:14px}
 .consent input{width:18px;height:18px;margin-top:3px;accent-color:var(--rose);flex:none}
 details{font-size:13px;color:var(--muted)}
@@ -120,76 +110,78 @@ details dd{margin:0}
 .btn.ghost{background:transparent;border:0;animation:none;color:var(--muted);font-size:14px;padding:4px}
 @media (prefers-reduced-motion:reduce){.chip span,.btn{animation:none}}
 .err{color:var(--rose-dk);font-size:13px;min-height:1em;margin:0;text-align:center}
-.done{text-align:center;display:flex;flex-direction:column;gap:12px}
+.done{text-align:center;display:flex;flex-direction:column;gap:12px;word-break:keep-all}
 .done .lead{color:var(--muted);margin:0;font-size:15px}
-.rooms{display:grid;gap:8px;margin-top:8px}
-.rooms a{display:block;border:1px solid var(--line);border-radius:999px;padding:12px;color:var(--ink);text-decoration:none;background:#fff}
-.rooms a b{color:var(--rose)}
 footer{font-size:12px;color:var(--muted);text-align:center;padding-bottom:28px}
 footer span{font-family:var(--latin);letter-spacing:.24em;text-transform:uppercase}
 .panel{animation:rise .4s ease-out}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.panel{animation:none}}
-
-/* 예시 2: 조건 탭 + 프리미엄 소개 */
-.hero .lead b{color:var(--rose-dk);font-weight:600}
-.seg{display:flex;gap:8px;margin-top:8px}
-.seg button{font:inherit;font-size:15px;border-radius:999px;padding:9px 22px;color:var(--muted);cursor:pointer;border:2px solid transparent;
-  background-image:linear-gradient(var(--bg),var(--bg)),linear-gradient(90deg,var(--rose),#E3A08F,var(--gold),#E8A9B4,var(--rose));
-  background-origin:padding-box,border-box;background-clip:padding-box,border-box;background-size:100% 100%,300% 100%;animation:ctaflow 5s linear infinite}
-.seg button[aria-selected=true]{background-image:linear-gradient(var(--blush),var(--blush)),linear-gradient(90deg,var(--rose),#E3A08F,var(--gold),#E8A9B4,var(--rose));color:var(--rose-dk);font-weight:600}
-.crit{margin:10px 0 0;width:100%;max-width:440px;display:flex;flex-direction:column;background:var(--paper);border:1px solid rgba(205,180,138,.55);border-radius:20px;padding:6px 20px;box-sizing:border-box;text-align:left}
-.crit div{display:grid;grid-template-columns:4.6em minmax(0,1fr);gap:12px;padding:13px 0;align-items:baseline;min-width:0}
-.crit div+div{border-top:1px solid var(--line)}
-.crit dt{font-family:var(--display);font-weight:700;font-size:15px;color:var(--rose-dk)}
-.crit dd{margin:0;font-size:14px;line-height:1.6;min-width:0;word-break:keep-all;overflow-wrap:anywhere}
-.fine{margin:0;font-size:12px;color:var(--muted)}
-.premium{max-width:440px;margin:0 auto;padding-block:28px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
-.eyebrow{margin:0;font-family:var(--latin);font-style:italic;font-size:15px;letter-spacing:.06em;color:var(--gold)}
-.premium h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.45}
-.premium .lead{color:var(--muted);margin:0;font-size:15px;line-height:1.7}
-.perks{list-style:none;margin:8px 0 0;padding:0;width:100%;display:grid;gap:10px}
-.perks li{display:flex;flex-direction:column;gap:2px;padding:14px 12px;border-radius:16px;background:var(--paper);border:1px solid var(--line)}
-.perks b{font-family:var(--display);font-size:16px}
-.perks span{font-size:min(14px,2.85vw);color:var(--muted);white-space:nowrap}
+/* 긴 선택지는 세로로 한 줄씩, 상대 나이는 두 칸 나란히 */
+.chips.col{flex-direction:column;align-items:stretch;width:100%}
+.chips.col .chip span{padding:11px 16px;font-size:15px}
+.range{display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
+.range select{width:42%}
+.note{margin:0;padding:12px 14px;border-radius:14px;background:var(--blush);font-size:13px;line-height:1.6;color:var(--ink);text-align:left;display:flex;flex-direction:column;gap:10px}
+.consents{display:flex;flex-direction:column;gap:12px}
+/* 사진 고르기: 실제 파일 칸은 숨기고 버튼 모양 라벨로 */
+.sr{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.photo-pick{display:flex;flex-direction:column;gap:10px}
+.photo-pick .btn{text-align:center;box-sizing:border-box;font-size:15px}
+.thumbs{display:flex;gap:8px}
+.thumbs img{width:88px;height:88px;object-fit:cover;border-radius:10px}
+.pf-more{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:13px}
+.pf-more dt{color:var(--muted)}
+.pf-more dd{margin:0}
+/* 완료 화면: 개인 매칭 페이지 링크 */
+.kakao{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:16px;background:var(--blush)}
+.kakao p{margin:0}
+.kk-title{font-family:var(--display);font-size:16px;line-height:1.6}
+.kk-title b{color:var(--rose-dk)}
+.kakao img{width:100%;height:auto;border-radius:12px}
+.kk-form{font-size:14px}
+.kk-go{display:block;box-sizing:border-box;text-align:center;text-decoration:none;color:var(--ink)}
+.kk-mine{font-size:13px;color:var(--muted)}
+.kk-mine code{font-family:var(--body);font-size:13px;word-break:break-all;color:var(--ink);font-weight:600;user-select:all}
+/* 연애 스타일: 한 줄에 선택지 2개씩 2줄, 제목·안내는 폭에 맞춰 한 줄 */
+/* 지역: 칩 3개를 한 줄에 */
+.chips.nowrap{flex-wrap:nowrap;gap:6px}
+.chips.nowrap .chip span{padding:9px min(20px,4vw);white-space:nowrap}
+.chips.two{display:grid;grid-template-columns:1fr 1fr;width:100%}
+.chips.two .chip span{padding:9px 4px;font-size:min(14px,3.6vw);white-space:nowrap}
+h2.one{white-space:nowrap;font-size:min(20px,5.2vw)}
+.hint.one{white-space:nowrap;font-size:min(13px,3.3vw)}
+/* 한 줄 소개: 예시가 잘리지 않게 두 줄까지 감싸는 칸 */
+.long{font-family:var(--display);font-size:16px;line-height:1.5;text-align:center;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:6px 4px;width:100%;box-sizing:border-box;resize:none;word-break:keep-all}
+.long:focus{border-bottom-color:var(--rose);outline:0}
+.long::placeholder{color:rgba(138,127,134,.55)}
+/* 완료 화면: 상대에게 보일 내 카드 미리보기 */
+.profile{border:1px solid rgba(205,180,138,.55);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--bg)}
+.profile p{margin:0}
+/* 긴 낱말도 칸 안에서 줄바꿈 (keep-all이라 띄어쓰기 없는 답이 밖으로 나가지 않게) */
+.profile,.pf-more dd{min-width:0;overflow-wrap:anywhere}
+.pf-style{font-size:14px;line-height:1.6;display:flex;flex-direction:column;gap:4px}
+.pf-style b{color:var(--rose-dk);font-weight:600}
+.pf-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.pf-head b{font-family:var(--display);font-size:18px}
+.pf-head span,.pf-photo{font-size:13px;color:var(--muted)}
+.pf-intro{font-family:var(--display);font-size:15px}
+.profile .chips{justify-content:flex-start;gap:6px}
+.profile .chips span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--rose-dk);background:var(--paper)}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
 <div class="page">
   <section class="hero">
     <div class="script" aria-hidden="true"><span class="pen"><span class="txt">with love</span></span><svg class="gh" viewBox="0 0 72 60"><defs><linearGradient id="gflow" x1="0" x2="1" spreadMethod="repeat"><stop offset="0" stop-color="#C9A45C"/><stop offset=".3" stop-color="#E8CF94"/><stop offset=".55" stop-color="#D99A7E"/><stop offset=".8" stop-color="#B8894A"/><stop offset="1" stop-color="#C9A45C"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="1 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs><path pathLength="100" d="M0 44C6 46 14 49 24 49C31 45 39 40 42 33C44 28 42 23 37 22C33 21 29 25 27.5 31C27 29 26 26 24 24C20 21 14 24 12 31C10 38 16 44 25 49C30 53 38 54 46 53C54 52 60 49 64 46"/></svg></div>
-    <h1>이런 분들만 <b>모여요</b></h1>
-    <p class="lead">아래 항목 중 <b>한 가지만</b> 해당돼도 신청할 수 있어요</p>
-    <div class="seg" role="tablist" aria-label="조건 보기">
-      <button type="button" role="tab" id="t-m" aria-selected="true" aria-controls="c-m">남성 조건</button>
-      <button type="button" role="tab" id="t-f" aria-selected="false" aria-controls="c-f">여성 조건</button>
-    </div>
-    <dl class="crit" id="c-m" role="tabpanel" aria-labelledby="t-m">
-      <div><dt>학력</dt><dd>카이스트·포항공대·서연고·서성한·중경외시·교대·건동홍·국숭세단<br>의·치·한·수·약대, 로스쿨 졸업·재학</dd></div>
-      <div><dt>직업</dt><dd>대기업·중견기업, 전문직, 공무원, 공기업, 스타트업 대표</dd></div>
-      <div><dt>자산</dt><dd>29세 이하 1억 이상<br>30~35세 3.5억 이상<br>36~40세 7억 이상</dd></div>
-      <div><dt>소득</dt><dd>20대 5,000만 원 이상<br>30대 6,000만 원 이상<br>40대 8,000만 원 이상</dd></div>
-    </dl>
-    <dl class="crit" id="c-f" role="tabpanel" aria-labelledby="t-f" hidden>
-      <div><dt>학력</dt><dd>카이스트·포항공대·수도권 4년제·지방 국립대<br>의·치·한·수·약대, 로스쿨 졸업·재학</dd></div>
-      <div><dt>직업</dt><dd>대기업·중견기업, 전문직, 공무원, 공기업, 교사, 간호사</dd></div>
-      <div><dt>자산</dt><dd>29세 이하 5천만 이상<br>30~35세 1.5억 이상<br>36~40세 3억 이상</dd></div>
-      <div><dt>소득</dt><dd>20대 4,000만 원 이상<br>30대 5,000만 원 이상<br>40대 7,000만 원 이상</dd></div>
-    </dl>
-    <p class="fine">해당 항목은 재직·소득·졸업 서류로 확인해요</p>
-    <a class="cta" href="#apply" id="cta">인연찾기</a>
-  </section>
-
-  <section class="premium">
-    <p class="eyebrow">Premium matching</p>
-    <h2>대형 결정사 못지않은<br>서비스를 받아보세요</h2>
-    <p class="lead">학력·직업·자산·소득, 각 분야 <span class="touch">상위 10%</span> 남녀만 모여<br>서로를 소개받는 자리예요</p>
-    <ul class="perks">
-      <li><b>서류 인증</b><span>재직·소득·혼인관계·졸업 서류를 매칭매니저가 직접 확인해요</span></li>
-      <li><b>1:1 맞춤 매칭</b><span>이상형 조건을 받아, 서로 원하는 조건이 맞는 인연을 찾아드려요</span></li>
-      <li><b>프로필 먼저 확인</b><span>사진과 가치관을 먼저 보고, 서로 마음이 닿으면 만나요</span></li>
-    </ul>
+    <h1>소개팅,<br><b>이제 <span class="touch">가볍게</span> 시작하세요</b></h1>
+    <p class="lead">복잡한 프로필 없이 2분 신청.<br>서로 마음이 맞는 상대가 나타나면,<br>그때 연결됩니다.</p>
     <div class="divider" aria-hidden="true"></div>
+    <ul class="vows">
+      <li><b>01</b>신청은<br>무료</li>
+      <li><b>02</b>서로 관심<br>확인</li>
+      <li><b>03</b>그때<br>연결</li>
+    </ul>
   </section>
 
   <div class="wrap">
@@ -224,37 +216,66 @@ footer span{font-family:var(--latin);letter-spacing:.24em;text-transform:upperca
         <div class="script">Invitation</div>
         <p>새로운 인연의 자리에 당신을 초대합니다</p>
       </div>
-      <div class="steps" aria-hidden="true"><i class="on" id="h1"></i><i id="h2"></i></div>
+      <div class="steps" aria-hidden="true"><i class="on" id="h1"></i><i id="h2"></i><i id="h3"></i></div>
+      <p class="hint" id="stepLabel" aria-live="polite" style="text-align:center;margin:-14px 0 0">3단계 중 1단계</p>
 
       <div class="panel" id="step1">
         <div class="stack">
-          <fieldset class="field">
-            <legend>해당 조건</legend>
-            <p class="hint">가입 조건 중 해당되는 항목을 모두 선택해 주세요</p>
-            <div class="chips one">
-              <label class="chip"><input type="checkbox" name="qual" id="q-edu" value="학력"><span>학력</span></label>
-              <label class="chip"><input type="checkbox" name="qual" id="q-job" value="직업"><span>직업</span></label>
-              <label class="chip"><input type="checkbox" name="qual" id="q-asset" value="자산"><span>자산</span></label>
-              <label class="chip"><input type="checkbox" name="qual" id="q-income" value="소득"><span>소득</span></label>
-            </div>
-          </fieldset>
           <div class="field">
             <label for="name">닉네임</label>
-            <p class="hint">프로필에는 닉네임이 표기되니,<br>본인을 잘 나타낼 수 있는 닉네임을 작성해 주세요.</p>
+            <p class="hint">프로필에는 닉네임이 표기되니,<br>본인을 잘 나타낼 수 있는 닉네임을 4글자 이상으로 작성해 주세요.</p>
             <input type="text" id="name" autocomplete="nickname" placeholder="예: 퇴근후산책" maxlength="10">
           </div>
           <fieldset class="field">
             <legend>성별</legend>
             <div class="chips">
-              <label class="chip"><input type="radio" name="gender" id="g-m" value="남성"><span>남성</span></label>
-              <label class="chip"><input type="radio" name="gender" id="g-f" value="여성"><span>여성</span></label>
+              <label class="chip"><input type="radio" name="gender" value="남성"><span>남성</span></label>
+              <label class="chip"><input type="radio" name="gender" value="여성"><span>여성</span></label>
             </div>
           </fieldset>
           <div class="field">
             <label for="year">출생 연도</label>
-            <select id="year"><option value="">선택해 주세요</option></select>
+            <p class="hint">상대에게는 내 출생 연도가 보여요</p>
+            <select id="year" class="years"><option value="">선택해 주세요</option></select>
           </div>
-          <div class="reassure">매칭매니저가 간편 신청서 확인 후,<br><b>이상형 상세 신청서</b>를 보내드려요!</div>
+          <fieldset class="field">
+            <legend>직업군</legend>
+            <p class="hint">회사 이름은 묻지 않아요. 직업군만 보여요</p>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="job" value="대기업"><span>대기업</span></label>
+              <label class="chip"><input type="radio" name="job" value="중견기업"><span>중견기업</span></label>
+              <label class="chip"><input type="radio" name="job" value="중소기업"><span>중소기업</span></label>
+              <label class="chip"><input type="radio" name="job" value="전문직"><span>전문직</span></label>
+              <label class="chip"><input type="radio" name="job" value="공무원"><span>공무원</span></label>
+              <label class="chip"><input type="radio" name="job" value="공기업"><span>공기업</span></label>
+              <label class="chip"><input type="radio" name="job" value="스타트업 대표"><span>스타트업 대표</span></label>
+              <label class="chip"><input type="radio" name="job" value="자영업"><span>자영업</span></label>
+              <label class="chip"><input type="radio" name="job" value="교사"><span>교사</span></label>
+              <label class="chip"><input type="radio" name="job" value="간호사"><span>간호사</span></label>
+              <label class="chip"><input type="radio" name="job" value="프리랜서"><span>프리랜서</span></label>
+              <label class="chip"><input type="radio" name="job" value="기타"><span>기타</span></label>
+            </div>
+            <input type="text" id="jobEtc" aria-label="직업 직접 입력" placeholder="직업을 적어 주세요" maxlength="20" hidden>
+          </fieldset>
+          <fieldset class="field">
+            <legend>거주 또는 근무 지역</legend>
+            <p class="hint">해당하는 곳을 모두 골라 주세요.<br>만나기 편한 지역의 분부터 소개해 드려요</p>
+            <div class="chips nowrap">
+              <label class="chip"><input type="checkbox" name="region" value="서울"><span>서울</span></label>
+              <label class="chip"><input type="checkbox" name="region" value="경기·인천"><span>경기·인천</span></label>
+              <label class="chip"><input type="checkbox" name="region" value="기타"><span>기타</span></label>
+            </div>
+            <input type="text" id="regionEtc" aria-label="지역 직접 입력" placeholder="지역을 적어 주세요 (예: 부산)" maxlength="20" hidden>
+          </fieldset>
+          <fieldset class="field">
+            <legend>만나고 싶은 상대 나이</legend>
+            <p class="hint">출생 연도로 골라 주세요.<br>넓게 고를수록 소개받을 수 있는 분이 많아져요</p>
+            <div class="range">
+              <select id="wantFrom" class="years" aria-label="이 연도생부터"><option value="">부터</option></select>
+              <span aria-hidden="true">~</span>
+              <select id="wantTo" class="years" aria-label="이 연도생까지"><option value="">까지</option></select>
+            </div>
+          </fieldset>
           <p class="err" id="err1" role="alert"></p>
           <button type="button" class="btn" id="next">다음</button>
         </div>
@@ -262,47 +283,163 @@ footer span{font-family:var(--latin);letter-spacing:.24em;text-transform:upperca
 
       <div class="panel" id="step2" hidden>
         <div class="stack">
-          <h2>이제 한 걸음 남았어요</h2>
+          <h2 class="one">어떤 연애를 하고 싶은지 알려 주세요</h2>
+          <p class="hint one" style="text-align:center">정답은 없어요. 답이 비슷한 분부터 먼저 소개해 드려요.</p>
           <fieldset class="field">
-            <legend>만나고 싶은 지역</legend>
-            <div class="chips">
-              <label class="chip"><input type="radio" name="region" id="r-seoul" value="서울"><span>서울</span></label>
-              <label class="chip"><input type="radio" name="region" id="r-jeju" value="제주"><span>제주</span></label>
+            <legend>연락은 어느 정도가 편해요?</legend>
+            <div class="chips two">
+              <label class="chip"><input type="radio" name="v1" value="틈날 때마다"><span>틈날 때마다</span></label>
+              <label class="chip"><input type="radio" name="v1" value="하루 몇 번"><span>하루 몇 번</span></label>
+              <label class="chip"><input type="radio" name="v1" value="하루 한두 번"><span>하루 한두 번</span></label>
+              <label class="chip"><input type="radio" name="v1" value="만날 때 몰아서"><span>만날 때 몰아서</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>쉬는 날엔 주로</legend>
+            <div class="chips two">
+              <label class="chip"><input type="radio" name="v2" value="집에서 충전"><span>집에서 충전</span></label>
+              <label class="chip"><input type="radio" name="v2" value="가까운 데 산책"><span>가까운 데 산책</span></label>
+              <label class="chip"><input type="radio" name="v2" value="약속 잡고 외출"><span>약속 잡고 외출</span></label>
+              <label class="chip"><input type="radio" name="v2" value="여행·액티비티"><span>여행·액티비티</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>결혼은</legend>
+            <div class="chips two">
+              <label class="chip"><input type="radio" name="v3" value="1~2년 안에"><span>1~2년 안에</span></label>
+              <label class="chip"><input type="radio" name="v3" value="인연이면 언제든"><span>인연이면 언제든</span></label>
+              <label class="chip"><input type="radio" name="v3" value="천천히 생각"><span>천천히 생각</span></label>
+              <label class="chip"><input type="radio" name="v3" value="아직 모르겠어요"><span>아직 모르겠어요</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>다툼이 생기면</legend>
+            <div class="chips two">
+              <label class="chip"><input type="radio" name="v5" value="바로 대화"><span>바로 대화</span></label>
+              <label class="chip"><input type="radio" name="v5" value="잠깐 쉬고 대화"><span>잠깐 쉬고 대화</span></label>
+              <label class="chip"><input type="radio" name="v5" value="시간을 충분히"><span>시간을 충분히</span></label>
+              <label class="chip"><input type="radio" name="v5" value="글로 정리해서"><span>글로 정리해서</span></label>
             </div>
           </fieldset>
           <div class="field">
-            <label for="phone">연락처</label>
-            <p class="hint">연락 받으실 번호예요</p>
-            <input type="tel" id="phone" inputmode="numeric" autocomplete="tel" placeholder="010-0000-0000" maxlength="13">
+            <label for="intro">한 줄 소개</label>
+            <p class="hint">선택 사항이에요. 상대가 제일 먼저 읽는 문장이에요</p>
+            <textarea id="intro" class="long" rows="2" placeholder="예: 주말엔 자기계발하거나&#10;한강 러닝하는 걸 좋아해요" maxlength="40"></textarea>
           </div>
-          <div class="reassure">남겨주신 번호는 <b>매칭매니저가 연락드릴 때</b> 사용합니다.<br>상대에게 전달되지 않으니 안심하세요.</div>
-          <label class="consent" for="agree"><input type="checkbox" id="agree"><span>개인정보 수집·이용에 동의합니다 (필수)</span></label>
+          <div class="field">
+            <label for="pf1">🌈 성격 / 나를 표현하는 한마디</label>
+            <textarea id="pf1" class="long" rows="1" placeholder="예: 긍정적, 차분함, 잘 웃음" maxlength="30"></textarea>
+          </div>
+          <div class="field">
+            <label for="pf2">🍰 취미 / 관심사</label>
+            <textarea id="pf2" class="long" rows="1" placeholder="예: 여행, 영화, 운동, 독서" maxlength="30"></textarea>
+          </div>
+          <div class="field">
+            <label for="pf3">💭 연애 가치관</label>
+            <textarea id="pf3" class="long" rows="2" placeholder="예: 존중과 배려,&#10;함께 성장하는 연애" maxlength="30"></textarea>
+          </div>
+          <div class="field">
+            <label for="pf4">🌟 나의 매력 포인트</label>
+            <textarea id="pf4" class="long" rows="2" placeholder="예: 잘 웃는 미소, 유머감각,&#10;리액션, 책임감" maxlength="30"></textarea>
+          </div>
+          <p class="err" id="errV" role="alert"></p>
+          <button type="button" class="btn" id="next2">다음</button>
+          <button type="button" class="btn ghost" id="back1">이전으로</button>
+        </div>
+      </div>
+
+      <div class="panel" id="step3" hidden>
+        <div class="stack">
+          <h2>사진과 연락 방법만 알려 주세요</h2>
+          <fieldset class="field">
+            <legend>소개받을 상대의 사진이 꼭 필요한가요?</legend>
+            <div class="chips col">
+              <label class="chip"><input type="radio" name="photoNeed" value="필수"><span>네, 사진이 있는 분만 소개받고 싶어요</span></label>
+              <label class="chip"><input type="radio" name="photoNeed" value="무관"><span>아니요, 사진이 없어도 괜찮아요</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>본인 사진도 등록하시겠어요?</legend>
+            <p class="hint">선택 사항이에요</p>
+            <p class="hint" id="photoTip" hidden><b>사진이 있는 분을 소개받으시려면<br>내 사진도 함께 공개해 주셔야 해요.<br>서로 공평하게 보여 드려요.</b></p>
+            <div class="chips col">
+              <label class="chip"><input type="radio" name="myPhoto" value="등록"><span>네, 등록할게요</span></label>
+              <label class="chip" id="noPhoto"><input type="radio" name="myPhoto" value="없이"><span>사진 없이 소개받을게요</span></label>
+            </div>
+            <div class="note" id="photoNote" hidden>
+              <div id="photoPick" class="photo-pick">
+                <span>매니저가 본인 사진인지 확인한 뒤, 사진을 공개한 회원끼리만 서로 볼 수 있어요.</span>
+                <label class="btn" for="photoFile">사진 고르기 (최대 2장)</label>
+                <input type="file" id="photoFile" accept="image/*" multiple class="sr">
+                <div class="thumbs" id="thumbs"></div>
+              </div>
+              <label class="consent" for="photoShare"><input type="checkbox" id="photoShare"><span>매칭 제안 상대에게 내 사진을 보여 주는 데 동의해요 <span id="photoShareReq">(선택)</span></span></label>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>휴대폰 번호</legend>
+            <p class="hint">매칭 소식을 리턴투미 카카오톡 알림으로 보내 드려요.<br>두 분 모두 입금하기 전에는 상대에게 절대 전달되지 않아요</p>
+            <input type="tel" id="contact" aria-label="휴대폰 번호" placeholder="010-0000-0000" inputmode="numeric" maxlength="13" autocomplete="tel">
+          </fieldset>
+          <div class="note">
+            <span><b>상대에게 보이는 것</b><br>닉네임, 나이(출생 연도), 거주·근무 지역, 연애 스타일 답변, 한 줄 소개, 자기소개(성격·취미·연애 가치관·매력)<br>(사진은 공개에 동의하신 경우만)</span>
+            <span><b>상대에게 보이지 않는 것</b><br>연락처(연결 전까지), 들어온 경로</span>
+          </div>
+          <details>
+            <summary>매칭비·입금 안내</summary>
+            <dl>
+              <dt>매칭비</dt><dd>20,000원</dd>
+              <dt>입금 시점</dt><dd>두 분 모두 만나고 싶다고 답하면 내 매칭 페이지에 입금 계좌가 바로 떠요. 그 전에는 비용이 들지 않아요.</dd>
+              <dt>입금 계좌</dt><dd>예금주는 이미*이에요. 다른 이름의 계좌로 입금을 요청받으면 입금하지 말고 오픈채팅방 매니저에게 알려 주세요.</dd>
+              <dt>연결</dt><dd>입금이 확인되면 두 분의 연락처를 서로 전달해 드려요.</dd>
+            </dl>
+          </details>
+          <div class="consents">
+            <label class="consent" for="adult"><input type="checkbox" id="adult"><span>만 19세 이상 성인이에요 (필수)</span></label>
+            <label class="consent" for="unverified"><input type="checkbox" id="unverified"><span>신원·직업·혼인 여부 등은 따로 검증하지 않는 서비스임을 확인했어요 (필수)</span></label>
+            <label class="consent" for="agree"><input type="checkbox" id="agree"><span>개인정보 수집·이용에 동의합니다 (필수)</span></label>
+            <label class="consent" for="share"><input type="checkbox" id="share"><span>매칭 제안 상대에게 위 '상대에게 보이는 것'을 보여 주는 데 동의합니다 (필수)</span></label>
+          </div>
           <details>
             <summary>수집 항목과 보관 기간 보기</summary>
             <dl>
-              <dt>수집 항목</dt><dd>이름, 성별, 출생 연도, 선호 지역, 휴대전화번호</dd>
-              <dt>이용 목적</dt><dd>소개팅 상대 매칭, 프로필 전달, 매칭 관련 안내 연락</dd>
-              <dt>보관 기간</dt><dd>매칭 서비스 종료 또는 탈퇴 요청 시까지 보관 후 바로 파기</dd>
-              <dt>동의 거부</dt><dd>동의하지 않으실 수 있으나, 이 경우 프로필을 보내드릴 수 없어요.</dd>
+              <dt>수집 항목</dt><dd>닉네임, 직업군, 성별, 출생 연도, 거주·근무 지역, 희망 상대 나이, 연애 스타일 답변, 한 줄 소개, 자기소개(성격·취미·연애 가치관·매력), 사진 관련 선택, 휴대폰 번호(카카오톡 알림 발송과 연결 완료 시 상대에게 전달) (사진은 등록하신 경우만)</dd>
+              <dt>이용 목적</dt><dd>소개팅 상대 매칭, 매칭 제안과 입금·연결 안내 연락</dd>
+              <dt>제공 대상</dt><dd>매칭 제안을 받는 상대 회원 (닉네임·나이·지역·연애 스타일·한 줄 소개, 동의 시 사진). 연락처는 두 분이 연결에 동의하고 입금이 확인된 뒤에만 제공</dd>
+              <dt>보관 기간</dt><dd>매칭 서비스 종료 또는 삭제 요청 시까지 보관 후 바로 파기. 오픈채팅방 매니저에게 닉네임으로 말씀하시면 언제든 지워 드려요</dd>
+              <dt>동의 거부</dt><dd>동의하지 않으실 수 있으나, 이 경우 매칭을 제안해 드릴 수 없어요.</dd>
             </dl>
           </details>
           <p class="err" id="err2" role="alert"></p>
           <input type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
-          <button type="submit" class="btn" id="send">신청 완료</button>
-          <button type="button" class="btn ghost" id="back">이전으로</button>
+          <button type="submit" class="btn" id="send">신청하기</button>
+          <button type="button" class="btn ghost" id="back2">이전으로</button>
         </div>
       </div>
     </form>
 
     <section class="done" id="done" hidden>
       <div class="invite"><div class="script">Thank you</div></div>
-      <h2>초대에 응해 주셔서 고마워요</h2>
-      <p class="lead">내용을 확인하고 평일에 카톡으로 연락드릴게요. 신청이 많을 땐 1~2일 걸릴 수 있어요.</p>
-      <p class="lead">기다리는 동안 오픈채팅방에서 먼저 이야기 나눠 보세요.</p>
-      <div class="rooms">
-        <a href="https://open.kakao.com/o/gbFZ01Ti" target="_blank" rel="noopener"><b>서울</b> 2030 소개팅 오픈채팅</a>
-        <a href="https://open.kakao.com/o/gabl11Ti" target="_blank" rel="noopener"><b>제주</b> 2030 소개팅 오픈채팅</a>
+      <h2>신청이 접수됐어요</h2>
+      <div class="kakao">
+        <p class="kk-title">마지막으로 카카오톡 채널 <b>리턴투미</b>에<br>아래 메시지를 꼭 보내 주세요</p>
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAI2AyADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5foop8MZllVB3NADBz05pdrf3W/Kt2KJIl2oo+tPoA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/Kja391vyroKKAOf2t/db8qNrf3W/KugooA5/a391vyo2t/db8q6CigDn9rf3W/KkII6gj610NMliSVSHANAGDRT54zFMyHt0plABVnTv+PpfoarVZ07/j6X6GgDYooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoozRQAUUUUAFFFFAGPqX/H0foKrVZ1L/j7P0qtQAVZ07/j6X6Gq1WdO/wCPpfoaANiiiigAoopUVncIgLMxwqgZJPpQAIryOqIrM7HCqoySfQV63H4G0Twf4FuNV8eB21fUIithp8b7ZIyejH36Zz0rW8J+GtP+GWgx+KvF1v8AadcmGdP03GSh7M3v/L615V4s1vWPFWtzanq/nS3EhwqhTtjXsqjsKAMIUVJ9nn/54y/98GkaKVBl4nVfUqRQAyiiigAoooNA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yB8xHaug/wCFGfET/oXn/wDAiL/4qgDzSivS/wDhRnxE/wChef8A8CIv/iqP+FGfET/oXn/8CIv/AIqgDzSivS/+FGfET/oXn/8AAiL/AOKo/wCFGfET/oXn/wDAiL/4qgDzSivS/wDhRnxE/wChef8A8CIv/iqP+FGfET/oXn/8CIv/AIqgDzSivS/+FGfET/oXn/8AAiL/AOKo/wCFGfET/oXn/wDAiL/4qgDzSivS/wDhRnxE/wChef8A8CIv/iq5Hxf4T1rwfqEVl4isjZ3UsYmRC6vlMkZypPcGgDCooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAsefF/wA+sf8A30f8aPPi/wCfWP8A76P+NV6KAO28FfEzxF4KtLm28OTRWsFxIJZVMYfLAYB59q6P/hoDx9/0Eof+/C/4V5NRQB6z/wANAePv+glD/wB+F/wo/wCGgPH3/QSh/wC/C/4V5NRQB6z/AMNAePv+glD/AN+F/wAKP+GgPH3/AEEof+/C/wCFeTUUAes/8NAePv8AoJQ/9+F/wo/4aA8ff9BKH/vwv+FeTUUAes/8NAePv+glD/34X/Cj/hoDx9/0Eof+/C/4V5NRQB6z/wANAePv+glD/wB+F/wrjPGfjXVvGepRX/iIxXV1FEIUcLswgJOMD3JrmaKAJ/Pi/wCfWP8A76P+NL58X/PrH/30f8ar0UAWPPi/59Y/++j/AI0efF/z6x/99H/Gq9FAFjz4v+fWP/vo/wCNHnxf8+sf/fR/xqvRQBY8+L/n1j/76P8AjR58X/PrH/30f8ar0UAWPPi/59Y/++j/AI0efF/z6x/99H/Gq9FAFjz4v+fWP/vo/wCNHnxf8+sf/fR/xqvRQBY8+L/n1j/76P8AjR58X/PrH/30f8ar0UAWPPi/59Y/++j/AI0efF/z6x/99H/Gq9FAFjz4v+fWP/vo/wCNHnxf8+sf/fR/xqvRQBY8+L/n1j/76P8AjR58X/PrH/30f8ar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ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoyfWiigAooooAKKKKACiiigAooooAPxooooAKKKKACiiigAooooAydR/4+T9Kq1a1H/j5P0qrQAVZ07/AI+l+hqtVnTv+PpfoaANeiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAMnUf+Pk/SqtWtR/4+T9Kq0AFWdO/4+l+hqtVnTv+PpfoaANeiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAMnUf+Pk/SqtWtR/4+T9Kq0AFWdO/4+l+hqtVnTv8Aj6X6GgDXooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDJ1H/AI+T9Kq1a1H/AI+T9Kq0AFWdO/4+l+hqtVnTv+PpfoaANeiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAMnUf+Pk/SqtWtR/4+T9Kq0AFWdO/wCPpfoarVZ07/j6X6GgDXooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAopdrBQxVtp4BxxmkoAKKMijIPSgAooooAKKUqwUMVYKehI4NJQAUUneloAKKKTNAC0UYYjIBwOpx0p8kUkaqzoyqwypZSAR7etADKKTNLQAUU6SKSJgJY3QkZAYEEj1pvTrQAUUmRTkVpGCxqWYnACjJNACUUrqyMVdSrjgqRgg03NAC0UYPYH64pWVkbDqynuCMGgBKKKKACiiigAooooAydR/wCPk/SqtWtR/wCPk/SqtABVnTv+PpfoarVZ07/j6X6GgDXooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAO8v/D0Uvwu0LUNO05pNRmupUmliRmYqM4zjtTvDfhyM+A/Fl7q2myJd2yRm2kmRlKZPOM1uQ6lrmmfB/wAPyeHpbqOZ7uYSG3XcdvPXg1LpWq6/qnw18ZHxHNeSmOKPyvtCFcc844FAGDrQH/CkfDxwM/2jNz+BrD8L+JbLRLOWG78P6fqju+4SXOcqMdBjtW7rXHwR8O/9hKb+RrP8NjwbYaXFqGty3moajkkabGmxAQeNzdxQB6Bdzadb/Di28TnwXpfmyTYeEqdqxE4D+vNeXeKvEFpriW62eh2OlGIksbbPz57HPpW3F8TNRPiCa7ureGbS5ohbPpn/ACyEI6KPQj1rP8Uw+EJtOF/4curyC6dwG06dMhAepD+goAs61pFhB8LdB1SG3VL+4uZUlmGc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RRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAZOo/wDHyfpVWrGoHN03sBVegAp0bFHVh1BptFAG7E6yRhlPBp9YttcPA3HKnqK0o7yFx97afQ0AWKKj8+L/AJ6L+dHnxf8APRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v8Anon50efF/wA9E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/wCeifnR58X/AD0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/AJ6J+dHnxf8APRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v8Anon50efF/wA9E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/wCeifnR58X/AD0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/AJ6J+dHnxf8APRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v8Anon50efF/wA9E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/wCeifnR58X/AD0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/non50efF/z0T86AJKKj8+L/AJ6J+dHnxf8APRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v+eifnR58X/PRPzoAkoqPz4v8Anon50efF/wA9E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/56J+dHnxf89E/OgCSio/Pi/wCeifnR58X/AD0T86AJKKj8+L/non50efF/z0T86AJKZI4jRmY4AqGW8hQcNuPtWdc3DzkZ4UdqAI5H8yRnPc5ptFFADd496N496KKADePejcPeiigA3D3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooAN496N496KKADePejePeiigA3j3o3j3oooANw96N496KKADePejePeiigD/9k=" alt="카카오톡 검색창에 리턴투미를 검색하면 나오는 리턴투미 채널" width="800" height="566">
+        <p class="hint kk-form">형식: 소개팅/년생/성별/닉네임</p>
+        <p class="kk-mine">내 메시지 <code id="kkMsg"></code></p>
+        <button type="button" class="btn" id="kkCopy">메시지 복사하기</button>
+        <a class="btn kk-go" href="https://pf.kakao.com/_wkCzX/chat" target="_blank" rel="noopener">리턴투미 채널로 메시지 보내기</a>
+        <p class="hint">메시지를 확인하면 채널 채팅으로 나만 들어갈 수 있는 매칭 페이지 링크를 보내 드려요.</p>
       </div>
+      <p class="lead">상대에게는 이렇게 보여요</p>
+      <div class="profile" id="profile">
+        <p class="pf-head"><b id="pfName"></b><span id="pfMeta"></span></p>
+        <p class="pf-intro" id="pfIntro"></p>
+        <div class="pf-style" id="pfValues"></div>
+        <dl class="pf-more" id="pfMore"></dl>
+        <p class="pf-photo" id="pfPhoto"></p>
+      </div>
+      <p class="lead">링크를 받은 뒤에는 조건이 맞는 분이 새로 신청하면 매칭 페이지에 나타나요. 매칭비는 두 분 모두 만나고 싶을 때만 안내해요.</p>
+      <p class="hint">리턴투미는 매칭이 성사되기 전에 입금을 요청하지 않아요.<br>내 정보를 지우고 싶으면 언제든 매니저에게 닉네임으로 말씀해 주세요.</p>
     </section>
     </div>
   </div>
@@ -333,54 +470,105 @@ size();addEventListener('resize',size);
 for(let i=0;i<(W<600?10:18);i++)petals.push(petal(Math.random()*W,Math.random()*H,false));
 frame();
 
-// 남성/여성 조건 탭
-document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('.seg button').forEach(o=>{const on=o===b;o.setAttribute('aria-selected',on);$(o.getAttribute('aria-controls')).hidden=!on;});});
-
-// 인연찾기: 신청서 카드까지 1.2초 동안 천천히 내려감
-$('cta').addEventListener('click',e=>{
-  if(calm)return;
-  e.preventDefault();
-  const from=scrollY,to=$('apply').closest('.card').getBoundingClientRect().top+scrollY-80,t0=performance.now();
-  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  (function step(now){const t=Math.min(1,(now-t0)/1200);scrollTo(0,from+(to-from)*ease(t));if(t<1)requestAnimationFrame(step);})(t0);});
-
 // 신청서
 const thisYear=new Date().getFullYear();
-for(let y=thisYear-20;y>=thisYear-39;y--)$('year').add(new Option(y+'년생',y)); // 만 20~39세 대상
+// 나이 조건 없음(성인만). 희망 상대 나이도 같은 연도 목록
+document.querySelectorAll('.years').forEach(s=>{for(let y=thisYear-19;y>=1960;y--)s.add(new Option(y+'년생',y));});
 const val=n=>(document.querySelector(`input[name=${n}]:checked`)||{}).value;
-const quals=()=>[...document.querySelectorAll('input[name=qual]:checked')].map(i=>i.value);
-function show(step){$('step1').hidden=step!==1;$('step2').hidden=step!==2;$('h2').classList.toggle('on',step===2);}
-$('next').onclick=()=>{
-  const miss=[!quals().length&&'해당 조건',!$('name').value.trim()&&'닉네임',!val('gender')&&'성별',!$('year').value&&'출생 연도'].filter(Boolean);
-  $('err1').textContent=miss.length?miss.join(', ')+'을(를) 입력해 주세요.':'';
-  if(!miss.length)show(2);};
-$('back').onclick=()=>show(1);
-$('phone').addEventListener('input',e=>{const d=e.target.value.replace(/\D/g,'').slice(0,11);
+// 중복 선택 칸(지역)은 고른 값 전부
+const vals=n=>[...document.querySelectorAll(`input[name=${n}]:checked`)].map(i=>i.value);
+function show(step){[1,2,3].forEach(i=>{$('step'+i).hidden=step!==i;$('h'+i).classList.toggle('on',i<=step);});
+  $('stepLabel').textContent=`3단계 중 ${step}단계`;$('apply').scrollIntoView({behavior:calm?'auto':'smooth',block:'start'});}
+// 시안 미리보기(ENDPOINT 비어 있음)에서는 빈칸이어도 다음 단계로 넘어감. 배포본은 그대로 검사
+$('next').onclick=()=>{if(!ENDPOINT)return show(2);
+  const miss=[!$('name').value.trim()&&'닉네임',!val('gender')&&'성별',!$('year').value&&'출생 연도',!val('job')&&'직업군',val('job')==='기타'&&!$('jobEtc').value.trim()&&'직업',!vals('region').length&&'거주 또는 근무 지역',vals('region').includes('기타')&&!$('regionEtc').value.trim()&&'지역',(!$('wantFrom').value||!$('wantTo').value)&&'상대 나이'].filter(Boolean);
+  const short=!miss.length&&$('name').value.trim().length<4;
+  $('err1').textContent=miss.length?miss.join(', ')+'을(를) 입력해 주세요.':short?'닉네임은 4글자 이상으로 써 주세요.':'';
+  if(!miss.length&&!short)show(2);};
+// 직업군 '기타'를 고르면 직접 적는 칸을 보여 줌. 상대에게는 적은 직업이 보임
+document.querySelectorAll('input[name=job]').forEach(r=>r.addEventListener('change',()=>{
+  const etc=val('job')==='기타';$('jobEtc').hidden=!etc;if(etc)$('jobEtc').focus();else $('jobEtc').value='';}));
+const jobLabel=()=>val('job')==='기타'&&$('jobEtc').value.trim()||val('job');
+// 지역 '기타'도 직접 적는 칸
+document.querySelectorAll('input[name=region][value=기타]').forEach(r=>r.addEventListener('change',()=>{
+  $('regionEtc').hidden=!r.checked;if(r.checked)$('regionEtc').focus();else $('regionEtc').value='';}));
+const regionLabel=()=>vals('region').map(r=>r==='기타'&&$('regionEtc').value.trim()||r).join(', ');
+const VALUES=['v1','v2','v3','v5'];
+// 연애 스타일: 질문 한 줄씩 "연락은? 틈날 때마다 하는 게 좋아요." (landing-easy.html·me.html 같은 내용)
+const STYLE_Q=['연락은?','쉬는 날에는?','결혼은?','다툼이 생기면?'];
+const STYLE={'틈날 때마다':'틈날 때마다 하는 게 좋아요.','하루 몇 번':'하루에 몇 번 하는 게 좋아요.','하루 한두 번':'하루 한두 번이면 충분해요.','만날 때 몰아서':'만나서 몰아서 이야기하는 게 좋아요.',
+  '집에서 충전':'주로 집에서 충전해요.','가까운 데 산책':'주로 가까운 곳으로 산책 가요.','약속 잡고 외출':'주로 약속 잡고 밖에 나가요.','여행·액티비티':'주로 여행이나 액티비티를 즐겨요.',
+  '1~2년 안에':'1~2년 안에 하고 싶어요.','인연이면 언제든':'좋은 인연이면 언제든 하고 싶어요.','천천히 생각':'천천히 생각하고 싶어요.','아직 모르겠어요':'아직 잘 모르겠어요.',
+  '바로 대화':'바로 대화로 풀어요.','잠깐 쉬고 대화':'잠깐 쉬었다가 대화해요.','시간을 충분히':'충분히 시간을 갖고 이야기해요.','글로 정리해서':'글로 정리해서 이야기해요.'};
+const styleLines=vs=>vs.map((v,i)=>{const p=document.createElement('p'),b=document.createElement('b');b.textContent=STYLE_Q[i];p.append(b,' '+(STYLE[v]||v||''));return p;});
+const PROFILE=['pf1','pf2','pf3','pf4'];
+const profile=()=>PROFILE.map(i=>$(i).value.trim());
+$('next2').onclick=()=>{if(!ENDPOINT)return show(3);const left=VALUES.filter(n=>!val(n)).length+profile().filter(x=>!x).length;
+  $('errV').textContent=left?`${left}개 문항이 남았어요.`:'';if(!left)show(3);};
+$('back1').onclick=()=>show(1);
+$('back2').onclick=()=>show(2);
+// 상대 사진을 원하면 내 사진도 공개해야 함(상호 공개). 그래서 '사진 없이'를 숨기고 공개 동의를 필수로
+const photoMutual=()=>val('photoNeed')==='필수';
+function syncPhoto(){const m=photoMutual();$('photoTip').hidden=!m;$('noPhoto').hidden=m;
+  if(m&&val('myPhoto')==='없이')document.querySelector('input[name=myPhoto]:checked').checked=false;
+  const yes=val('myPhoto')==='등록';$('photoNote').hidden=!yes;if(!yes)$('photoShare').checked=false;
+  $('photoShareReq').textContent=m||val('myPhoto')==='등록'?'(필수)':'(선택)';}
+// 사진: 긴 변 720px JPEG로 줄여 최대 2장 (원본은 보내지 않음)
+let photos=[];
+const shrink=f=>new Promise((ok,no)=>{const img=new Image(),u=URL.createObjectURL(f);img.onload=()=>{const k=Math.min(1,720/Math.max(img.width,img.height)),c=document.createElement('canvas');
+  c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.82));};img.onerror=()=>no();img.src=u;});
+$('photoFile').addEventListener('change',async e=>{const fs=[...e.target.files].slice(0,2);e.target.value='';$('err2').textContent='';
+  try{photos=await Promise.all(fs.map(shrink));}catch(err){photos=[];$('err2').textContent='사진을 읽지 못했어요. 다른 사진으로 골라 주세요.';}
+  $('thumbs').replaceChildren(...photos.map(src=>Object.assign(document.createElement('img'),{src,alt:'고른 사진'})));});
+document.querySelectorAll('input[name=photoNeed],input[name=myPhoto]').forEach(r=>r.addEventListener('change',syncPhoto));
+// 알림톡은 휴대폰 번호로 가서 연락처는 번호 하나로 받음
+$('contact').addEventListener('input',e=>{const d=e.target.value.replace(/\D/g,'').slice(0,11);
   e.target.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);});
+// 복사가 막힌 앱 화면에서는 글자를 선택해 두어 직접 복사하게
+$('kkCopy').onclick=()=>{const t=$('kkMsg').textContent,b=$('kkCopy');
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{b.textContent='복사했어요';},()=>{getSelection().selectAllChildren($('kkMsg'));b.textContent='선택된 글자를 복사해 주세요';});};
 // 구글 시트 접수 주소(Apps Script 웹 앱). 비어 있으면 미리보기라 저장하지 않음
 const ENDPOINT='https://script.google.com/macros/s/AKfycbxBDdde33r4IpmVHst1fU9zRLJaSHuyFfPqnT7X3yrmGYmWA3F1iidA8LLpwKTj1Fxtmw/exec';
 // 방문 기록: 같은 탭에서 새로고침하면 다시 세지 않음
 if(ENDPOINT)try{if(!sessionStorage.getItem('v')){sessionStorage.setItem('v',1);
   fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'visit',ref:location.search.slice(0,200)})}).catch(()=>{});}}catch(e){}
-function finish(){$('apply').hidden=true;$('done').hidden=false;$('done').scrollIntoView({behavior:'smooth',block:'center'});
+function finish(){
+  $('kkMsg').textContent=['소개팅',$('year').value&&String($('year').value).slice(2)+'년생',val('gender'),$('name').value.trim()].join('/');
+  $('pfName').textContent=$('name').value.trim();
+  $('pfMeta').textContent=[val('gender'),$('year').value&&String($('year').value).slice(2)+'년생',jobLabel(),regionLabel()].filter(Boolean).join(' · ');
+  $('pfIntro').textContent=$('intro').value.trim();$('pfIntro').hidden=!$('intro').value.trim();
+  $('pfMore').replaceChildren(...['성격','취미·관심사','연애 가치관','매력 포인트'].flatMap((k,i)=>[Object.assign(document.createElement('dt'),{textContent:k}),Object.assign(document.createElement('dd'),{textContent:profile()[i]})]));
+  $('pfValues').replaceChildren(...styleLines(VALUES.map(val)));
+  $('pfPhoto').textContent=$('photoShare').checked?'사진: 매니저 확인 후 공개':'사진: 공개하지 않음';
+  $('apply').hidden=true;$('done').hidden=false;$('done').scrollIntoView({behavior:'smooth',block:'center'});
   if(!calm)for(let i=0;i<30;i++)petals.push(petal(W/2,H/2,true));}
 $('apply').addEventListener('submit',async e=>{e.preventDefault();
-  const phoneOk=/^01[016789]-\d{3,4}-\d{4}$/.test($('phone').value);
-  const msg=!val('region')?'만나고 싶은 지역을 골라 주세요.':!phoneOk?'휴대전화번호를 다시 확인해 주세요.':!$('agree').checked?'개인정보 수집·이용에 동의해 주세요.':'';
+  if(!ENDPOINT)return finish();
+  const c=$('contact').value.trim();
+  const contactOk=/^01[016789]-\d{3,4}-\d{4}$/.test(c);
+  const msg=!val('photoNeed')?'상대 사진이 꼭 필요한지 골라 주세요.':!val('myPhoto')?'본인 사진 등록 여부를 골라 주세요.'
+    :photoMutual()&&!$('photoShare').checked?'사진이 있는 분을 소개받으려면 내 사진 공개에도 동의해 주세요.'
+    :val('myPhoto')==='등록'&&!photos.length?'등록할 사진을 골라 주세요.'
+    :val('myPhoto')==='등록'&&!$('photoShare').checked?'사진 공개에 동의해 주세요.'
+    :!contactOk?'휴대폰 번호를 다시 확인해 주세요.'
+    :!$('adult').checked?'성인만 신청할 수 있어요.':!$('unverified').checked?'검증 안내를 확인해 주세요.'
+    :!$('agree').checked?'개인정보 수집·이용에 동의해 주세요.':!$('share').checked?'상대에게 프로필을 보여 주는 데 동의해 주세요.':'';
   $('err2').textContent=msg;if(msg)return;
   if(!ENDPOINT)return finish();
   const btn=$('send');btn.disabled=true;btn.textContent='보내는 중…';
+  const a=+$('wantFrom').value,b=+$('wantTo').value;
   try{
     // text/plain 본문이라 Apps Script가 CORS 사전 요청 없이 받음
-    const res=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({quals:quals().join(','),name:$('name').value.trim(),gender:val('gender'),year:$('year').value,
-      region:val('region'),phone:$('phone').value,agree:$('agree').checked,website:$('website').value,ref:location.search.slice(0,200)})});
+    const res=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({form:'easy',name:$('name').value.trim(),gender:val('gender'),job:val('job'),jobEtc:$('jobEtc').value.trim(),year:$('year').value,region:vals('region'),regionEtc:$('regionEtc').value.trim(),
+      wantMin:Math.min(a,b),wantMax:Math.max(a,b),values:VALUES.map(val),intro:$('intro').value.trim(),profile:profile(),photos:val('myPhoto')==='등록'?photos.map(p=>p.split(',')[1]):[],share:$('share').checked,photoNeed:val('photoNeed'),myPhoto:val('myPhoto'),photoShare:$('photoShare').checked,
+      channel:'휴대폰',contact:c,adult:$('adult').checked,unverified:$('unverified').checked,agree:$('agree').checked,
+      website:$('website').value,ref:location.search.slice(0,200)})});
     const out=await res.json();
     if(!out.ok)throw new Error(out.error);
     finish();
   }catch(err){
     $('err2').textContent='신청이 전송되지 않았어요. 잠시 후 다시 눌러 주세요.';
-    btn.disabled=false;btn.textContent='신청 완료';
+    btn.disabled=false;btn.textContent='신청하기';
   }});
 </script>
 
