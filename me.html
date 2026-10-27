@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>리턴투미 내 매칭</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* 개인 매칭 페이지(me.html#토큰): 신청서(landing-easy)와 같은 밝은 한 가지 테마. 진행 중 매칭 → 나를 고른 분 → 추천 → 내 카드 순 */
+:root{
+  color-scheme:light;
+  --bg:#FAF6F2; --ink:#2A2230; --muted:#8A7F86; --rose:#B85C6E; --rose-dk:#A24E60; --blush:#F5E8E8;
+  --gold:#CDB48A; --paper:#FFFEFB; --line:rgba(42,34,48,.1); --ok:#4E7A5E; --ok-bg:#E6F0E8;
+  --script:"Pinyon Script","Snell Roundhand",cursive;
+  --display:"Gowun Batang","Nanum Myeongjo",serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;word-break:keep-all}
+.page{max-width:420px;margin:0 auto;padding-block:40px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+header{text-align:center;display:flex;flex-direction:column;gap:2px}
+header .script{font-family:var(--script);font-size:38px;line-height:1.1;color:var(--rose)}
+h1{font-family:var(--display);font-size:22px;margin:0}
+h2{font-family:var(--display);font-size:17px;margin:0}
+p{margin:0}
+.muted{color:var(--muted);font-size:14px}
+section{display:flex;flex-direction:column;gap:12px}
+#view{display:flex;flex-direction:column;gap:32px}
+.box{background:var(--paper);border:1px solid rgba(205,180,138,.55);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.notice{background:var(--blush);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;font-size:15px}
+.notice b{color:var(--rose-dk)}
+.notice.ok{background:var(--ok-bg)} .notice.ok b{color:var(--ok)}
+.stage{display:inline-block;align-self:flex-start;font-size:12px;font-weight:600;border-radius:999px;padding:2px 10px;background:var(--blush);color:var(--rose-dk)}
+.stage.ok{background:var(--ok-bg);color:var(--ok)}
+.pf-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.pf-head b{font-family:var(--display);font-size:18px}
+.pf-head span,.pf-photo{font-size:13px;color:var(--muted)}
+.pf-intro{font-family:var(--display);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--rose-dk);background:var(--bg)}
+.btn{font:inherit;font-weight:500;font-size:15px;border:2px solid var(--rose);border-radius:999px;padding:11px;background:var(--paper);color:var(--rose-dk);cursor:pointer;text-align:center;text-decoration:none;display:block}
+.btn:hover{background:var(--blush)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.done{border-color:var(--line);color:var(--muted);cursor:default;background:transparent}
+.btn:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+.contact{font-size:17px;font-weight:600;user-select:all}
+.err{color:var(--rose-dk);font-size:13px;margin:0;text-align:center;min-height:1em}
+.pf-more{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:13px}
+.pf-more dt{color:var(--muted)}
+.pf-more dd{margin:0}
+/* 사진: 보는 사람 닉네임을 흐리게 깔고, 길게 눌러 저장·끌어가기 막음 (캡처는 못 막음) */
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ph{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;max-width:100%;background:var(--blush)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.ph i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:15px;font-weight:600;color:rgba(255,255,255,.55);transform:rotate(-24deg);text-shadow:0 0 6px rgba(0,0,0,.25);pointer-events:none}
+.sr{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.consent input{width:18px;height:18px;margin-top:3px;accent-color:var(--rose);flex:none}
+.thumbs{display:flex;gap:8px}
+.thumbs img{width:72px;height:72px;object-fit:cover;border-radius:10px}
+</style>
+
+<div class="page">
+  <header><div class="script">My match</div><h1>내 매칭 페이지</h1><p class="muted">이 링크는 나만 볼 수 있어요. 다른 사람에게 보내지 마세요.</p></header>
+  <p class="muted" id="loading" style="text-align:center">불러오는 중이에요…</p>
+  <div id="view" hidden></div>
+  <p class="err" id="err" role="alert"></p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+// 구글 시트 접수 주소(Apps Script 웹 앱). build_landing.sh가 채움. 비어 있으면 예시 화면
+const ENDPOINT='https://script.google.com/macros/s/AKfycbxBDdde33r4IpmVHst1fU9zRLJaSHuyFfPqnT7X3yrmGYmWA3F1iidA8LLpwKTj1Fxtmw/exec';
+const CHANNEL='https://pf.kakao.com/_wkCzX/chat';
+// 신청 완료 화면은 me.html#토큰, 알림톡 버튼은 me.html?t=토큰 (버튼 주소엔 # 뒤 변수를 못 넣음)
+const token=location.hash.slice(1)||new URLSearchParams(location.search).get('t')||'';
+const el=(tag,props,...kids)=>{const e=Object.assign(document.createElement(tag),props||{});e.append(...kids.filter(Boolean));return e;};
+let viewer='';
+const channelBtn=()=>el('a',{className:'btn',href:CHANNEL,target:'_blank',rel:'noopener',textContent:'리턴투미 채널로 메시지 보내기'});
+
+function card(c,action){
+  const box=el('div',{className:'box'},
+    el('p',{className:'pf-head'},el('b',{textContent:c.name}),el('span',{textContent:[c.gender,String(c.year).slice(2)+'년생',c.job,c.regions].filter(Boolean).join(' · ')})),
+    c.intro&&el('p',{className:'pf-intro',textContent:c.intro}),
+    c.photos.length&&el('div',{className:'photos'},...c.photos.map(src=>el('div',{className:'ph'},el('img',{src,alt:c.name+'님 사진',draggable:false}),el('i',{textContent:viewer})))),
+    el('div',{className:'chips'},...c.values.map(v=>el('span',{textContent:v}))),
+    c.profile&&el('dl',{className:'pf-more'},...['성격','취미·관심사','연애 가치관','매력 포인트'].flatMap((k,i)=>c.profile[i]?[el('dt',{textContent:k}),el('dd',{textContent:c.profile[i]})]:[])),
+    el('p',{className:'pf-photo',textContent:c.photoState?{'없음':'내 사진: 아직 없어요','확인 중':'내 사진: 매니저가 확인하고 있어요','공개 중':'내 사진: 사진을 공개한 회원에게 보이고 있어요'}[c.photoState]
+      :c.photos.length?'사진 캡처·유포 시 이용이 제한돼요':c.photo?'사진을 공개한 분이에요. 내 사진을 공개하면 볼 수 있어요':'사진은 공개하지 않은 분이에요'}));
+  if(action)box.append(action);
+  return box;
+}
+function likeBtn(c){
+  const b=el('button',{type:'button',className:'btn',textContent:'만나보고 싶어요'});
+  b.onclick=async()=>{b.disabled=true;b.textContent='보내는 중…';$('err').textContent='';
+    try{
+      if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'like',token,to:c.id})})).json();if(!r.ok)throw 0;}
+      b.className='btn done';b.textContent='마음을 전했어요';
+      if(ENDPOINT)setTimeout(load,1200);
+    }catch(e){b.disabled=false;b.textContent='만나보고 싶어요';$('err').textContent='전송되지 않았어요. 잠시 후 다시 눌러 주세요.';}};
+  return b;
+}
+const STAGE={
+  '입금 안내':['서로 만나보고 싶어 하셨어요! 매칭비 20,000원을 입금해 주세요','입금자명은 꼭 내 닉네임으로 해 주세요. 두 분 모두 입금이 확인되면 이 페이지에 상대 연락처가 열려요.'],
+  '상대 입금 대기':['입금이 확인됐어요','상대분 입금을 기다리고 있어요. 확인되면 이 페이지에 연락처가 열려요.'],
+  '연결 완료':['연결됐어요!','먼저 편하게 인사를 건네 보세요.'],
+};
+// 내 사진 올리기·바꾸기: 긴 변 720px JPEG로 줄여 최대 2장, 올리면 매니저가 다시 확인
+const shrink=f=>new Promise((ok,no)=>{const img=new Image(),u=URL.createObjectURL(f);img.onload=()=>{const k=Math.min(1,720/Math.max(img.width,img.height)),c=document.createElement('canvas');
+  c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.82));};img.onerror=()=>no();img.src=u;});
+function photoBox(me){
+  let picked=[];
+  const file=el('input',{type:'file',id:'photoFile',accept:'image/*',multiple:true,className:'sr'});
+  const thumbs=el('div',{className:'thumbs'});
+  const agree=el('input',{type:'checkbox',id:'photoAgree'});
+  const send=el('button',{type:'button',className:'btn',textContent:'사진 올리기',hidden:true});
+  file.onchange=async()=>{const fs=[...file.files].slice(0,2);file.value='';
+    try{picked=await Promise.all(fs.map(shrink));}catch(e){picked=[];$('err').textContent='사진을 읽지 못했어요. 다른 사진으로 골라 주세요.';}
+    thumbs.replaceChildren(...picked.map(src=>el('img',{src,alt:'고른 사진'})));send.hidden=!picked.length;};
+  send.onclick=async()=>{if(!agree.checked){$('err').textContent='사진 공개에 동의해 주세요.';return;}
+    send.disabled=true;send.textContent='올리는 중…';$('err').textContent='';
+    try{
+      if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'photo',token,photoShare:true,photos:picked.map(p=>p.split(',')[1])})})).json();if(!r.ok)throw 0;load();}
+      else{send.textContent='올렸어요 (예시)';}
+    }catch(e){send.disabled=false;send.textContent='사진 올리기';$('err').textContent='올리지 못했어요. 잠시 후 다시 눌러 주세요.';}};
+  return el('section',null,el('h2',{textContent:'내 사진'}),
+    el('p',{className:'muted',textContent:'매니저가 본인 사진인지 확인한 뒤, 사진을 공개한 회원끼리만 서로 볼 수 있어요.'+(me.photos.length?' 새로 올리면 지금 사진은 지워지고 다시 확인을 받아요.':'')}),
+    el('label',{className:'btn',htmlFor:'photoFile',textContent:me.photos.length?'사진 바꾸기 (최대 2장)':'사진 고르기 (최대 2장)'}),file,thumbs,
+    el('label',{className:'consent',htmlFor:'photoAgree'},agree,el('span',{textContent:'사진을 공개한 회원에게 내 사진을 보여 주는 데 동의해요'})),send);
+}
+function render(d){
+  const v=$('view');v.replaceChildren();viewer=d.me.name;
+  if(!d.confirmed){
+    v.append(el('section',null,
+      el('div',{className:'notice'},el('p',null,el('b',{textContent:'지금은 추천이 잠시 멈춰 있어요'})),
+        el('p',{textContent:"궁금한 점은 카카오톡 채널 '리턴투미'로 닉네임과 함께 문의해 주세요."}),channelBtn()),
+      el('h2',{textContent:'상대에게는 이렇게 보여요'}),card(d.me)),photoBox(d.me));
+    return;
+  }
+  const sec=(title,desc,...kids)=>el('section',null,el('h2',{textContent:title}),desc&&el('p',{className:'muted',textContent:desc}),...kids);
+  if(d.matches.length)v.append(sec('진행 중인 매칭',null,...d.matches.map(m=>{
+    const [t,s]=STAGE[m.stage],done=m.stage==='연결 완료';
+    return el('div',{className:'notice'+(done?' ok':'')},el('span',{className:'stage'+(done?' ok':''),textContent:m.stage}),
+      el('p',null,el('b',{textContent:t})),el('p',{textContent:s}),
+      done&&el('p',null,'상대 연락처 ',el('span',{className:'contact',textContent:m.contact})),
+      m.stage==='입금 안내'&&el('p',null,'입금 계좌 ',el('span',{className:'contact',textContent:m.account||'준비 중이에요. 리턴투미 채널로 문의해 주세요.'})),
+      m.stage==='입금 안내'&&el('p',null,'입금자명 ',el('span',{className:'contact',textContent:viewer})),
+      card(m.partner));})));
+  if(d.likedMe.length)v.append(sec('나를 만나보고 싶어 하는 분','나도 만나보고 싶으면 눌러 주세요. 서로 누르면 매칭이 성사돼요.',...d.likedMe.map(c=>card(c,likeBtn(c)))));
+  v.append(sec('조건이 맞는 분','나이·지역 조건이 서로 맞는 분 중 연애 스타일이 비슷한 순서예요.',
+    ...(d.candidates.length?d.candidates.map(c=>card(c,likeBtn(c)))
+      :[el('p',{className:'box muted',textContent:'지금은 새로 소개할 분이 없어요. 조건이 맞는 분이 신청하면 이 페이지에 나타나요.'})]),
+    d.waiting?el('p',{className:'muted',textContent:`내가 고른 ${d.waiting}분의 답을 기다리고 있어요.`}):null));
+  v.append(sec('상대에게는 이렇게 보여요',null,card(d.me)),photoBox(d.me));
+}
+// 예시 화면(ENDPOINT 비었을 때만): 실제 회원이 아닌 예시 데이터, 사진 자리는 그려 넣은 회색 칸
+function demo(t){const c=document.createElement('canvas');c.width=300;c.height=400;const x=c.getContext('2d');x.fillStyle='#E9DEDF';x.fillRect(0,0,300,400);x.fillStyle='#A08F94';x.font='24px sans-serif';x.textAlign='center';x.fillText(t,150,205);return c.toDataURL('image/jpeg');}
+const SAMPLE={ok:true,confirmed:true,waiting:1,
+  me:{id:'M1',name:'퇴근후산책',gender:'여성',year:1992,job:'간호사',regions:'서울, 경기·인천',values:['하루 몇 번','가까운 데 산책','인연이면 언제든','바로 대화'],intro:'주말엔 자기계발하거나 한강 러닝하는 걸 좋아해요',photo:true,photoState:'공개 중',photos:[demo('내 사진')],profile:['긍정적, 잘 웃음','여행, 러닝, 독서','존중과 배려','잘 웃는 미소']},
+  matches:[{stage:'입금 안내',account:'○○은행 000-0000-0000 (예금주 이미*)',partner:{id:'M2',name:'한강러너',gender:'남성',year:1990,job:'대기업',regions:'서울',values:['하루 몇 번','가까운 데 산책','인연이면 언제든','잠깐 쉬고 대화'],intro:'퇴근 후 러닝 크루, 주말엔 맛집 탐방',photo:true,photos:[demo('예시 사진'),demo('예시 사진')],profile:['차분함','러닝, 맛집','함께 성장하는 연애','책임감']}}],
+  likedMe:[{id:'M3',name:'책방주인',gender:'남성',year:1991,regions:'경기·인천',values:['하루 한두 번','집에서 충전','천천히 생각','시간을 충분히'],intro:'',photo:false,photos:[],profile:['다정함','독서, 커피','웃음이 많은 연애','리액션']}],
+  candidates:[{id:'M4',name:'캠핑좋아',gender:'남성',year:1993,job:'스타트업 대표',regions:'서울',values:['틈날 때마다','여행·액티비티','1~2년 안에','바로 대화'],intro:'캠핑 장비 욕심이 많아요',photo:true,photos:[demo('예시 사진')],profile:['활발함','캠핑, 여행','솔직한 연애','유머감각']}]};
+async function load(){
+  try{
+    let d=SAMPLE;
+    if(ENDPOINT){
+      if(!token)throw new Error('notfound');
+      d=await(await fetch(ENDPOINT+'?t='+encodeURIComponent(token))).json();
+      if(!d.ok)throw new Error(d.error);
+    }
+    render(d);$('view').hidden=false;$('err').textContent='';
+    if(!ENDPOINT)$('view').prepend(el('p',{className:'muted',style:'text-align:center',textContent:'예시 화면이에요. 실제 회원 정보가 아니에요.'}));
+  }catch(e){
+    $('err').textContent=e.message==='notfound'?'링크가 올바르지 않아요. 신청 완료 화면의 링크로 다시 들어와 주시거나 리턴투미 채널로 문의해 주세요.':'불러오지 못했어요. 잠시 후 새로고침해 주세요.';
+  }
+  $('loading').hidden=true;
+}
+load();
+</script>
+
+</body>
+</html>
