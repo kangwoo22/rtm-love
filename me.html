@@ -40,6 +40,7 @@ section{display:flex;flex-direction:column;gap:12px}
 .pf-head b{font-family:var(--display);font-size:18px}
 .pf-head span,.pf-photo{font-size:13px;color:var(--muted)}
 .pf-intro{font-family:var(--display);font-size:15px}
+.pf-style{font-size:14px;line-height:1.7;word-break:keep-all}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--rose-dk);background:var(--bg)}
 .btn{font:inherit;font-weight:500;font-size:15px;border:2px solid var(--rose);border-radius:999px;padding:11px;background:var(--paper);color:var(--rose-dk);cursor:pointer;text-align:center;text-decoration:none;display:block}
@@ -80,6 +81,12 @@ const CHANNEL='https://pf.kakao.com/_wkCzX/chat';
 const token=location.hash.slice(1)||new URLSearchParams(location.search).get('t')||'';
 const el=(tag,props,...kids)=>{const e=Object.assign(document.createElement(tag),props||{});e.append(...kids.filter(Boolean));return e;};
 let viewer='';
+// 연애 스타일 답을 질문과 이어 문장으로 (landing-easy.html STYLE과 같은 내용)
+const STYLE={'틈날 때마다':'연락은 틈날 때마다 하는 게 좋아요.','하루 몇 번':'연락은 하루에 몇 번 하는 게 좋아요.','하루 한두 번':'연락은 하루 한두 번이면 충분해요.','만날 때 몰아서':'연락보다는 만나서 몰아서 이야기하는 게 좋아요.',
+  '집에서 충전':'쉬는 날엔 주로 집에서 충전해요.','가까운 데 산책':'쉬는 날엔 주로 가까운 곳으로 산책 가요.','약속 잡고 외출':'쉬는 날엔 주로 약속 잡고 밖에 나가요.','여행·액티비티':'쉬는 날엔 주로 여행이나 액티비티를 즐겨요.',
+  '1~2년 안에':'결혼은 1~2년 안에 하고 싶어요.','인연이면 언제든':'결혼은 좋은 인연이면 언제든 하고 싶어요.','천천히 생각':'결혼은 천천히 생각하고 싶어요.','아직 모르겠어요':'결혼은 아직 잘 모르겠어요.',
+  '바로 대화':'다툼이 생기면 바로 대화로 풀어요.','잠깐 쉬고 대화':'다툼이 생기면 잠깐 쉬었다가 대화해요.','시간을 충분히':'다툼이 생기면 충분히 시간을 갖고 이야기해요.','글로 정리해서':'다툼이 생기면 글로 정리해서 이야기해요.'};
+const styleText=vs=>vs.filter(Boolean).map(v=>STYLE[v]||v).join(' ');
 const channelBtn=()=>el('a',{className:'btn',href:CHANNEL,target:'_blank',rel:'noopener',textContent:'리턴투미 채널로 메시지 보내기'});
 
 function card(c,action){
@@ -87,7 +94,7 @@ function card(c,action){
     el('p',{className:'pf-head'},el('b',{textContent:c.name}),el('span',{textContent:[c.gender,String(c.year).slice(2)+'년생',c.job,c.regions].filter(Boolean).join(' · ')})),
     c.intro&&el('p',{className:'pf-intro',textContent:c.intro}),
     c.photos.length&&el('div',{className:'photos'},...c.photos.map(src=>el('div',{className:'ph'},el('img',{src,alt:c.name+'님 사진',draggable:false}),el('i',{textContent:viewer})))),
-    el('div',{className:'chips'},...c.values.map(v=>el('span',{textContent:v}))),
+    el('p',{className:'pf-style',textContent:styleText(c.values)}),
     c.profile&&el('dl',{className:'pf-more'},...['성격','취미·관심사','연애 가치관','매력 포인트'].flatMap((k,i)=>c.profile[i]?[el('dt',{textContent:k}),el('dd',{textContent:c.profile[i]})]:[])),
     el('p',{className:'pf-photo',textContent:c.photoState?{'없음':'내 사진: 아직 없어요','확인 중':'내 사진: 매니저가 확인하고 있어요','공개 중':'내 사진: 사진을 공개한 회원에게 보이고 있어요'}[c.photoState]
       :c.photos.length?'사진 캡처·유포 시 이용이 제한돼요':c.photo?'사진을 공개한 분이에요. 내 사진을 공개하면 볼 수 있어요':'사진은 공개하지 않은 분이에요'}));

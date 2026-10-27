@@ -151,6 +151,7 @@ h2.one{white-space:nowrap;font-size:min(20px,5.2vw)}
 /* 완료 화면: 상대에게 보일 내 카드 미리보기 */
 .profile{border:1px solid rgba(205,180,138,.55);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--bg)}
 .profile p{margin:0}
+.pf-style{font-size:14px;line-height:1.7;word-break:keep-all}
 .pf-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
 .pf-head b{font-family:var(--display);font-size:18px}
 .pf-head span,.pf-photo{font-size:13px;color:var(--muted)}
@@ -254,6 +255,7 @@ h2.one{white-space:nowrap;font-size:min(20px,5.2vw)}
               <label class="chip"><input type="checkbox" name="region" value="경기·인천"><span>경기·인천</span></label>
               <label class="chip"><input type="checkbox" name="region" value="기타"><span>기타</span></label>
             </div>
+            <input type="text" id="regionEtc" aria-label="지역 직접 입력" placeholder="지역을 적어 주세요 (예: 부산)" maxlength="20" hidden>
           </fieldset>
           <fieldset class="field">
             <legend>만나고 싶은 상대 나이</legend>
@@ -410,21 +412,22 @@ h2.one{white-space:nowrap;font-size:min(20px,5.2vw)}
       <div class="invite"><div class="script">Thank you</div></div>
       <h2>신청이 접수됐어요</h2>
       <div class="kakao">
-        <p class="kk-title">이제 <b>내 매칭 페이지</b>에서<br>조건이 맞는 분을 바로 확인해 보세요</p>
-        <p class="hint">나만 들어갈 수 있는 링크예요. 같은 링크를 리턴투미 카카오톡 알림으로도 보내 드려요. 새 소식이 생길 때마다 알림이 가요.</p>
-        <p class="kk-mine"><code id="meLink"></code></p>
-        <button type="button" class="btn" id="kkCopy">링크 복사하기</button>
-        <a class="btn kk-go" id="meGo" href="me.html" target="_blank" rel="noopener">내 매칭 페이지 열기</a>
+        <p class="kk-title">마지막으로 카카오톡 채널 <b>리턴투미</b>에<br>아래 메시지를 꼭 보내 주세요</p>
+        <p class="hint kk-form">형식: 간편소개팅/닉네임/성별/년생</p>
+        <p class="kk-mine">내 메시지 <code id="kkMsg"></code></p>
+        <button type="button" class="btn" id="kkCopy">메시지 복사하기</button>
+        <a class="btn kk-go" href="https://pf.kakao.com/_wkCzX/chat" target="_blank" rel="noopener">리턴투미 채널로 메시지 보내기</a>
+        <p class="hint">메시지를 확인하면 채널 채팅으로 나만 들어갈 수 있는 매칭 페이지 링크를 보내 드려요.</p>
       </div>
       <p class="lead">상대에게는 이렇게 보여요</p>
       <div class="profile" id="profile">
         <p class="pf-head"><b id="pfName"></b><span id="pfMeta"></span></p>
         <p class="pf-intro" id="pfIntro"></p>
-        <div class="chips" id="pfValues"></div>
+        <p class="pf-style" id="pfValues"></p>
         <dl class="pf-more" id="pfMore"></dl>
         <p class="pf-photo" id="pfPhoto"></p>
       </div>
-      <p class="lead">조건이 맞는 분이 새로 신청하면 매칭 페이지에 나타나요. 매칭비는 두 분 모두 만나고 싶을 때만 안내해요.</p>
+      <p class="lead">링크를 받은 뒤에는 조건이 맞는 분이 새로 신청하면 매칭 페이지에 나타나요. 매칭비는 두 분 모두 만나고 싶을 때만 안내해요.</p>
       <p class="hint">리턴투미는 매칭이 성사되기 전에 입금을 요청하지 않아요.<br>내 정보를 지우고 싶으면 언제든 매니저에게 닉네임으로 말씀해 주세요.</p>
     </section>
     </div>
@@ -467,7 +470,7 @@ function show(step){[1,2,3].forEach(i=>{$('step'+i).hidden=step!==i;$('h'+i).cla
   $('stepLabel').textContent=`3단계 중 ${step}단계`;$('apply').scrollIntoView({behavior:calm?'auto':'smooth',block:'start'});}
 // 시안 미리보기(ENDPOINT 비어 있음)에서는 빈칸이어도 다음 단계로 넘어감. 배포본은 그대로 검사
 $('next').onclick=()=>{if(!ENDPOINT)return show(2);
-  const miss=[!$('name').value.trim()&&'닉네임',!val('gender')&&'성별',!$('year').value&&'출생 연도',!val('job')&&'직업군',val('job')==='기타'&&!$('jobEtc').value.trim()&&'직업',!vals('region').length&&'거주 또는 근무 지역',(!$('wantFrom').value||!$('wantTo').value)&&'상대 나이'].filter(Boolean);
+  const miss=[!$('name').value.trim()&&'닉네임',!val('gender')&&'성별',!$('year').value&&'출생 연도',!val('job')&&'직업군',val('job')==='기타'&&!$('jobEtc').value.trim()&&'직업',!vals('region').length&&'거주 또는 근무 지역',vals('region').includes('기타')&&!$('regionEtc').value.trim()&&'지역',(!$('wantFrom').value||!$('wantTo').value)&&'상대 나이'].filter(Boolean);
   const short=!miss.length&&$('name').value.trim().length<4;
   $('err1').textContent=miss.length?miss.join(', ')+'을(를) 입력해 주세요.':short?'닉네임은 4글자 이상으로 써 주세요.':'';
   if(!miss.length&&!short)show(2);};
@@ -475,7 +478,16 @@ $('next').onclick=()=>{if(!ENDPOINT)return show(2);
 document.querySelectorAll('input[name=job]').forEach(r=>r.addEventListener('change',()=>{
   const etc=val('job')==='기타';$('jobEtc').hidden=!etc;if(etc)$('jobEtc').focus();else $('jobEtc').value='';}));
 const jobLabel=()=>val('job')==='기타'&&$('jobEtc').value.trim()||val('job');
+// 지역 '기타'도 직접 적는 칸
+document.querySelectorAll('input[name=region][value=기타]').forEach(r=>r.addEventListener('change',()=>{
+  $('regionEtc').hidden=!r.checked;if(r.checked)$('regionEtc').focus();else $('regionEtc').value='';}));
+const regionLabel=()=>vals('region').map(r=>r==='기타'&&$('regionEtc').value.trim()||r).join(', ');
 const VALUES=['v1','v2','v3','v5'];
+// 연애 스타일 답을 질문과 이어 문장으로 (me.html STYLE과 같은 내용)
+const STYLE={'틈날 때마다':'연락은 틈날 때마다 하는 게 좋아요.','하루 몇 번':'연락은 하루에 몇 번 하는 게 좋아요.','하루 한두 번':'연락은 하루 한두 번이면 충분해요.','만날 때 몰아서':'연락보다는 만나서 몰아서 이야기하는 게 좋아요.',
+  '집에서 충전':'쉬는 날엔 주로 집에서 충전해요.','가까운 데 산책':'쉬는 날엔 주로 가까운 곳으로 산책 가요.','약속 잡고 외출':'쉬는 날엔 주로 약속 잡고 밖에 나가요.','여행·액티비티':'쉬는 날엔 주로 여행이나 액티비티를 즐겨요.',
+  '1~2년 안에':'결혼은 1~2년 안에 하고 싶어요.','인연이면 언제든':'결혼은 좋은 인연이면 언제든 하고 싶어요.','천천히 생각':'결혼은 천천히 생각하고 싶어요.','아직 모르겠어요':'결혼은 아직 잘 모르겠어요.',
+  '바로 대화':'다툼이 생기면 바로 대화로 풀어요.','잠깐 쉬고 대화':'다툼이 생기면 잠깐 쉬었다가 대화해요.','시간을 충분히':'다툼이 생기면 충분히 시간을 갖고 이야기해요.','글로 정리해서':'다툼이 생기면 글로 정리해서 이야기해요.'};
 const PROFILE=['pf1','pf2','pf3','pf4'];
 const profile=()=>PROFILE.map(i=>$(i).value.trim());
 $('next2').onclick=()=>{if(!ENDPOINT)return show(3);const left=VALUES.filter(n=>!val(n)).length+profile().filter(x=>!x).length;
@@ -500,22 +512,21 @@ document.querySelectorAll('input[name=photoNeed],input[name=myPhoto]').forEach(r
 $('contact').addEventListener('input',e=>{const d=e.target.value.replace(/\D/g,'').slice(0,11);
   e.target.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);});
 // 복사가 막힌 앱 화면에서는 글자를 선택해 두어 직접 복사하게
-$('kkCopy').onclick=()=>{const t=$('meLink').textContent,b=$('kkCopy');
-  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{b.textContent='복사했어요';},()=>{getSelection().selectAllChildren($('meLink'));b.textContent='선택된 글자를 복사해 주세요';});};
+$('kkCopy').onclick=()=>{const t=$('kkMsg').textContent,b=$('kkCopy');
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{b.textContent='복사했어요';},()=>{getSelection().selectAllChildren($('kkMsg'));b.textContent='선택된 글자를 복사해 주세요';});};
 // 구글 시트 접수 주소(Apps Script 웹 앱). 비어 있으면 미리보기라 저장하지 않음
 const ENDPOINT='https://script.google.com/macros/s/AKfycbxBDdde33r4IpmVHst1fU9zRLJaSHuyFfPqnT7X3yrmGYmWA3F1iidA8LLpwKTj1Fxtmw/exec';
 // 방문 기록: 같은 탭에서 새로고침하면 다시 세지 않음
 if(ENDPOINT)try{if(!sessionStorage.getItem('v')){sessionStorage.setItem('v',1);
   fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'visit',ref:location.search.slice(0,200)})}).catch(()=>{});}}catch(e){}
-function finish(me){
+function finish(){
+  $('kkMsg').textContent=['간편소개팅',$('name').value.trim(),val('gender'),$('year').value&&String($('year').value).slice(2)+'년생'].join('/');
   $('pfName').textContent=$('name').value.trim();
-  $('pfMeta').textContent=[val('gender'),$('year').value&&String($('year').value).slice(2)+'년생',jobLabel(),vals('region').join(', ')].filter(Boolean).join(' · ');
+  $('pfMeta').textContent=[val('gender'),$('year').value&&String($('year').value).slice(2)+'년생',jobLabel(),regionLabel()].filter(Boolean).join(' · ');
   $('pfIntro').textContent=$('intro').value.trim();$('pfIntro').hidden=!$('intro').value.trim();
   $('pfMore').replaceChildren(...['성격','취미·관심사','연애 가치관','매력 포인트'].flatMap((k,i)=>[Object.assign(document.createElement('dt'),{textContent:k}),Object.assign(document.createElement('dd'),{textContent:profile()[i]})]));
-  $('pfValues').replaceChildren(...VALUES.map(n=>Object.assign(document.createElement('span'),{textContent:val(n)})));
+  $('pfValues').textContent=VALUES.map(n=>STYLE[val(n)]||val(n)).join(' ');
   $('pfPhoto').textContent=$('photoShare').checked?'사진: 매니저 확인 후 공개':'사진: 공개하지 않음';
-  const link=me||new URL('me.html',location.href).href; // 미리보기에선 예시 매칭 페이지
-  $('meLink').textContent=link;$('meGo').href=link;
   $('apply').hidden=true;$('done').hidden=false;$('done').scrollIntoView({behavior:'smooth',block:'center'});
   if(!calm)for(let i=0;i<30;i++)petals.push(petal(W/2,H/2,true));}
 $('apply').addEventListener('submit',async e=>{e.preventDefault();
@@ -535,13 +546,13 @@ $('apply').addEventListener('submit',async e=>{e.preventDefault();
   const a=+$('wantFrom').value,b=+$('wantTo').value;
   try{
     // text/plain 본문이라 Apps Script가 CORS 사전 요청 없이 받음
-    const res=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({form:'easy',name:$('name').value.trim(),gender:val('gender'),job:val('job'),jobEtc:$('jobEtc').value.trim(),year:$('year').value,region:vals('region'),
+    const res=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({form:'easy',name:$('name').value.trim(),gender:val('gender'),job:val('job'),jobEtc:$('jobEtc').value.trim(),year:$('year').value,region:vals('region'),regionEtc:$('regionEtc').value.trim(),
       wantMin:Math.min(a,b),wantMax:Math.max(a,b),values:VALUES.map(val),intro:$('intro').value.trim(),profile:profile(),photos:val('myPhoto')==='등록'?photos.map(p=>p.split(',')[1]):[],share:$('share').checked,photoNeed:val('photoNeed'),myPhoto:val('myPhoto'),photoShare:$('photoShare').checked,
       channel:'휴대폰',contact:c,adult:$('adult').checked,unverified:$('unverified').checked,agree:$('agree').checked,
       website:$('website').value,ref:location.search.slice(0,200)})});
     const out=await res.json();
     if(!out.ok)throw new Error(out.error);
-    finish(out.me);
+    finish();
   }catch(err){
     $('err2').textContent='신청이 전송되지 않았어요. 잠시 후 다시 눌러 주세요.';
     btn.disabled=false;btn.textContent='신청하기';
