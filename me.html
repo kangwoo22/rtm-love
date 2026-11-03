@@ -160,6 +160,7 @@ function render(d){
       done&&el('p',null,'상대 연락처 ',el('span',{className:'contact',textContent:m.contact})),
       m.stage==='입금 안내'&&el('p',null,'입금 계좌 ',el('span',{className:'contact',textContent:m.account||'준비 중이에요. 리턴투미 채널로 문의해 주세요.'})),
       m.stage==='입금 안내'&&el('p',null,'입금자명 ',el('span',{className:'contact',textContent:viewer})),
+      m.stage==='입금 안내'&&el('p',{className:'muted',textContent:"은행 앱 이체 화면의 '받는 분에게 표시'(또는 '입금자명')를 내 닉네임으로 바꿔서 보내 주세요. 실명으로 보내면 자동 확인이 안 돼서 연락처 전달이 늦어질 수 있어요."}),
       card(m.partner));})));
   if(d.likedMe.length)v.append(sec('나를 만나보고 싶어 하는 분','나도 만나보고 싶으면 눌러 주세요. 서로 누르면 매칭이 성사돼요.',...d.likedMe.map(c=>card(c,likeBtn(c)))));
   v.append(sec('조건이 맞는 분','나이·지역 조건이 서로 맞는 분 중 연애 스타일이 비슷한 순서예요.',
