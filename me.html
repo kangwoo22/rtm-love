@@ -134,10 +134,12 @@ section{display:flex;flex-direction:column;gap:14px}
 @keyframes tick{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.clock *{animation:none!important}}
 .todo{white-space:pre-line;text-wrap:balance;font-weight:700;color:var(--ink);text-align:center;font-size:18px;line-height:1.45;letter-spacing:-.01em}
-.more summary{cursor:pointer;color:var(--muted);font-size:14px;list-style:none;text-align:center}
-.more summary::before{content:'＋ '}.more[open] summary::before{content:'－ '}
+.more>summary{cursor:pointer;color:var(--muted);font-size:14px;list-style:none;text-align:center}
+.more>summary::before{content:'＋ '}.more[open]>summary::before{content:'－ '}
 .more[open]{display:flex;flex-direction:column;gap:10px}
 .mine{border-top:1px solid var(--line);padding-top:20px}.mine>summary{font-size:15px;color:var(--ink);font-weight:600}
+.more-open{display:flex;flex-direction:column;gap:10px}
+.mine section>h2{background:none} /* 접힌 칸 안의 '내 사진' 제목은 형광펜 없이 */
 </style>
 
 <div class="page">
@@ -372,8 +374,11 @@ function render(d){
   if(d.confirmed&&!m)v.append(sec('나와 잘 맞는 분',...(d.candidates.length?d.candidates.map(c=>{const b=card(c,answer(c));b.append(el('p',{className:'passnote',textContent:'한 번 패스하면 다시는 이 프로필을 볼 수 없어요.\n신중히 선택해 주세요!'}));return b;})
     :[el('p',{className:'box muted',textContent:opens?`지금은 좋은 분들을 모으고 있어요. ${opens}부터 소개해 드려요.`:d.doneToday?'오늘 소개는 여기까지예요. 내일 새로운 분을 소개해 드려요.':'지금은 소개해 드릴 분이 없어요. 새로운 인연이 오면 알려 드려요.'})]),
     el('p',{className:'daily',textContent:'소개는 하루 3명까지, 매일 1번씩 새로 업데이트돼요.'})));
+  // 내 프로필 · 사진: 접어 두되, 열면 '더 보기' 없이 사진·연애 스타일·자기소개까지 한 번에 다 보이게
+  const mine=card(d.me),more=mine.querySelector('details.more');
+  more.replaceWith(el('div',{className:'more-open'},...[...more.children].filter(x=>x.tagName!=='SUMMARY')));
   v.append(el('details',{className:'more mine'},el('summary',{textContent:'내 프로필 · 사진'}),
-    el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요.'}),card(d.me),photoBox(d.me)));
+    el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요.'}),mine,photoBox(d.me)));
 }
 // 예시 화면(ENDPOINT 비었을 때만): 실제 회원이 아닌 예시 데이터, 사진 자리는 그려 넣은 회색 칸
 function demo(t){const c=document.createElement('canvas');c.width=300;c.height=400;const x=c.getContext('2d');x.fillStyle='#E9DEDF';x.fillRect(0,0,300,400);x.fillStyle='#A08F94';x.font='24px "Gowun Dodum",sans-serif';x.textAlign='center';x.fillText(t,150,205);return c.toDataURL('image/jpeg');}
