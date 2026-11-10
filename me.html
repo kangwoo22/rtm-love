@@ -9,67 +9,139 @@
 <body>
 <title>리턴투미 내 매칭</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
-/* 개인 매칭 페이지(me.html#토큰): 신청서(landing-easy)와 같은 밝은 한 가지 테마. 진행 중 매칭 → 나를 고른 분 → 추천 → 내 카드 순 */
+/* 개인 매칭 페이지(me.html#토큰): 연분홍 바탕 + 둥근 흰 카드(그림자) + 분홍→빨강 그라데이션 알약 버튼 + 큰 그림 이모지. 진행 중 매칭 → 나를 고른 분 → 추천 → 내 카드 순 */
 :root{
   color-scheme:light;
-  --bg:#FAF6F2; --ink:#2A2230; --muted:#8A7F86; --rose:#B85C6E; --rose-dk:#A24E60; --blush:#F5E8E8;
-  --gold:#CDB48A; --paper:#FFFEFB; --line:rgba(42,34,48,.1); --ok:#4E7A5E; --ok-bg:#E6F0E8;
-  --script:"Pinyon Script","Snell Roundhand",cursive;
-  --display:"Gowun Batang","Nanum Myeongjo",serif;
-  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --bg:#FFF8F9; --ink:#1F1A24; --muted:#8E8590; --rose:#EE5F84; --rose-dk:#D94468; --blush:#FCE3E9;
+  --gold:#F5A623; --paper:#FFFFFF; --line:rgba(31,26,36,.08); --ok:#1F9D63; --ok-bg:#E3F7EC;
+  --grad:linear-gradient(90deg,#EE5F84,#FF8A73);
+  --shadow:0 14px 34px rgba(220,80,110,.12),0 2px 6px rgba(220,80,110,.06);
+  --display:"Gowun Dodum","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"Gowun Dodum","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;word-break:keep-all}
-.page{max-width:420px;margin:0 auto;padding-block:40px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
-header{text-align:center;display:flex;flex-direction:column;gap:2px}
-header .script{font-family:var(--script);font-size:38px;line-height:1.1;color:var(--rose)}
-h1{font-family:var(--display);font-size:22px;margin:0}
-h2{font-family:var(--display);font-size:17px;margin:0}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,#FFFFFF 0%,#FFF6F7 100%) fixed;background-color:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;word-break:keep-all}
+.page{max-width:420px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+header .script{width:84px;height:84px}
+h1{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.3;letter-spacing:-.02em;margin:0}
+h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em;margin:0 4px}
+/* 소제목(추천·나에게 관심 보낸 분·매칭된 분): 신청서 "가볍게"와 같은 분홍 형광펜 밑줄 */
+section>h2{align-self:flex-start;font-size:20px;margin:0 2px;padding:0 4px;background:linear-gradient(transparent 58%,#FBD6E0 58%,#FBD6E0 92%,transparent 92%)}
 p{margin:0}
 .muted{color:var(--muted);font-size:14px}
-section{display:flex;flex-direction:column;gap:12px}
+section{display:flex;flex-direction:column;gap:14px}
 #view{display:flex;flex-direction:column;gap:32px}
-.box{background:var(--paper);border:1px solid rgba(205,180,138,.55);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
-.notice{background:var(--blush);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;font-size:15px}
-.notice b{color:var(--rose-dk)}
-.notice.ok{background:var(--ok-bg)} .notice.ok b{color:var(--ok)}
+.box{background:var(--paper);border-radius:28px;padding:24px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+/* 나에게 관심 보낸 분 카드: 테두리 선·둘레 빛·하트 구슬이 같은 박자(2.4초, 부드러운 쿵-쿵 뒤 쉼)로 함께 두근. 박자 지점(16%·44%)을 두 키프레임에서 똑같이 맞춤 */
+.box.hot{position:relative;border:1.5px solid #F6BFCD;animation:hotpulse 2.4s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes hotpulse{
+  0%,72%,100%{border-color:#F6BFCD;box-shadow:0 0 0 0 rgba(238,95,132,0),var(--shadow)}
+  16%{border-color:#F197AD;box-shadow:0 0 0 6px rgba(238,95,132,.11),var(--shadow)}
+  30%{border-color:#F5B4C4;box-shadow:0 0 0 3px rgba(238,95,132,.04),var(--shadow)}
+  44%{border-color:#F3A3B7;box-shadow:0 0 0 7px rgba(238,95,132,.08),var(--shadow)}}
+.box.hot::after{content:"\2665";position:absolute;top:-14px;right:-8px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:17px;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.75),transparent 40%),var(--grad);box-shadow:0 6px 12px rgba(238,95,132,.3);animation:heartbeat 2.4s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes heartbeat{0%,72%,100%{transform:rotate(12deg) scale(1)}16%{transform:rotate(12deg) scale(1.09)}30%{transform:rotate(12deg) scale(1.01)}44%{transform:rotate(12deg) scale(1.05)}}
+/* 매칭된 짝 카드: 이름 뒤 빛 번짐 + 떠오르는 작은 하트 (4.5초마다 한 번, 차분하게) */
+.box.mate{position:relative;overflow:hidden;isolation:isolate;border:1.5px solid #F6BFCD}
+.box.mate>*{position:relative;z-index:2}
+.box.mate>.fx{position:absolute;inset:0;z-index:1;pointer-events:none}
+.mate .fx i{position:absolute;display:block;font-style:normal;line-height:1;left:var(--cx,50%);top:var(--cy,22%)}
+.mate .glow{width:240px;height:140px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,170,190,.45),rgba(255,200,170,.18) 60%,transparent);animation:bloom 4.5s ease-in-out infinite}
+@keyframes bloom{0%,100%{transform:translate(-50%,-50%) scale(.6);opacity:0}40%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.mate .ht{color:var(--c);font-size:var(--s);opacity:0;animation:heartup 4.5s ease-out var(--w) infinite}
+@keyframes heartup{0%,10%{transform:translate(-50%,-50%) scale(.5);opacity:0}35%{opacity:.95}75%,100%{transform:translate(-50%,calc(-50% - 34px)) scale(1);opacity:0}}
+.passnote{margin:-2px 0 0;text-align:center;font-size:12px;color:var(--muted);white-space:pre-line}
+.daily{margin:2px 0 0;text-align:center;font-size:12px;color:var(--muted)}
+.cheer{text-align:center;font-size:14px;font-weight:700;color:var(--rose-dk)}
+@media (prefers-reduced-motion:reduce){.mate .fx i{animation:none}.mate .ht{opacity:0}.mate .glow{opacity:.8;transform:translate(-50%,-50%)}}
+@media (prefers-reduced-motion:reduce){.box.hot{animation:none}.box.hot::after{animation:none;transform:rotate(12deg)}}
+.notice{background:var(--paper);border-radius:28px;padding:24px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:14px;font-size:15px}
+.notice .ico{width:96px;height:96px}
+/* 안내 카드 위 구슬: 로즈→코랄 그라데이션에 빛 반사, 천천히 둥실 */
+.orb{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.75),transparent 40%),var(--grad);box-shadow:0 10px 20px rgba(220,80,110,.22);animation:orbfloat 3.4s ease-in-out infinite}
+@keyframes orbfloat{50%{transform:translateY(-5px)}}
+@media (prefers-reduced-motion:reduce){.orb{animation:none}}
+/* 3D 아이콘: 처음엔 톡 튀어나오고, 그다음 둥실둥실. 하트는 두근, 반짝이는 깜빡, 동전은 빙글 */
+.ico3d{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 12px 12px rgba(220,80,110,.28));animation:pop .7s cubic-bezier(.3,1.6,.5,1) both,float 3.4s .7s ease-in-out infinite}
+.ico3d .beat{transform-box:fill-box;transform-origin:center;animation:beat 1.8s ease-in-out infinite}.ico3d .late{animation-delay:.3s}
+.ico3d .spark{transform-box:fill-box;transform-origin:center;animation:twinkle 2.2s ease-in-out infinite}
+.ico3d .coin{transform-box:fill-box;transform-origin:center;animation:flip 3s ease-in-out infinite}
+@keyframes pop{from{transform:scale(.3) translateY(20px);opacity:0}}
+@keyframes float{50%{transform:translateY(-7px) rotate(-3deg)}}
+@keyframes beat{0%,60%,100%{transform:scale(1)}12%{transform:scale(1.12)}24%{transform:scale(.97)}36%{transform:scale(1.07)}}
+@keyframes twinkle{50%{transform:scale(.4) rotate(45deg);opacity:.3}}
+@keyframes flip{0%,40%,100%{transform:scaleX(1)}70%{transform:scaleX(-1)}}
+@media (prefers-reduced-motion:reduce){.ico3d,.ico3d *{animation:none!important}}
+.notice b{color:#fff}
 .stage{display:inline-block;align-self:flex-start;font-size:12px;font-weight:600;border-radius:999px;padding:2px 10px;background:var(--blush);color:var(--rose-dk)}
 .stage.ok{background:var(--ok-bg);color:var(--ok)}
-.pf-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
-.pf-head b{font-family:var(--display);font-size:18px}
+.pf-head{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center}
+.pf-head b{font-size:22px;font-weight:700;letter-spacing:-.01em}
 .pf-head span,.pf-photo{font-size:13px;color:var(--muted)}
-.pf-intro{font-family:var(--display);font-size:15px}
-.pf-style{font-size:14px;line-height:1.6;display:flex;flex-direction:column;gap:4px}
+.pf-intro{font-size:15px;color:#4A4350;text-align:center}
+.pf-style{font-size:14px;line-height:1.6;display:flex;flex-direction:column;gap:6px;background:#FFF6F9;border-radius:18px;padding:14px}
 .pf-style b{color:var(--rose-dk);font-weight:600}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chips span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--rose-dk);background:var(--bg)}
-.btn{font:inherit;font-weight:500;font-size:15px;border:2px solid var(--rose);border-radius:999px;padding:11px;background:var(--paper);color:var(--rose-dk);cursor:pointer;text-align:center;text-decoration:none;display:block}
-.btn:hover{background:var(--blush)}
+.chips span{font-size:12px;border-radius:999px;padding:2px 10px;color:var(--rose-dk);background:var(--blush)}
+/* 버튼: 분홍→빨강 그라데이션 알약(주), 회색 글자만(보조, 주 버튼 아래) */
+.btn{font:inherit;font-weight:600;font-size:16px;letter-spacing:.02em;border:0;border-radius:999px;padding:15px;background:var(--grad);color:#fff;cursor:pointer;text-align:center;text-decoration:none;display:block;box-shadow:0 10px 22px rgba(238,95,132,.32)}
+.btn:hover{filter:brightness(1.05)}
 .btn:disabled{opacity:.6;cursor:wait}
-.btn.done{border-color:var(--line);color:var(--muted);cursor:default;background:transparent}
-.btn:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
-.contact{font-size:17px;font-weight:600;user-select:all}
+.btn.done{background:var(--blush);color:var(--rose-dk);box-shadow:none;cursor:default}
+.btn:focus-visible{outline:3px solid rgba(238,95,132,.35);outline-offset:3px}
+.pair{display:flex;flex-direction:column-reverse;gap:2px}
+.btn.ghost{background:none;box-shadow:none;color:var(--muted);font-weight:500;padding:10px}.btn.ghost:hover{color:var(--ink);filter:none}
+.btn.toss{background:#0064FF;box-shadow:0 10px 22px rgba(0,100,255,.25);margin:6px 0}
+.contact{font-size:18px;font-weight:700;user-select:all}
+/* 입금자명: 이름표와 닉네임 사이를 넉넉히 띄움 */
+.payname{display:flex;justify-content:center;align-items:baseline;gap:28px}.payname>span:first-child{color:var(--muted);font-size:14px}
+/* 꼭 봐야 할 한 줄: 소제목과 같은 분홍 형광펜 */
+.hl{color:var(--ink);font-weight:600;padding:0 3px;background:linear-gradient(transparent 55%,#FBD6E0 55%,#FBD6E0 92%,transparent 92%)}
+.acct{white-space:nowrap;text-align:center;font-size:min(16px,4.1vw);letter-spacing:-.01em}
 .err{color:var(--rose-dk);font-size:13px;margin:0;text-align:center;min-height:1em}
-.pf-more{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:13px}
+.pf-more{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
 .pf-more dt{color:var(--muted)}
 .pf-more dd{margin:0}
 /* 긴 낱말도 칸 안에서 줄바꿈 */
 .box,.pf-more dd{min-width:0;overflow-wrap:anywhere}
 /* 사진: 보는 사람 닉네임을 흐리게 깔고, 길게 눌러 저장·끌어가기 막음 (캡처는 못 막음) */
 .photos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ph{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;max-width:100%;background:var(--blush)}
+.ph{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:3/4;max-width:100%;background:var(--blush)}
 .ph img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .ph i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:15px;font-weight:600;color:rgba(255,255,255,.55);transform:rotate(-24deg);text-shadow:0 0 6px rgba(0,0,0,.25);pointer-events:none}
 .sr{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:14px}
 .consent input{width:18px;height:18px;margin-top:3px;accent-color:var(--rose);flex:none}
 .thumbs{display:flex;gap:8px}
-.thumbs img{width:72px;height:72px;object-fit:cover;border-radius:10px}
+.thumbs img{width:72px;height:72px;object-fit:cover;border-radius:14px}
+/* 4단계: 지난 단계 체크, 지금 단계는 그라데이션, 남은 단계는 연분홍 */
+.steps{list-style:none;margin:0;padding:0;display:flex;justify-content:center;gap:18px;text-align:center;font-size:12px;color:var(--muted)}
+.steps b{display:grid;place-items:center;width:26px;height:26px;margin:0 auto 3px;border-radius:50%;font-size:12px;background:var(--blush);color:var(--rose-dk)}
+.steps .on{color:var(--rose-dk);font-weight:700}.steps .on b{background:var(--grad);color:#fff}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin-bottom:12px;background:#fff;border-radius:999px;box-shadow:var(--shadow)}.tabs button{background:none;border:0;border-radius:999px;padding:9px 0;font:inherit;font-size:15px;color:var(--muted);cursor:pointer}.tabs .on{background:var(--grad);color:#fff;font-weight:600}
+.timer{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px 8px;margin:6px 0 0;padding:10px 12px;border-radius:16px;background:#FFF1F5;color:var(--rose-dk);font-size:13px;text-align:center}
+.timer .t{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}.timer .why{flex-basis:100%;font-size:11px;opacity:.8;white-space:pre-line;line-height:1.5}
+.timer.soon{background:#FFE4E4;color:#D7263D}
+/* 3D 자명종: 초침이 1초마다 째깍, 6시간 안 남으면 따르릉 흔들림 */
+.clock{width:40px;height:40px;flex:none;filter:drop-shadow(0 5px 6px rgba(220,80,110,.3))}
+.clock svg{width:100%;height:100%;overflow:visible}
+.clock .hand{transform-origin:50px 57px;animation:tick 60s steps(60) infinite}
+.timer.soon .clock svg{transform-origin:50% 60%;animation:ring 2.4s ease-in-out infinite}
+@keyframes ring{0%,70%,100%{transform:rotate(0)}74%,82%,90%{transform:rotate(-10deg)}78%,86%,94%{transform:rotate(10deg)}}
+@keyframes tick{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.clock *{animation:none!important}}
+.todo{white-space:pre-line;text-wrap:balance;font-weight:700;color:var(--ink);text-align:center;font-size:18px;line-height:1.45;letter-spacing:-.01em}
+.more summary{cursor:pointer;color:var(--muted);font-size:14px;list-style:none;text-align:center}
+.more summary::before{content:'＋ '}.more[open] summary::before{content:'－ '}
+.more[open]{display:flex;flex-direction:column;gap:10px}
+.mine{border-top:1px solid var(--line);padding-top:20px}.mine>summary{font-size:15px;color:var(--ink);font-weight:600}
 </style>
 
 <div class="page">
-  <header><div class="script">My match</div><h1>내 매칭 페이지</h1><p class="muted">이 링크는 나만 볼 수 있어요. 다른 사람에게 보내지 마세요.</p></header>
+  <header><div class="script" id="hdrIco"></div><h1>내 <em>매칭</em> 페이지</h1><p class="muted">이 링크는 나만 볼 수 있어요.<br>다른 사람에게 보내지 마세요.</p></header>
   <p class="muted" id="loading" style="text-align:center">불러오는 중이에요…</p>
   <div id="view" hidden></div>
   <p class="err" id="err" role="alert"></p>
@@ -84,6 +156,64 @@ const CHANNEL='https://pf.kakao.com/_wkCzX/chat';
 const token=location.hash.slice(1)||new URLSearchParams(location.search).get('t')||'';
 const el=(tag,props,...kids)=>{const e=Object.assign(document.createElement(tag),props||{});e.append(...kids.filter(Boolean));return e;};
 let viewer='';
+// 3D 느낌 아이콘: 이모지 대신 직접 그린 SVG(광택·입체 그라데이션) + CSS로 둥실·두근 움직임
+const HEART='M50 84C22 65 10 50 10 35 10 22 20 12 32 12c8 0 14 4 18 11 4-7 10-11 18-11 12 0 22 10 22 23 0 15-12 30-40 49Z';
+function ico(name){
+  const k=name+Math.random().toString(36).slice(2,6); // 같은 화면에 여러 개여도 그라데이션 id가 안 겹치게
+  const blur=`<filter id="b${k}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6"/></filter>`;
+  const red=`<radialGradient id="r${k}" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#FFD0DC"/><stop offset=".4" stop-color="#F2708F"/><stop offset=".75" stop-color="#D94468"/><stop offset="1" stop-color="#B03454"/></radialGradient>`;
+  const coral=`<radialGradient id="c${k}" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#FFE0CC"/><stop offset=".45" stop-color="#FF8A65"/><stop offset="1" stop-color="#D9482B"/></radialGradient>`;
+  const gold=`<radialGradient id="g${k}" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF6C2"/><stop offset=".45" stop-color="#FFCB3D"/><stop offset="1" stop-color="#D98E04"/></radialGradient>`;
+  const heart=(fill,tf,cls='')=>`<g transform="${tf}"><g class="${cls}"><path d="${HEART}" fill="url(#${fill}${k})"/>
+    <ellipse cx="32" cy="28" rx="9" ry="5" transform="rotate(-35 32 28)" fill="#fff" opacity=".85" filter="url(#b${k})"/>
+    <ellipse cx="66" cy="62" rx="10" ry="4" transform="rotate(-40 66 62)" fill="#fff" opacity=".18" filter="url(#b${k})"/></g></g>`;
+  const spark=(x,y,s,d)=>`<path class="spark" style="animation-delay:${d}s" d="M${x} ${y-s}Q${x} ${y} ${x+s} ${y}Q${x} ${y} ${x} ${y+s}Q${x} ${y} ${x-s} ${y}Q${x} ${y} ${x} ${y-s}Z" fill="#FFC93C"/>`;
+  const art={
+    mail:`<g transform="rotate(-6 50 55)"><rect x="12" y="30" width="76" height="54" rx="11" fill="url(#e${k})"/>
+      <path d="M16 80 50 56 84 80" fill="none" stroke="#F4B6C9" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M12 41q0-11 11-11h54q11 0 11 11L55 64q-5 4-10 0Z" fill="url(#f${k})"/>
+      <rect x="18" y="33" width="40" height="5" rx="2.5" fill="#fff" opacity=".7"/></g>
+      ${heart('r','translate(35 46) scale(.32)','beat')}${spark(86,22,6,0)}${spark(14,20,4,.7)}`,
+    heart:`${heart('r','translate(4 6) scale(.92)','beat')}${spark(86,18,7,0)}${spark(12,74,4,.8)}${spark(90,62,4,1.3)}`,
+    hearts:`${heart('c','translate(40 2) scale(.56)','beat late')}${heart('r','translate(0 20) scale(.74)','beat')}${spark(88,72,5,.4)}`,
+    card:`<g transform="rotate(-12 46 50)"><rect x="10" y="26" width="68" height="46" rx="9" fill="url(#p${k})"/>
+      <rect x="10" y="36" width="68" height="8" fill="#000" opacity=".16"/>
+      <rect x="18" y="51" width="13" height="10" rx="2.5" fill="url(#g${k})"/>
+      <rect x="14" y="29" width="44" height="4" rx="2" fill="#fff" opacity=".45"/></g>
+      <g class="coin"><circle cx="72" cy="70" r="16" fill="url(#g${k})"/><circle cx="72" cy="70" r="11.5" fill="none" stroke="#C98200" stroke-width="1.5" opacity=".55"/>
+      <text x="72" y="75.5" text-anchor="middle" font-size="15" font-weight="800" fill="#B26F00" font-family="Gowun Dodum,sans-serif">₩</text>
+      <ellipse cx="65" cy="62" rx="5" ry="3" transform="rotate(-35 65 62)" fill="#fff" opacity=".8" filter="url(#b${k})"/></g>`,
+    phone:`<g transform="rotate(-8 50 50)"><rect x="27" y="8" width="46" height="84" rx="12" fill="url(#d${k})"/>
+      <rect x="31" y="15" width="38" height="70" rx="8" fill="url(#s${k})"/>
+      <path d="M36 32q0-6 6-6h16q6 0 6 6v8q0 6-6 6H46l-6 5v-5q-4-1-4-6Z" fill="#fff"/>
+      <rect x="40" y="56" width="22" height="4" rx="2" fill="#fff" opacity=".8"/><rect x="40" y="64" width="15" height="4" rx="2" fill="#fff" opacity=".6"/>
+      <path d="M30 12 42 12 30 40Z" fill="#fff" opacity=".12"/></g>
+      ${heart('r','translate(41 23) scale(.2)','beat')}${spark(84,20,6,0)}`
+  }[name];
+  return `<svg class="ico3d" viewBox="0 0 100 100" aria-hidden="true"><defs>${blur}${red}${coral}${gold}
+    <linearGradient id="e${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFD9E4"/></linearGradient>
+    <linearGradient id="f${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF8F9"/><stop offset="1" stop-color="#FFC4D6"/></linearGradient>
+    <linearGradient id="p${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9DB4"/><stop offset=".6" stop-color="#EE5F84"/><stop offset="1" stop-color="#D2476A"/></linearGradient>
+    <linearGradient id="d${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B4E66"/><stop offset="1" stop-color="#1F1A24"/></linearGradient>
+    <linearGradient id="s${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB0C2"/><stop offset="1" stop-color="#EE5F84"/></linearGradient>
+    </defs>${art}</svg>`;
+}
+$('hdrIco').innerHTML=ico('mail');
+const CLOCK=`<svg viewBox="0 0 100 100" aria-hidden="true"><defs>
+  <radialGradient id="ck1" cx=".34" cy=".28" r=".85"><stop offset="0" stop-color="#FFD0DC"/><stop offset=".45" stop-color="#F2708F"/><stop offset="1" stop-color="#B03454"/></radialGradient>
+  <radialGradient id="ck2" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".8" stop-color="#FFF1F5"/><stop offset="1" stop-color="#F6C9D7"/></radialGradient>
+  <radialGradient id="ck3" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF6C2"/><stop offset=".5" stop-color="#FFCB3D"/><stop offset="1" stop-color="#D98E04"/></radialGradient>
+  <filter id="ck4" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.4"/></filter></defs>
+  <path d="M30 86 22 96M70 86 78 96" stroke="#B03454" stroke-width="6" stroke-linecap="round"/>
+  <path d="M18 34a16 16 0 0 1 22-20Z" fill="url(#ck3)"/><path d="M82 34a16 16 0 0 0-22-20Z" fill="url(#ck3)"/>
+  <rect x="46" y="12" width="8" height="8" rx="3" fill="#D98E04"/>
+  <circle cx="50" cy="57" r="36" fill="url(#ck1)"/>
+  <circle cx="50" cy="57" r="27" fill="url(#ck2)"/>
+  <g fill="#EE5F84"><circle cx="50" cy="35" r="2.4"/><circle cx="72" cy="57" r="2.4"/><circle cx="50" cy="79" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
+  <path d="M50 57 62 63" stroke="#1F1A24" stroke-width="4.5" stroke-linecap="round"/>
+  <path class="hand" d="M50 61V36" stroke="#D94468" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="50" cy="57" r="4" fill="url(#ck3)"/>
+  <ellipse cx="34" cy="36" rx="9" ry="5" transform="rotate(-40 34 36)" fill="#fff" opacity=".8" filter="url(#ck4)"/></svg>`;
 // 연애 스타일: 질문 한 줄씩 "연락은? 틈날 때마다 하는 게 좋아요." (landing-easy.html·me.html 같은 내용)
 const STYLE_Q=['연락은?','쉬는 날에는?','결혼은?','다툼이 생기면?'];
 const STYLE={'틈날 때마다':'틈날 때마다 하는 게 좋아요.','하루 몇 번':'하루에 몇 번 하는 게 좋아요.','하루 한두 번':'하루 한두 번이면 충분해요.','만날 때 몰아서':'만나서 몰아서 이야기하는 게 좋아요.',
@@ -93,18 +223,29 @@ const STYLE={'틈날 때마다':'틈날 때마다 하는 게 좋아요.','하루
 const styleLines=vs=>vs.map((v,i)=>{const p=document.createElement('p'),b=document.createElement('b');b.textContent=STYLE_Q[i];p.append(b,' '+(STYLE[v]||v||''));return p;});
 const channelBtn=()=>el('a',{className:'btn',href:CHANNEL,target:'_blank',rel:'noopener',textContent:'리턴투미 채널로 메시지 보내기'});
 
+// 카드: 겉에는 닉네임·나이·직업·지역·한 줄 소개만, 사진·연애 스타일·자기소개는 '더 보기' 안에
 function card(c,action){
-  const box=el('div',{className:'box'},
-    el('p',{className:'pf-head'},el('b',{textContent:c.name}),el('span',{textContent:[c.gender,String(c.year).slice(2)+'년생',c.job,c.regions].filter(Boolean).join(' · ')})),
-    c.intro&&el('p',{className:'pf-intro',textContent:c.intro}),
+  const note=c.photoState?{'없음':'내 사진: 아직 없어요','확인 중':'내 사진: 매니저가 확인하고 있어요','새 사진 확인 중':'새 사진: 매니저가 확인하고 있어요. 그동안은 이전 사진이 보여요','공개 중':'내 사진: 사진을 공개한 회원에게 보여요'}[c.photoState]
+    :c.photos.length?'사진 캡처·유포 시 이용이 제한돼요':c.photo?'사진은 내 사진을 공개하면 볼 수 있어요':'';
+  const more=el('details',{className:'more'},el('summary',{textContent:'더 보기'}),
     c.photos.length&&el('div',{className:'photos'},...c.photos.map(src=>el('div',{className:'ph'},el('img',{src,alt:c.name+'님 사진',draggable:false}),el('i',{textContent:viewer})))),
     el('div',{className:'pf-style'},...styleLines(c.values)),
     c.profile&&el('dl',{className:'pf-more'},...['성격','취미·관심사','연애 가치관','매력 포인트'].flatMap((k,i)=>c.profile[i]?[el('dt',{textContent:k}),el('dd',{textContent:c.profile[i]})]:[])),
-    el('p',{className:'pf-photo',textContent:c.photoState?{'없음':'내 사진: 아직 없어요','확인 중':'내 사진: 매니저가 확인하고 있어요','공개 중':'내 사진: 사진을 공개한 회원에게 보이고 있어요'}[c.photoState]
-      :c.photos.length?'사진 캡처·유포 시 이용이 제한돼요':c.photo?'사진을 공개한 분이에요. 내 사진을 공개하면 볼 수 있어요':'사진은 공개하지 않은 분이에요'}));
+    note&&el('p',{className:'pf-photo',textContent:note}));
+  const box=el('div',{className:c.until?'box hot':'box'},
+    el('p',{className:'pf-head'},el('b',{textContent:c.name}),el('span',{textContent:[String(c.year).slice(2)+'년생',c.job,c.regions].filter(Boolean).join(' · ')})),
+    c.intro&&el('p',{className:'pf-intro',textContent:c.intro}),more);
   if(action)box.append(action);
+  if(c.until)box.append(timer(c.until));
   return box;
 }
+// 받은 관심 마감 표시: 서버가 준 until(받은 뒤 24시간)까지 남은 시간을 초 단위로, 시계 바늘이 1초마다 째깍
+function left(until){const ms=new Date(until)-Date.now();if(ms<=0)return '응답 시간이 끝났어요';
+  const t=Math.floor(ms/1e3),z=n=>String(n).padStart(2,'0');return `${Math.floor(t/3600)}:${z(Math.floor(t%3600/60))}:${z(t%60)} 남음`;}
+function timer(until){const t=el('b',{className:'t',textContent:left(until)});
+  const p=el('p',{className:'timer'+(new Date(until)-Date.now()<6*36e5?' soon':'')},el('span',{className:'clock',innerHTML:CLOCK}),t,
+    el('span',{className:'why',textContent:'빨리 답할수록 상대가 반가워해요\n시간이 지나면 다시는 못 봐요'}));p.dataset.until=until;return p;}
+setInterval(()=>document.querySelectorAll('.timer').forEach(p=>{p.querySelector('.t').textContent=left(p.dataset.until);p.classList.toggle('soon',new Date(p.dataset.until)-Date.now()<6*36e5);}),1e3);
 function likeBtn(c){
   const b=el('button',{type:'button',className:'btn',textContent:'만나보고 싶어요'});
   b.onclick=async()=>{b.disabled=true;b.textContent='보내는 중…';$('err').textContent='';
@@ -115,19 +256,68 @@ function likeBtn(c){
     }catch(e){b.disabled=false;b.textContent='만나보고 싶어요';$('err').textContent='전송되지 않았어요. 잠시 후 다시 눌러 주세요.';}};
   return b;
 }
-const STAGE={
-  '입금 안내':['서로 만나보고 싶어 하셨어요! 매칭비 20,000원을 입금해 주세요','입금자명은 꼭 내 닉네임으로 해 주세요. 두 분 모두 입금이 확인되면 이 페이지에 상대 연락처가 열려요.'],
-  '상대 입금 대기':['입금이 확인됐어요','상대분 입금을 기다리고 있어요. 확인되면 이 페이지에 연락처가 열려요.'],
-  '연결 완료':['연결됐어요!','먼저 편하게 인사를 건네 보세요.'],
-};
+// 매칭된 짝 카드: 이름 뒤가 은은하게 밝아지고 작은 하트가 살짝 떠오르며 사라짐 + 축하 문구
+function mate(box){
+  const fx=el('div',{className:'fx','aria-hidden':'true'},el('i',{className:'glow'}),
+    ...[[20,30,13,'#EE5F84'],[80,28,11,'#FF8A73'],[26,62,11,'#F7A8BC'],[76,60,13,'#EE5F84'],[52,14,10,'#FF8A73']]
+      .map(([x,y,sz,c],i)=>{const h=el('i',{className:'ht',textContent:'\u2665'});h.style.cssText=`--cx:${x}%;--cy:${y}%;--w:${(.3+i*.3).toFixed(1)}s;--s:${sz}px;--c:${c}`;return h;}));
+  box.classList.add('mate');box.prepend(fx,el('p',{className:'cheer',textContent:'축하해요, 매칭됐어요!'}));
+  return box;
+}
+// 나에게 관심 보낸 분: 패스 | 만나보고 싶어요. 패스는 내 화면에서만 치우고 상대에게 알리지 않음
+function passBtn(c){
+  const b=el('button',{type:'button',className:'btn ghost',textContent:'패스'});
+  b.onclick=async()=>{b.disabled=true;$('err').textContent='';
+    try{
+      if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'pass',token,to:c.id})})).json();if(!r.ok)throw 0;load();}
+      else b.closest('.box').remove();
+    }catch(e){b.disabled=false;$('err').textContent='전송되지 않았어요. 잠시 후 다시 눌러 주세요.';}};
+  return b;
+}
+const answer=c=>el('div',{className:'pair'},passBtn(c),likeBtn(c));
+// 상대 연락처 복사: 번호가 있으면 번호만, 없으면 통째로
+function copyBtn(text){
+  const v=(String(text).match(/01\d[-\d ]{7,}\d/)||[text])[0];
+  const b=el('button',{type:'button',className:'btn',textContent:'연락처 복사하기'});
+  b.onclick=()=>(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>{b.textContent='복사했어요';},()=>{b.textContent=v+' (길게 눌러 복사)';});
+  return b;
+}
+// 토스 앱 송금 화면을 계좌·금액 채운 채로 엶 (폰에 토스가 있을 때만 동작)
+function tossBtn(account){
+  const no=(String(account).match(/\d[\d-]{7,}\d/)||[''])[0].replace(/-/g,'');
+  if(!no)return null;
+  const bank=/^[가-힣A-Za-z]+/.test(account)?account.match(/^[가-힣A-Za-z]+/)[0]:'토스뱅크';
+  return el('a',{className:'btn toss',href:`supertoss://send?bank=${encodeURIComponent(bank)}&accountNo=${no}&amount=20000`,textContent:'토스로 2만 원 보내기'});
+}
 // 내 사진 올리기·바꾸기: 긴 변 720px JPEG로 줄여 최대 2장, 올리면 매니저가 다시 확인
+// 기본 보정(올릴 때 폰에서 바로, 사진은 밖으로 안 나감). 얼굴 모양·이목구비 선은 그대로 두고 자잘한 것만:
+// ① 피부 잡티·노이즈: 피부색 부분에서 비슷한 색끼리만 살짝 평균(눈·코·입 경계는 색 차이가 커서 안 섞임), 원본과 반반
+// ② 색 틀어짐(누렇거나 퍼런 빛): 사진 평균이 회색이 되게 R·G·B를 절반만 맞춤 ③ 밝기·대비: 하위 1%~상위 1%를 펴서 원본과 반반, 어두우면 조금 밝게
+function autoTone(x,w,h){const d=x.getImageData(0,0,w,h),p=d.data,n=w*h,src=new Uint8ClampedArray(p),hist=new Uint32Array(256);
+  for(let y=0;y<h;y++)for(let xi=0;xi<w;xi++){const i=(y*w+xi)*4,r=src[i],g=src[i+1],b=src[i+2];
+    const cb=128-.169*r-.331*g+.5*b,cr=128+.5*r-.419*g-.081*b;
+    if(cb<77||cb>127||cr<133||cr>173)continue; // 피부색이 아니면 그대로
+    let ar=0,ag=0,ab=0,c=0;
+    for(let dy=-2;dy<=2;dy++){const yy=y+dy;if(yy<0||yy>=h)continue;
+      for(let dx=-2;dx<=2;dx++){const xx=xi+dx;if(xx<0||xx>=w)continue;const j=(yy*w+xx)*4;
+        if(Math.abs(src[j]-r)+Math.abs(src[j+1]-g)+Math.abs(src[j+2]-b)<48){ar+=src[j];ag+=src[j+1];ab+=src[j+2];c++;}}}
+    p[i]=(r+ar/c)/2;p[i+1]=(g+ag/c)/2;p[i+2]=(b+ab/c)/2;}
+  let sum=0,sr=0,sg=0,sb=0;
+  for(let i=0;i<p.length;i+=4){const v=(p[i]*77+p[i+1]*150+p[i+2]*29)>>8;hist[v]++;sum+=v;sr+=p[i];sg+=p[i+1];sb+=p[i+2];}
+  const gray=(sr+sg+sb)/3,k=s=>Math.min(1.12,Math.max(.88,1+(gray/(s||1)-1)*.5)),K=[k(sr),k(sg),k(sb)];
+  let lo=0,hi=255,a=0;while(lo<255&&a+hist[lo]<n*.01)a+=hist[lo++];a=0;while(hi>0&&a+hist[hi]<n*.01)a+=hist[hi--];
+  const stretch=hi-lo>=16,gm=sum/n<100?.85:1,lut=[0,1,2].map(()=>new Uint8ClampedArray(256));
+  for(let ch=0;ch<3;ch++)for(let v=0;v<256;v++){const w0=v*K[ch];
+    lut[ch][v]=stretch?Math.round(w0*.5+255*Math.pow(Math.min(1,Math.max(0,(w0-lo)/(hi-lo))),gm)*.5):Math.round(w0);}
+  for(let i=0;i<p.length;i+=4){p[i]=lut[0][p[i]];p[i+1]=lut[1][p[i+1]];p[i+2]=lut[2][p[i+2]];}
+  x.putImageData(d,0,0);}
 const shrink=f=>new Promise((ok,no)=>{const img=new Image(),u=URL.createObjectURL(f);img.onload=()=>{const k=Math.min(1,720/Math.max(img.width,img.height)),c=document.createElement('canvas');
-  c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.82));};img.onerror=()=>no();img.src=u;});
+  c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);autoTone(x,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.82));};img.onerror=()=>no();img.src=u;});
 function photoBox(me){
   let picked=[];
   const file=el('input',{type:'file',id:'photoFile',accept:'image/*',multiple:true,className:'sr'});
   const thumbs=el('div',{className:'thumbs'});
-  const agree=el('input',{type:'checkbox',id:'photoAgree'});
+  const agree=el('input',{type:'checkbox',id:'photoAgree'}),aiFix=el('input',{type:'checkbox',id:'photoAiFix'});
   const send=el('button',{type:'button',className:'btn',textContent:'사진 올리기',hidden:true});
   file.onchange=async()=>{const fs=[...file.files].slice(0,2);file.value='';
     try{picked=await Promise.all(fs.map(shrink));}catch(e){picked=[];$('err').textContent='사진을 읽지 못했어요. 다른 사진으로 골라 주세요.';}
@@ -135,47 +325,81 @@ function photoBox(me){
   send.onclick=async()=>{if(!agree.checked){$('err').textContent='사진 공개에 동의해 주세요.';return;}
     send.disabled=true;send.textContent='올리는 중…';$('err').textContent='';
     try{
-      if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'photo',token,photoShare:true,photos:picked.map(p=>p.split(',')[1])})})).json();if(!r.ok)throw 0;load();}
+      if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'photo',token,photoShare:true,aiFix:aiFix.checked,photos:picked.map(p=>p.split(',')[1])})})).json();if(!r.ok)throw 0;load();}
       else{send.textContent='올렸어요 (예시)';}
     }catch(e){send.disabled=false;send.textContent='사진 올리기';$('err').textContent='올리지 못했어요. 잠시 후 다시 눌러 주세요.';}};
   return el('section',null,el('h2',{textContent:'내 사진'}),
-    el('p',{className:'muted',textContent:'매니저가 본인 사진인지 확인한 뒤, 사진을 공개한 회원끼리만 서로 볼 수 있어요.'+(me.photos.length?' 새로 올리면 지금 사진은 지워지고 다시 확인을 받아요.':'')}),
+    el('p',{className:'muted',textContent:'매니저가 본인 사진인지 확인한 뒤, 사진을 공개한 회원끼리만 서로 볼 수 있어요.'+(me.photos.length?' 새로 올리면 매니저가 확인할 때까지 지금 사진이 그대로 보여요.':'')}),
     el('label',{className:'btn',htmlFor:'photoFile',textContent:me.photos.length?'사진 바꾸기 (최대 2장)':'사진 고르기 (최대 2장)'}),file,thumbs,
-    el('label',{className:'consent',htmlFor:'photoAgree'},agree,el('span',{textContent:'사진을 공개한 회원에게 내 사진을 보여 주는 데 동의해요'})),send);
+    el('label',{className:'consent',htmlFor:'photoAgree'},agree,el('span',{textContent:'사진을 공개한 회원에게 내 사진을 보여 주는 데 동의해요'})),
+    el('label',{className:'consent',htmlFor:'photoAiFix'},aiFix,el('span',{textContent:'사진을 자연스럽게 다듬는 보정에 동의해요'})),send);
 }
+// 맨 위 4단계 표시 + 지금 할 일 한 줄 → 진행 중 매칭 → 나에게 관심 → 추천 → (접힘) 내 프로필·사진
+const STEPS=['소개','서로 관심','매칭 희망','연락처'];
+let tab='match';
 function render(d){
   const v=$('view');v.replaceChildren();viewer=d.me.name;
-  if(!d.confirmed){
-    v.append(el('section',null,
-      el('div',{className:'notice'},el('p',null,el('b',{textContent:'지금은 추천이 잠시 멈춰 있어요'})),
-        el('p',{textContent:"궁금한 점은 카카오톡 채널 '리턴투미'로 닉네임과 함께 문의해 주세요."}),channelBtn()),
-      el('h2',{textContent:'상대에게는 이렇게 보여요'}),card(d.me)),photoBox(d.me));
-    return;
+  const m=d.matches[0],sec=(t,...k)=>el('section',null,el('h2',{textContent:t}),...k);
+  const step=m?(m.stage==='연결 완료'?3:2):(d.likedMe.length||d.waiting?1:0);
+  const opens=d.opensAt&&new Date(d.opensAt).toLocaleDateString('ko-KR',{month:'long',day:'numeric'});
+  const todo=!d.confirmed?'지금은 소개가 잠시 멈춰 있어요. 리턴투미 채널로 문의해 주세요.'
+    :opens?`소개는 ${opens}부터 시작돼요.`
+    :m?{'입금 안내':'매칭비 2만 원을 입금해 주시면 매칭이 성사돼요.','상대 입금 대기':'매칭비 입금이 확인됐어요.\n상대를 기다리는 중이에요.','연결 완료':'연락처가 열렸어요.\n먼저 인사해 보세요.'}[m.stage]
+    :d.likedMe.length?'나를 만나보고 싶어 하는 분이 있어요.\n나도 누르면 매칭돼요.'
+    :d.waiting?'관심을 보냈어요. 24시간 안에 상대도 누르면 알림톡으로 알려 드려요.'
+    :"마음에 드는 분께\n'만나보고 싶어요'를 눌러 주세요.";
+  v.append(el('div',{className:'notice'},el('div',{className:'orb','aria-hidden':'true'}),
+    el('ol',{className:'steps'},...STEPS.map((t,i)=>el('li',{className:'s'+i+' '+(i<step?'done':i===step?'on':'')},el('b',{textContent:i<step?'✓':String(i+1)}),el('span',{textContent:t})))),
+    el('p',{className:'todo',textContent:todo}),!d.confirmed&&channelBtn()));
+  if(m&&d.confirmed){
+    const box=el('div',{className:'box'});
+    if(m.stage==='입금 안내')box.append(el('p',{className:'contact acct',textContent:m.account||'계좌는 채널로 문의해 주세요'}),
+      tossBtn(m.account),
+      el('p',{className:'payname'},el('span',{textContent:'입금자명'}),el('span',{className:'contact',textContent:viewer})),el('p',{className:'muted',style:'text-align:center'},el('span',{className:'hl',textContent:'입금자명을 꼭 닉네임으로 바꿔서 보내 주세요.'})),
+      el('p',{className:'muted',style:'text-align:center',textContent:'입금 후 조금만 기다려 주시면, 상대방 입금이 확인되는 대로 연락처를 보내 드릴게요 :)'}));
+    if(m.stage==='연결 완료')box.append(el('p',{className:'muted',style:'text-align:center',textContent:'상대 연락처'}),el('p',{className:'contact acct',textContent:m.contact}),copyBtn(m.contact));
+    if(box.childNodes.length)v.append(box);
+    v.append(sec('매칭된 분',mate(card(m.partner))));
   }
-  const sec=(title,desc,...kids)=>el('section',null,el('h2',{textContent:title}),desc&&el('p',{className:'muted',textContent:desc}),...kids);
-  if(d.matches.length)v.append(sec('진행 중인 매칭',null,...d.matches.map(m=>{
-    const [t,s]=STAGE[m.stage],done=m.stage==='연결 완료';
-    return el('div',{className:'notice'+(done?' ok':'')},el('span',{className:'stage'+(done?' ok':''),textContent:m.stage}),
-      el('p',null,el('b',{textContent:t})),el('p',{textContent:s}),
-      done&&el('p',null,'상대 연락처 ',el('span',{className:'contact',textContent:m.contact})),
-      m.stage==='입금 안내'&&el('p',null,'입금 계좌 ',el('span',{className:'contact',textContent:m.account||'준비 중이에요. 리턴투미 채널로 문의해 주세요.'})),
-      m.stage==='입금 안내'&&el('p',null,'입금자명 ',el('span',{className:'contact',textContent:viewer})),
-      m.stage==='입금 안내'&&el('p',{className:'muted',textContent:"은행 앱 이체 화면의 '받는 분에게 표시'(또는 '입금자명')를 내 닉네임으로 바꿔서 보내 주세요. 실명으로 보내면 자동 확인이 안 돼서 연락처 전달이 늦어질 수 있어요."}),
-      card(m.partner));})));
-  if(d.likedMe.length)v.append(sec('나를 만나보고 싶어 하는 분','나도 만나보고 싶으면 눌러 주세요. 서로 누르면 매칭이 성사돼요.',...d.likedMe.map(c=>card(c,likeBtn(c)))));
-  v.append(sec('조건이 맞는 분','나이·지역 조건이 서로 맞는 분 중 연애 스타일이 비슷한 순서예요.',
-    ...(d.candidates.length?d.candidates.map(c=>card(c,likeBtn(c)))
-      :[el('p',{className:'box muted',textContent:'지금은 새로 소개할 분이 없어요. 조건이 맞는 분이 신청하면 이 페이지에 나타나요.'})]),
-    d.waiting?el('p',{className:'muted',textContent:`내가 고른 ${d.waiting}분의 답을 기다리고 있어요.`}):null));
-  v.append(sec('상대에게는 이렇게 보여요',null,card(d.me)),photoBox(d.me));
+  // 매칭 중엔 다른 분이 안 보이게 탭으로 나눔: '내 매칭'(기본) / '다른 분'(나에게 관심 보낸 분)
+  if(m&&d.confirmed&&d.likedMe.length){
+    const tabs=el('div',{className:'tabs'});
+    [['match','내 매칭'],['others','다른 분 ('+d.likedMe.length+')']].forEach(([k,t])=>{const b=el('button',{type:'button',className:tab===k?'on':'',textContent:t});b.onclick=()=>{tab=k;load();};tabs.append(b);});
+    v.prepend(tabs);
+    if(tab==='others'){v.replaceChildren(tabs,sec('나에게 관심 보낸 분',...d.likedMe.map(c=>card(c,answer(c)))));return;}
+  }
+  if(!m&&d.confirmed&&d.likedMe.length)v.append(sec('나에게 관심 보낸 분',...d.likedMe.map(c=>card(c,answer(c)))));
+  if(d.confirmed&&!m)v.append(sec('나와 잘 맞는 분',...(d.candidates.length?d.candidates.map(c=>{const b=card(c,answer(c));b.append(el('p',{className:'passnote',textContent:'한 번 패스하면 다시는 이 프로필을 볼 수 없어요.\n신중히 선택해 주세요!'}));return b;})
+    :[el('p',{className:'box muted',textContent:opens?`지금은 좋은 분들을 모으고 있어요. ${opens}부터 소개해 드려요.`:d.doneToday?'오늘 소개는 여기까지예요. 내일 새로운 분을 소개해 드려요.':'지금은 소개해 드릴 분이 없어요. 새 분이 오면 알려 드려요.'})]),
+    el('p',{className:'daily',textContent:'소개는 하루 3명까지, 매일 1번씩 새로 업데이트돼요.'})));
+  v.append(el('details',{className:'more mine'},el('summary',{textContent:'내 프로필 · 사진'}),
+    el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요.'}),card(d.me),photoBox(d.me)));
 }
 // 예시 화면(ENDPOINT 비었을 때만): 실제 회원이 아닌 예시 데이터, 사진 자리는 그려 넣은 회색 칸
-function demo(t){const c=document.createElement('canvas');c.width=300;c.height=400;const x=c.getContext('2d');x.fillStyle='#E9DEDF';x.fillRect(0,0,300,400);x.fillStyle='#A08F94';x.font='24px sans-serif';x.textAlign='center';x.fillText(t,150,205);return c.toDataURL('image/jpeg');}
+function demo(t){const c=document.createElement('canvas');c.width=300;c.height=400;const x=c.getContext('2d');x.fillStyle='#E9DEDF';x.fillRect(0,0,300,400);x.fillStyle='#A08F94';x.font='24px "Gowun Dodum",sans-serif';x.textAlign='center';x.fillText(t,150,205);return c.toDataURL('image/jpeg');}
 const SAMPLE={ok:true,confirmed:true,waiting:1,
   me:{id:'M1',name:'퇴근후산책',gender:'여성',year:1992,job:'간호사',regions:'서울, 경기·인천',values:['하루 몇 번','가까운 데 산책','인연이면 언제든','바로 대화'],intro:'주말엔 자기계발하거나 한강 러닝하는 걸 좋아해요',photo:true,photoState:'공개 중',photos:[demo('내 사진')],profile:['긍정적, 잘 웃음','여행, 러닝, 독서','존중과 배려','잘 웃는 미소']},
-  matches:[{stage:'입금 안내',account:'○○은행 000-0000-0000 (예금주 이미*)',partner:{id:'M2',name:'한강러너',gender:'남성',year:1990,job:'대기업',regions:'서울',values:['하루 몇 번','가까운 데 산책','인연이면 언제든','잠깐 쉬고 대화'],intro:'퇴근 후 러닝 크루, 주말엔 맛집 탐방',photo:true,photos:[demo('예시 사진'),demo('예시 사진')],profile:['차분함','러닝, 맛집','함께 성장하는 연애','책임감']}}],
-  likedMe:[{id:'M3',name:'책방주인',gender:'남성',year:1991,regions:'경기·인천',values:['하루 한두 번','집에서 충전','천천히 생각','시간을 충분히'],intro:'',photo:false,photos:[],profile:['다정함','독서, 커피','웃음이 많은 연애','리액션']}],
+  matches:[{stage:'입금 안내',account:'토스뱅크 0000-0000-0000 (예금주 **우)',partner:{id:'M2',name:'한강러너',gender:'남성',year:1990,job:'대기업',regions:'서울',values:['하루 몇 번','가까운 데 산책','인연이면 언제든','잠깐 쉬고 대화'],intro:'퇴근 후 러닝 크루, 주말엔 맛집 탐방',photo:true,photos:[demo('예시 사진'),demo('예시 사진')],profile:['차분함','러닝, 맛집','함께 성장하는 연애','책임감']}}],
+  likedMe:[{until:new Date(Date.now()+(5*60+42)*6e4).toISOString(),id:'M3',name:'책방주인',gender:'남성',year:1991,regions:'경기·인천',values:['하루 한두 번','집에서 충전','천천히 생각','시간을 충분히'],intro:'',photo:false,photos:[],profile:['다정함','독서, 커피','웃음이 많은 연애','리액션']}],
   candidates:[{id:'M4',name:'캠핑좋아',gender:'남성',year:1993,job:'스타트업 대표',regions:'서울',values:['틈날 때마다','여행·액티비티','1~2년 안에','바로 대화'],intro:'캠핑 장비 욕심이 많아요',photo:true,photos:[demo('예시 사진')],profile:['활발함','캠핑, 여행','솔직한 연애','유머감각']}]};
+// 예시 화면 전용: 단계별로 넘겨 보기 (실제 배포본은 ENDPOINT가 있어 안 보임)
+const SCENES=[
+  ['① 신청 직후',d=>({...d,matches:[],likedMe:[],waiting:0})],
+  ['② 관심 보냄',d=>({...d,matches:[],likedMe:[],waiting:1})],
+  ['③ 관심 받음',d=>({...d,matches:[]})],
+  ['④ 매칭 성사·입금',d=>d],
+  ['⑤ 상대 입금 대기',d=>(d.matches[0].stage='상대 입금 대기',d)],
+  ['⑥ 연결 완료',d=>(d.matches[0].stage='연결 완료',d.matches[0].contact='010-0000-0000',d)],
+  ['⓪ 모집 기간',d=>({...d,matches:[],likedMe:[],waiting:0,candidates:[],opensAt:'2026-11-16T12:00:00+09:00'})],
+];
+// 흐름 안내 페이지가 #s0~#s6로 단계 고정해 끼워 넣음 (그땐 단계 버튼 숨김)
+const fixed=/^#s[0-6]$/.test(location.hash);
+let scene=fixed?+location.hash[2]:3;
+function sceneBar(){
+  const bar=el('div',{className:'chips',style:'justify-content:center'});
+  SCENES.forEach(([t],i)=>{const b=el('button',{type:'button',className:'btn'+(i===scene?'':' done'),style:'padding:4px 10px;font-size:13px;display:inline-block',textContent:t});b.onclick=()=>{scene=i;tab='match';load();};bar.append(b);});
+  return el('div',{className:'box'},el('p',{className:'muted',style:'text-align:center',textContent:'예시 화면 · 단계를 눌러 보세요'}),bar);
+}
 async function load(){
   try{
     let d=SAMPLE;
@@ -184,8 +408,9 @@ async function load(){
       d=await(await fetch(ENDPOINT+'?t='+encodeURIComponent(token))).json();
       if(!d.ok)throw new Error(d.error);
     }
+    if(!ENDPOINT)d=SCENES[scene][1](JSON.parse(JSON.stringify(SAMPLE)));
     render(d);$('view').hidden=false;$('err').textContent='';
-    if(!ENDPOINT)$('view').prepend(el('p',{className:'muted',style:'text-align:center',textContent:'예시 화면이에요. 실제 회원 정보가 아니에요.'}));
+    if(!ENDPOINT&&!fixed)$('view').prepend(sceneBar());
   }catch(e){
     $('err').textContent=e.message==='notfound'?'링크가 올바르지 않아요. 신청 완료 화면의 링크로 다시 들어와 주시거나 리턴투미 채널로 문의해 주세요.':'불러오지 못했어요. 잠시 후 새로고침해 주세요.';
   }
