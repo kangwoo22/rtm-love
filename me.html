@@ -370,7 +370,7 @@ function render(d){
   }
   if(!m&&d.confirmed&&d.likedMe.length)v.append(sec('나에게 관심 보낸 분',...d.likedMe.map(c=>card(c,answer(c)))));
   if(d.confirmed&&!m)v.append(sec('나와 잘 맞는 분',...(d.candidates.length?d.candidates.map(c=>{const b=card(c,answer(c));b.append(el('p',{className:'passnote',textContent:'한 번 패스하면 다시는 이 프로필을 볼 수 없어요.\n신중히 선택해 주세요!'}));return b;})
-    :[el('p',{className:'box muted',textContent:opens?`지금은 좋은 분들을 모으고 있어요. ${opens}부터 소개해 드려요.`:d.doneToday?'오늘 소개는 여기까지예요. 내일 새로운 분을 소개해 드려요.':'지금은 소개해 드릴 분이 없어요. 새 분이 오면 알려 드려요.'})]),
+    :[el('p',{className:'box muted',textContent:opens?`지금은 좋은 분들을 모으고 있어요. ${opens}부터 소개해 드려요.`:d.doneToday?'오늘 소개는 여기까지예요. 내일 새로운 분을 소개해 드려요.':'지금은 소개해 드릴 분이 없어요. 새로운 인연이 오면 알려 드려요.'})]),
     el('p',{className:'daily',textContent:'소개는 하루 3명까지, 매일 1번씩 새로 업데이트돼요.'})));
   v.append(el('details',{className:'more mine'},el('summary',{textContent:'내 프로필 · 사진'}),
     el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요.'}),card(d.me),photoBox(d.me)));
