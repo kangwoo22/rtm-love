@@ -346,13 +346,14 @@ function render(d){
   const opens=d.opensAt&&new Date(d.opensAt).toLocaleDateString('ko-KR',{month:'long',day:'numeric'});
   const todo=!d.confirmed?'지금은 소개가 잠시 멈춰 있어요. 리턴투미 채널로 문의해 주세요.'
     :opens?`소개는 ${opens}부터 시작돼요.`
+    :m&&m.free&&m.stage==='상대 입금 대기'?'첫 매칭은 오픈 이벤트로 무료예요.\n상대를 기다리는 중이에요.'
     :m?{'입금 안내':'매칭비 2만 원을 입금해 주시면 매칭이 성사돼요.','상대 입금 대기':'매칭비 입금이 확인됐어요.\n상대를 기다리는 중이에요.','연결 완료':'연락처가 열렸어요.\n먼저 인사해 보세요.'}[m.stage]
     :d.likedMe.length?'나를 만나보고 싶어 하는 분이 있어요.\n나도 누르면 매칭돼요.'
     :d.waiting?'관심을 보냈어요. 24시간 안에 상대도 누르면 알림톡으로 알려 드려요.'
     :"마음에 드는 분께\n'만나보고 싶어요'를 눌러 주세요.";
   v.append(el('div',{className:'notice'},el('div',{className:'orb','aria-hidden':'true'}),
     el('ol',{className:'steps'},...STEPS.map((t,i)=>el('li',{className:'s'+i+' '+(i<step?'done':i===step?'on':'')},el('b',{textContent:i<step?'✓':String(i+1)}),el('span',{textContent:t})))),
-    el('p',{className:'todo',textContent:todo}),!d.confirmed&&channelBtn()));
+    el('p',{className:'todo',textContent:todo}),!m&&d.confirmed&&d.freeFirst&&el('p',{className:'daily',textContent:'🎉 오픈 이벤트: 첫 매칭은 무료예요'}),!d.confirmed&&channelBtn()));
   if(m&&d.confirmed){
     const box=el('div',{className:'box'});
     if(m.stage==='입금 안내')box.append(el('p',{className:'contact acct',textContent:m.account||'계좌는 채널로 문의해 주세요'}),
@@ -373,7 +374,8 @@ function render(d){
   if(!m&&d.confirmed&&d.likedMe.length)v.append(sec('나에게 관심 보낸 분',...d.likedMe.map(c=>card(c,answer(c)))));
   if(d.confirmed&&!m)v.append(sec('나와 잘 맞는 분',...(d.candidates.length?d.candidates.map(c=>{const b=card(c,answer(c));b.append(el('p',{className:'passnote',textContent:'한 번 패스하면 다시는 이 프로필을 볼 수 없어요.\n신중히 선택해 주세요!'}));return b;})
     :[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:opens?`지금은 좋은 분들을 모으고 있어요. ${opens}부터 소개해 드려요.`:d.doneToday?'오늘 소개는 여기까지예요. 내일 새로운 분을 소개해 드려요.':'지금은 소개해 드릴 분이 없어요.\n새로운 인연이 오면 알려드릴게요 :)'})]),
-    el('p',{className:'daily',textContent:'소개는 하루 3명까지, 매일 1번씩 새로 업데이트돼요.'})));
+    el('p',{className:'daily',textContent:'소개는 하루 3명까지, 매일 1번씩 새로 업데이트돼요.'}),
+    el('p',{className:'daily',style:'white-space:pre-line',textContent:{on:'📷 사진을 올린 분들끼리 소개해 드려요.',wait:'📷 매니저가 내 사진을 확인하면\n사진을 올린 분들을 소개해 드려요.',none:'사진 없이 신청한 분들끼리 소개해 드려요.\n아래 「내 프로필 · 사진」에서 사진을 올리면\n사진 있는 분들을 소개받아요.'}[d.photoGroup]||''})));
   // 내 프로필 · 사진: 접어 두되, 열면 '더 보기' 없이 사진·연애 스타일·자기소개까지 한 번에 다 보이게
   const mine=card(d.me),more=mine.querySelector('details.more');
   more.replaceWith(el('div',{className:'more-open'},...[...more.children].filter(x=>x.tagName!=='SUMMARY')));
@@ -396,9 +398,11 @@ const SCENES=[
   ['⑤ 상대 입금 대기',d=>(d.matches[0].stage='상대 입금 대기',d)],
   ['⑥ 연결 완료',d=>(d.matches[0].stage='연결 완료',d.matches[0].contact='010-0000-0000',d)],
   ['⓪ 모집 기간',d=>({...d,matches:[],likedMe:[],waiting:0,candidates:[],opensAt:'2026-11-16T12:00:00+09:00'})],
+  ['⑦ 오픈 이벤트·사진 없이',d=>({...d,matches:[],likedMe:[],waiting:0,freeFirst:true,photoGroup:'none'})],
+  ['⑧ 첫 매칭 무료·상대 대기',d=>(d.matches[0].stage='상대 입금 대기',d.matches[0].free=true,d)],
 ];
 // 흐름 안내 페이지가 #s0~#s6로 단계 고정해 끼워 넣음 (그땐 단계 버튼 숨김)
-const fixed=/^#s[0-6]$/.test(location.hash);
+const fixed=/^#s[0-8]$/.test(location.hash);
 let scene=fixed?+location.hash[2]:3;
 function sceneBar(){
   const bar=el('div',{className:'chips',style:'justify-content:center'});

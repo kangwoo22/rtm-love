@@ -59,6 +59,8 @@ body{background:linear-gradient(180deg,#FDFAF7 0%,var(--bg) 40%,#F7EFEC 100%);ba
 @keyframes touch{0%,12%{transform:scaleX(0);opacity:1}45%,88%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
 @media (prefers-reduced-motion:reduce){.touch::before,.touch::after{animation:none}}
 .hero .lead{color:var(--muted);margin:0;font-size:15px}
+.hero .event{margin:4px 0 0;padding:8px 16px;border-radius:999px;background:var(--blush);color:var(--rose-dk);font-size:14px;line-height:1.5}
+.hero .event b{font-weight:700}
 .divider{width:1px;height:36px;background:linear-gradient(var(--gold),transparent);margin:6px 0}
 @keyframes ctaflow{from{background-position:0 0,0 0}to{background-position:0 0,300% 0}}
 
@@ -238,6 +240,8 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
     <div class="script" aria-hidden="true"><span class="pen"><span class="txt">with love</span></span><svg class="gh" viewBox="0 0 72 60"><defs><linearGradient id="gflow" x1="0" x2="1" spreadMethod="repeat"><stop offset="0" stop-color="#C9A45C"/><stop offset=".3" stop-color="#E8CF94"/><stop offset=".55" stop-color="#D99A7E"/><stop offset=".8" stop-color="#B8894A"/><stop offset="1" stop-color="#C9A45C"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="1 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs><path pathLength="100" d="M0 44C6 46 14 49 24 49C31 45 39 40 42 33C44 28 42 23 37 22C33 21 29 25 27.5 31C27 29 26 26 24 24C20 21 14 24 12 31C10 38 16 44 25 49C30 53 38 54 46 53C54 52 60 49 64 46"/></svg></div>
     <h1>소개팅,<br><b>이제 <span class="touch">가볍게</span> 시작하세요</b></h1>
     <p class="lead">복잡한 프로필 없이 2분 신청.<br>서로 마음이 맞는 상대가 나타나면,<br>그때 연결됩니다.</p>
+    <p class="event" id="openEvent"><b>🎉 오픈 이벤트</b><br>11/16(월) 낮 12시까지 신청하면 첫 매칭 무료</p>
+    <script>if(Date.now()>=Date.parse('2026-11-16T12:00:00+09:00'))document.getElementById('openEvent').hidden=true</script>
     <div class="divider" aria-hidden="true"></div>
     <ul class="vows">
       <li><b>01</b>신청<br>무료</li>
@@ -413,21 +417,13 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
 
       <div class="panel" id="step3" hidden>
         <div class="stack">
-          <h2>사진 필요 여부와<br><span class="nw">연락 방법을 알려 주세요</span></h2>
+          <h2>사진 등록 여부와<br><span class="nw">연락 방법을 알려 주세요</span></h2>
           <fieldset class="field">
-            <legend>소개받을 상대의 사진이<br>꼭 필요한가요?</legend>
+            <legend>내 사진을 등록하시겠어요?</legend>
+            <p class="hint"><b>사진을 올린 분은 사진을 올린 분들끼리,<br>사진 없이 신청한 분은 사진 없는 분들끼리<br>소개해 드려요.</b></p>
             <div class="chips col">
-              <label class="chip"><input type="radio" name="photoNeed" value="필수"><span>네, 사진이 있어야 해요</span></label>
-              <label class="chip"><input type="radio" name="photoNeed" value="무관"><span>아니요, 사진 없어도 돼요</span></label>
-            </div>
-          </fieldset>
-          <fieldset class="field">
-            <legend>본인 사진도 등록하시겠어요?</legend>
-            <p class="hint">선택 사항이에요</p>
-            <p class="hint" id="photoTip" hidden><b>사진이 있는 분을 소개받으시려면<br>내 사진도 함께 공개해 주셔야 해요.<br>서로 공평하게 보여 드려요.</b></p>
-            <div class="chips col">
-              <label class="chip"><input type="radio" name="myPhoto" value="등록"><span>네, 등록할게요</span></label>
-              <label class="chip" id="noPhoto"><input type="radio" name="myPhoto" value="없이"><span>사진 없이 소개받을게요</span></label>
+              <label class="chip"><input type="radio" name="myPhoto" value="등록"><span>네, 등록할게요<br><small>사진 있는 분을 소개받아요</small></span></label>
+              <label class="chip"><input type="radio" name="myPhoto" value="없이"><span>사진 없이 신청할게요<br><small>사진 없는 분을 소개받아요</small></span></label>
             </div>
             <div class="note" id="photoNote" hidden>
               <div id="photoPick" class="photo-pick">
@@ -436,7 +432,7 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
                 <input type="file" id="photoFile" accept="image/*" multiple class="sr">
                 <div class="thumbs" id="thumbs"></div>
               </div>
-              <label class="consent" for="photoShare"><input type="checkbox" id="photoShare"><span>매칭 제안 상대에게 내 사진을 보여 주는 데 동의해요 <span id="photoShareReq">(선택)</span></span></label>
+              <label class="consent" for="photoShare"><input type="checkbox" id="photoShare"><span>매칭 제안 상대에게 내 사진을 보여 주는 데 동의해요 (필수)</span></label>
               <label class="consent" for="aiFix"><input type="checkbox" id="aiFix"><span>사진을 자연스럽게 다듬는 보정에 동의해요</span></label>
             </div>
           </fieldset>
@@ -617,12 +613,8 @@ $('next2').onclick=()=>{if(!ENDPOINT)return show(3);const left=VALUES.filter(n=>
   $('errV').textContent=left?`${left}개 문항이 남았어요.`:'';if(!left)show(3);};
 $('back1').onclick=()=>show(1);
 $('back2').onclick=()=>show(2);
-// 상대 사진을 원하면 내 사진도 공개해야 함(상호 공개). 그래서 '사진 없이'를 숨기고 공개 동의를 필수로
-const photoMutual=()=>val('photoNeed')==='필수';
-function syncPhoto(){const m=photoMutual();$('photoTip').hidden=!m;$('noPhoto').hidden=m;
-  if(m&&val('myPhoto')==='없이')document.querySelector('input[name=myPhoto]:checked').checked=false;
-  const yes=val('myPhoto')==='등록';$('photoNote').hidden=!yes;if(!yes)$('photoShare').checked=false;
-  $('photoShareReq').textContent=m||val('myPhoto')==='등록'?'(필수)':'(선택)';}
+// 사진은 끼리끼리: 올리면 사진 있는 분끼리(공개 동의 필수), 안 올리면 사진 없는 분끼리. 서버의 '상대 사진 필요'는 이걸로 채움
+function syncPhoto(){const yes=val('myPhoto')==='등록';$('photoNote').hidden=!yes;if(!yes)$('photoShare').checked=false;}
 // 사진: 긴 변 720px JPEG로 줄여 최대 2장 (원본은 보내지 않음)
 let photos=[];
 // 기본 보정(올릴 때 폰에서 바로, 사진은 밖으로 안 나감). 얼굴 모양·이목구비 선은 그대로 두고 자잘한 것만:
@@ -651,7 +643,7 @@ const shrink=f=>new Promise((ok,no)=>{const img=new Image(),u=URL.createObjectUR
 $('photoFile').addEventListener('change',async e=>{const fs=[...e.target.files].slice(0,2);e.target.value='';$('err2').textContent='';
   try{photos=await Promise.all(fs.map(shrink));}catch(err){photos=[];$('err2').textContent='사진을 읽지 못했어요. 다른 사진으로 골라 주세요.';}
   $('thumbs').replaceChildren(...photos.map(src=>Object.assign(document.createElement('img'),{src,alt:'고른 사진'})));});
-document.querySelectorAll('input[name=photoNeed],input[name=myPhoto]').forEach(r=>r.addEventListener('change',syncPhoto));
+document.querySelectorAll('input[name=myPhoto]').forEach(r=>r.addEventListener('change',syncPhoto));
 // 알림톡은 휴대폰 번호로 가서 연락처는 번호 하나로 받음
 $('contact').addEventListener('input',e=>{const d=e.target.value.replace(/\D/g,'').slice(0,11);
   e.target.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);});
@@ -677,8 +669,7 @@ $('apply').addEventListener('submit',async e=>{e.preventDefault();
   if(!ENDPOINT)return finish();
   const c=$('contact').value.trim();
   const contactOk=/^01[016789]-\d{3,4}-\d{4}$/.test(c);
-  const msg=!val('photoNeed')?'상대 사진이 꼭 필요한지 골라 주세요.':!val('myPhoto')?'본인 사진 등록 여부를 골라 주세요.'
-    :photoMutual()&&!$('photoShare').checked?'사진이 있는 분을 소개받으려면 내 사진 공개에도 동의해 주세요.'
+  const msg=!val('myPhoto')?'사진 등록 여부를 골라 주세요.'
     :val('myPhoto')==='등록'&&!photos.length?'등록할 사진을 골라 주세요.'
     :val('myPhoto')==='등록'&&!$('photoShare').checked?'사진 공개에 동의해 주세요.'
     :!contactOk?'휴대폰 번호를 다시 확인해 주세요.'
@@ -691,7 +682,7 @@ $('apply').addEventListener('submit',async e=>{e.preventDefault();
   try{
     // text/plain 본문이라 Apps Script가 CORS 사전 요청 없이 받음
     const res=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({form:'easy',name:$('name').value.trim(),gender:val('gender'),job:val('job'),jobEtc:$('jobEtc').value.trim(),year:$('year').value,region:vals('region'),regionEtc:vals('region').includes('기타')?$('regionDetail').value.trim():'',regionDetail:$('regionDetail').value.trim(),
-      wantMin:Math.min(a,b),wantMax:Math.max(a,b),values:VALUES.map(val),intro:$('intro').value.trim(),profile:profile(),photos:val('myPhoto')==='등록'?photos.map(p=>p.split(',')[1]):[],share:$('share').checked,photoNeed:val('photoNeed'),myPhoto:val('myPhoto'),photoShare:$('photoShare').checked,aiFix:val('myPhoto')==='등록'&&$('aiFix').checked,
+      wantMin:Math.min(a,b),wantMax:Math.max(a,b),values:VALUES.map(val),intro:$('intro').value.trim(),profile:profile(),photos:val('myPhoto')==='등록'?photos.map(p=>p.split(',')[1]):[],share:$('share').checked,photoNeed:val('myPhoto')==='등록'?'필수':'무관',myPhoto:val('myPhoto'),photoShare:$('photoShare').checked,aiFix:val('myPhoto')==='등록'&&$('aiFix').checked,
       channel:'휴대폰',contact:c,adult:$('adult').checked,unverified:$('unverified').checked,agree:$('agree').checked,
       website:$('website').value,ref:location.search.slice(0,200)})});
     const out=await res.json();
