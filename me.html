@@ -647,7 +647,7 @@ const SCENES=[
   ['④ 매칭 성사·입금',d=>d],
   ['⑤ 상대 입금 대기',d=>(d.matches[0].stage='상대 입금 대기',d)],
   ['⑥ 연결 완료',d=>(d.matches[0].stage='연결 완료',d.matches[0].contact='카카오톡 아이디 hangang_runner',d.matches[0].kakao='hangang_runner',d)],
-  ['⓪ 모집 기간',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],waiting:0,candidates:[],opensAt:'2026-11-16T12:00:00+09:00'})],
+  ['⓪ 모집 기간',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],waiting:0,candidates:[],opensAt:'2026-11-25T12:00:00+09:00'})],
   ['⑦ 오픈 이벤트',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],waiting:0,freeFirst:true,photoGroup:'none'})],
   ['⑧ 첫 매칭 무료·상대 대기',d=>(d.matches[0].stage='상대 입금 대기',d.matches[0].free=true,d)],
   ['⑨ 탈퇴 후',d=>({...d,confirmed:false,left:true})],
