@@ -352,7 +352,7 @@ const shrink=f=>new Promise((ok,no)=>{const img=new Image(),u=URL.createObjectUR
   c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);autoTone(x,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.82));};img.onerror=()=>no();img.src=u;});
 // 「프로필 수정하기」: 닉네임·성별·출생연도·휴대폰은 매니저 채널로만. 나머지는 여기서 바로 바꿈 (서버가 신청서와 같은 규칙으로 다시 확인)
 const JOBS=['대기업','중견기업','중소기업','전문직','공무원','공기업','스타트업 대표','자영업','교사','간호사','프리랜서','기타'];
-const REGIONS=['서울','경기·인천','기타'];
+const REGIONS=['서울','인천','경기 북부','경기 남부','경기 동부','경기 서부','부산','대구','광주','대전','울산','세종','천안·아산','청주','충주','서산·당진','전주','군산·익산','순천·여수·광양','목포','창원·김해','포항·경주','구미','진주','춘천','원주','강릉','제주'];
 const STYLE_OPTS=[0,4,8,12].map(i=>Object.keys(STYLE).slice(i,i+4));
 const PF_KEYS=['성격','취미·관심사','연애 가치관','매력 포인트'];
 function editBox(me){
@@ -362,13 +362,13 @@ function editBox(me){
   const job=sel(JOBS,jobEtcV?'기타':jobRaw,'직업군'),jobEtc=el('input',{className:'pf-in',value:jobEtcV,maxLength:20,placeholder:'직업을 적어 주세요','aria-label':'직업 직접 입력'});
   const syncJob=()=>{jobEtc.hidden=job.value!=='기타';};job.onchange=syncJob;syncJob();
   const regs=String(e.regions||'').split(', '),regEtcV=(regs.join(',').match(/기타\(([^)]*)\)/)||[])[1]||'';
-  const regBoxes=REGIONS.map(r=>{const x=el('input',{type:'checkbox',value:r,checked:regs.some(g=>g===r||(r==='기타'&&g.startsWith('기타(')))});return el('label',{className:'consent'},x,el('span',{textContent:r}));});
+  const regBoxes=REGIONS.concat(regs.includes('경기·인천')?['경기·인천']:[],regs.some(g=>g.startsWith('기타('))?['기타']:[]).map(r=>{const x=el('input',{type:'checkbox',value:r,checked:regs.some(g=>g===r||(r==='기타'&&g.startsWith('기타(')))});return el('label',{className:'consent'},x,el('span',{textContent:r}));});
   const regEtc=el('input',{className:'pf-in',value:regEtcV,maxLength:20,placeholder:'예) 부산','aria-label':'기타 지역'});
   const regDetail=el('input',{className:'pf-in',value:e.regionDetail||'',maxLength:30,placeholder:'자세한 지역 (선택)','aria-label':'자세한 지역'});
   const want=e.want||[1985,1995],wFrom=sel(years,want[0],'이 연도생부터'),wTo=sel(years,want[1],'이 연도생까지');
   const styles=STYLE_OPTS.map((o,i)=>sel(o,me.values[i],STYLE_Q[i]));
-  const intro=el('textarea',{className:'pf-in',rows:2,maxLength:40,value:me.intro||'','aria-label':'한 줄 소개'});
-  const pfs=PF_KEYS.map((k,i)=>el('input',{className:'pf-in',maxLength:30,value:(me.profile||[])[i]||'','aria-label':k}));
+  const intro=el('textarea',{className:'pf-in',rows:2,maxLength:50,value:me.intro||'','aria-label':'한 줄 소개'});
+  const pfs=PF_KEYS.map((k,i)=>el('textarea',{className:'pf-in',rows:3,maxLength:50,value:(me.profile||[])[i]||'','aria-label':k}));
   const kakao=el('input',{className:'pf-in',maxLength:21,value:e.kakao||'',autocapitalize:'off',spellcheck:false,'aria-label':'카카오톡 아이디'});
   const er=el('p',{className:'err',role:'alert',style:'white-space:pre-line'});
   const save=el('button',{type:'button',className:'btn',textContent:'저장하기'});
@@ -379,7 +379,7 @@ function editBox(me){
     ...styles.map((s,i)=>row(STYLE_Q[i],s)),row('한 줄 소개',intro),...pfs.map((p,i)=>row(PF_KEYS[i],p)),
     row('카카오톡 아이디',kakao),
     el('p',{className:'passnote',textContent:'닉네임·성별·출생 연도·휴대폰 번호는 리턴투미 채널로 말씀해 주세요\n연락처·SNS 아이디는 소개 글에 적을 수 없어요'}),er,save);
-  const syncReg=()=>{regEtc.hidden=!regBoxes[2].firstChild.checked;};regBoxes[2].firstChild.onchange=syncReg;syncReg();
+  const etcBox=regBoxes.find(b=>b.firstChild.value==='기타'),syncReg=()=>{regEtc.hidden=!(etcBox&&etcBox.firstChild.checked);};if(etcBox)etcBox.firstChild.onchange=syncReg;syncReg();
   const open=el('button',{type:'button',className:'btn ghost',textContent:'프로필 수정하기'});
   open.onclick=()=>{form.hidden=!form.hidden;open.textContent=form.hidden?'프로필 수정하기':'수정 닫기';};
   save.onclick=async()=>{
