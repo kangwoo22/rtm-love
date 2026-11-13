@@ -28,7 +28,7 @@
   --display:"Gowun Batang","Nanum Myeongjo",serif;
   --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
-body{background:linear-gradient(180deg,#FDFAF7 0%,var(--bg) 40%,#F7EFEC 100%);background-color:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden}
+body{background:linear-gradient(180deg,#FDFAF7 0%,var(--bg) 40%,#F7EFEC 100%);background-color:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden;word-break:keep-all}
 [hidden]{display:none!important}
 .btn:disabled{opacity:.6;cursor:wait}
 #petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
@@ -58,8 +58,9 @@ body{background:linear-gradient(180deg,#FDFAF7 0%,var(--bg) 40%,#F7EFEC 100%);ba
 @keyframes touch{0%,12%{transform:scaleX(0);opacity:1}45%,88%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
 @media (prefers-reduced-motion:reduce){.touch::before,.touch::after{animation:none}}
 .hero .lead{color:var(--muted);margin:0;font-size:15px}
-.hero .event{margin:4px 0 0;padding:8px 16px;border-radius:999px;background:var(--blush);color:var(--rose-dk);font-size:14px;line-height:1.5}
+.hero .event{margin:4px 0 0;padding:10px 22px;border-radius:24px;background:var(--blush);color:var(--rose-dk);font-size:14px;line-height:1.5}
 .hero .event b{font-weight:700}
+.hero .event .free{font-size:17px;letter-spacing:.02em;background:linear-gradient(transparent 60%,#FFC9D6 60%)}
 .divider{width:1px;height:36px;background:linear-gradient(var(--gold),transparent);margin:6px 0}
 @keyframes ctaflow{from{background-position:0 0,0 0}to{background-position:0 0,300% 0}}
 
@@ -241,7 +242,7 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
     <div class="script" aria-hidden="true"><span class="pen"><span class="txt">with love</span></span><svg class="gh" viewBox="0 0 72 60"><defs><linearGradient id="gflow" x1="0" x2="1" spreadMethod="repeat"><stop offset="0" stop-color="#C9A45C"/><stop offset=".3" stop-color="#E8CF94"/><stop offset=".55" stop-color="#D99A7E"/><stop offset=".8" stop-color="#B8894A"/><stop offset="1" stop-color="#C9A45C"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="1 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs><path pathLength="100" d="M0 44C6 46 14 49 24 49C31 45 39 40 42 33C44 28 42 23 37 22C33 21 29 25 27.5 31C27 29 26 26 24 24C20 21 14 24 12 31C10 38 16 44 25 49C30 53 38 54 46 53C54 52 60 49 64 46"/></svg></div>
     <h1>소개팅,<br><b>이제 <span class="touch">가볍게</span> 시작하세요</b></h1>
     <p class="lead">복잡한 프로필 없이 2분 신청.<br>서로 마음이 맞는 상대가 나타나면,<br>인연이 시작됩니다.</p>
-    <p class="event" id="openEvent"><b>🎉 오픈 이벤트</b><br>11/16(월) 낮 12시까지 신청하면 첫 매칭 무료</p>
+    <p class="event" id="openEvent"><b>🎉 오픈 이벤트</b><br>11/16(월) 낮 12시까지 신청하면<br><b class="free">첫 매칭 무료</b></p>
     <script>if(Date.now()>=Date.parse('2026-11-16T12:00:00+09:00'))document.getElementById('openEvent').hidden=true</script>
     <div class="divider" aria-hidden="true"></div>
     <ul class="vows">
@@ -291,7 +292,7 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
         <div class="stack">
           <div class="field">
             <label for="name">닉네임</label>
-            <p class="hint">프로필에는 닉네임이 표기되니,<br>본인을 잘 나타낼 수 있는 닉네임을<br><span class="nw">4글자 이상으로 작성해 주세요.</span></p>
+            <p class="hint">프로필에는 닉네임이 표기되니,<br>본인을 잘 나타낼 수 있는 닉네임을<br><span class="nw">4글자 이상으로 작성해 주세요</span></p>
             <input type="text" id="name" autocomplete="nickname" placeholder="예: 퇴근후산책" maxlength="10">
           </div>
           <fieldset class="field">
@@ -351,7 +352,7 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
       <div class="panel" id="step2" hidden>
         <div class="stack">
           <h2><span class="nw">어떤 연애를 하고 싶은지</span><br>알려 주세요</h2>
-          <p class="hint" style="text-align:center">정답은 없어요.<br><span class="nw">솔직하게 나에 대해 얘기해 주세요.</span></p>
+          <p class="hint" style="text-align:center">정답은 없어요<br><span class="nw">솔직하게 나에 대해 얘기해 주세요</span></p>
           <fieldset class="field">
             <legend>연락은 어느 정도가 편해요?</legend>
             <div class="chips two">
@@ -390,7 +391,7 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
           </fieldset>
           <div class="field">
             <label for="intro">한 줄 소개</label>
-            <p class="hint">상대가 제일 먼저 읽는 문장이에요<br>정성스럽고 길수록 매칭률이 올라갑니다</p>
+            <p class="hint">상대가 제일 먼저 읽는 문장이에요<br>정성스럽게 길게 쓸수록 매칭률이 올라가요</p>
             <textarea id="intro" class="long" rows="2" placeholder="예: 주말엔 한강 러닝하는 걸 좋아해요" maxlength="40"></textarea>
           </div>
           <div class="field">
@@ -420,44 +421,44 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
           <h2>사진 등록 여부와<br><span class="nw">연락 방법을 알려 주세요</span></h2>
           <fieldset class="field">
             <legend>내 사진을 등록하시겠어요?</legend>
-            <p class="hint"><b>사진을 올린 분은 사진을 올린 분들끼리,<br>사진 없이 신청한 분은 사진 없는 분들끼리<br>소개해 드려요.</b></p>
+            <p class="hint"><b>사진을 올린 분은 사진을 올린 분들끼리,<br>사진 없이 신청한 분은 사진 없는 분들끼리<br>소개해 드려요</b></p>
             <div class="chips col">
               <label class="chip"><input type="radio" name="myPhoto" value="등록"><span>네, 등록할게요<br><small>사진 있는 분을 소개받아요</small></span></label>
               <label class="chip"><input type="radio" name="myPhoto" value="없이"><span>사진 없이 신청할게요<br><small>사진 없는 분을 소개받아요</small></span></label>
             </div>
             <div class="note" id="photoNote" hidden>
               <div id="photoPick" class="photo-pick">
-                <span>매니저가 본인 사진인지 확인해요.<br>추천 카드에는 보이지 않고,<br><b>질문을 다 주고받은 상대에게만</b> 보여요.</span>
+                <span>매니저가 본인 사진인지 확인해요<br>추천 카드에는 보이지 않고,<br><b>질문을 다 주고받은 상대에게만</b> 보여요</span>
                 <label class="btn" for="photoFile">사진 고르기 (2장)</label>
                 <input type="file" id="photoFile" accept="image/*" multiple class="sr">
                 <div class="thumbs" id="thumbs"></div>
               </div>
               <label class="consent" for="photoShare"><input type="checkbox" id="photoShare"><span>질문을 다 주고받은 상대에게 내 사진을 보여 주는 데 동의해요 (필수)</span></label>
-              <label class="consent" for="aiFix"><input type="checkbox" id="aiFix"><span>사진을 자연스럽게 다듬는 보정에 동의해요</span></label>
+              <label class="consent" for="aiFix"><input type="checkbox" id="aiFix"><span>자연스러운 사진 보정에 동의해요</span></label>
             </div>
           </fieldset>
           <fieldset class="field">
             <legend>휴대폰 번호</legend>
-            <p class="hint">매칭 소식을 리턴투미 <span class="nw">카카오톡 알림으로 보내 드려요.</span><br>상대에게는 알려 주지 않아요.</p>
+            <p class="hint">매칭 소식을 리턴투미 <span class="nw">카카오톡 알림으로 보내 드려요</span><br>상대에게는 알려 주지 않아요</p>
             <input type="tel" id="contact" aria-label="휴대폰 번호" placeholder="010-0000-0000" inputmode="numeric" maxlength="13" autocomplete="tel">
           </fieldset>
           <fieldset class="field">
             <legend>카카오톡 아이디</legend>
-            <p class="hint">서로 매칭이 되시면<br>상대에게 카카오톡 아이디를 전달해 드려요.<br><b>카카오톡 설정 › 프로필 관리 › 카카오톡 ID에서<br>'ID 검색 허용'을 꼭 켜 주세요.</b></p>
+            <p class="hint">서로 매칭이 되시면<br><span style="white-space:nowrap;font-size:min(13px,3.4vw)">상대에게 카카오톡 아이디를 전달해 드려요</span><br><b>카카오톡 설정 › 프로필 관리 › 카카오톡 ID에서<br>'ID 검색 허용'을 꼭 켜 주세요</b></p>
             <input type="text" id="kakaoId" aria-label="카카오톡 아이디" placeholder="카카오톡 아이디" maxlength="21" autocapitalize="off" autocomplete="off" spellcheck="false">
           </fieldset>
           <div class="note">
-            <span><b>상대에게 보이는 것</b><br>닉네임, 나이(출생 연도), 거주·근무 지역, 연애 스타일 답변, 한 줄 소개, 자기소개(성격·취미·연애 가치관·매력)<br><span class="nw">(사진은 질문을 다 주고받은 상대에게만)</span></span>
+            <span><b>상대에게 보이는 것</b><br>닉네임, 나이(출생 연도), 거주·근무 지역,<br>연애 스타일 답변, 한 줄 소개,<br>자기소개(성격·취미·연애 가치관·매력)<br><span class="nw">(사진은 질문을 다 주고받은 상대에게만)</span></span>
             <span><b>상대에게 보이지 않는 것</b><br><span class="nw">휴대폰 번호,</span> <span class="nw">카카오톡 아이디(연결 전까지),</span> <span class="nw">들어온 경로</span></span>
           </div>
           <details>
             <summary>매칭비·입금 안내</summary>
             <dl>
               <dt>매칭비</dt><dd>20,000원</dd>
-              <dt>입금 시점</dt><dd>두 분 모두 만나고 싶다고 답하면 내 매칭 페이지에 입금 계좌가 바로 떠요. 그 전에는 비용이 들지 않아요.</dd>
-              <dt>입금 계좌</dt><dd>토스뱅크 계좌이고 예금주는 **우예요. 다른 이름의 계좌로 입금을 요청받으면 입금하지 말고 오픈채팅방 매니저에게 알려 주세요.</dd>
-              <dt>입금자명</dt><dd>꼭 내 닉네임으로 바꿔서 보내 주세요. 은행 앱 이체 화면의 '받는 분에게 표시'(또는 '입금자명') 칸에 적으면 돼요. 실명으로 보내면 확인이 늦어질 수 있어요.</dd>
-              <dt>연결</dt><dd>입금이 확인되면 두 분의 카카오톡 아이디를 서로 전달해 드려요.</dd>
+              <dt>입금 시점</dt><dd>두 분 모두 만나고 싶다고 답하면 내 매칭 페이지에 입금 계좌가 바로 떠요. 그 전에는 비용이 들지 않아요</dd>
+              <dt>입금 계좌</dt><dd>토스뱅크 계좌이고 예금주는 **우예요. 다른 이름의 계좌로 입금을 요청받으면 입금하지 말고 오픈채팅방 매니저에게 알려 주세요</dd>
+              <dt>입금자명</dt><dd>꼭 내 닉네임으로 바꿔서 보내 주세요. 은행 앱 이체 화면의 '받는 분에게 표시'(또는 '입금자명') 칸에 적으면 돼요. 실명으로 보내면 확인이 늦어질 수 있어요</dd>
+              <dt>연결</dt><dd>입금이 확인되면 두 분의 카카오톡 아이디를 서로 전달해 드려요</dd>
             </dl>
           </details>
           <div class="consents">
@@ -465,7 +466,7 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
             <label class="consent" for="unverified"><input type="checkbox" id="unverified"><span>신원·직업·혼인 여부 등은 따로 검증하지 않는 서비스임을 확인했어요 (필수)</span></label>
             <label class="consent" for="agree"><input type="checkbox" id="agree"><span>개인정보 수집·이용에 동의합니다 (필수)</span></label>
             <label class="consent" for="share"><input type="checkbox" id="share"><span>매칭 제안 상대에게 위 '상대에게 보이는 것'을 보여 주는 데 동의합니다 (필수)</span></label>
-            <label class="consent" for="notify"><input type="checkbox" id="notify"><span>추천·질문·답장 도착 등 매칭 진행 알림을 카카오톡 알림톡으로 받는 데 동의해요. 호감을 가진 상대가 여러 명이면 알림도 여러 번 와요 (필수)</span></label>
+            <label class="consent" for="notify"><input type="checkbox" id="notify"><span>추천·질문·답장 도착 등 매칭 진행 알림을 카카오톡 알림톡으로 받는 데 동의해요. 상대가 여러 명이면 알림도 여러 번 와요 (필수)</span></label>
           </div>
           <details>
             <summary>수집 항목과 보관 기간 보기</summary>
@@ -473,9 +474,9 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
               <dt>수집 항목</dt><dd>닉네임, 직업군, 성별, 출생 연도, 거주·근무 지역, 희망 상대 나이, 연애 스타일 답변, 한 줄 소개, 자기소개(성격·취미·연애 가치관·매력), 사진 관련 선택, 휴대폰 번호(카카오톡 알림 발송), 카카오톡 아이디(연결 완료 시 상대에게 전달) (사진은 등록하신 경우만)</dd>
               <dt>이용 목적</dt><dd>소개팅 상대 매칭, 매칭 제안과 입금·연결 안내 연락</dd>
               <dt>제공 대상</dt><dd>매칭 제안을 받는 상대 회원 (닉네임·나이·지역·연애 스타일·한 줄 소개. 사진은 동의하신 경우 질문을 다 주고받은 상대에게만, 매칭 여부와 상관없이 제공). 카카오톡 아이디는 두 분이 연결에 동의하고 입금이 확인된 뒤에만 제공 (휴대폰 번호는 제공하지 않음)</dd>
-              <dt>국외 이전 (AI 보정 선택 동의 시)</dt><dd>사진을 보정하기 위해 OpenAI, L.L.C.(미국)로 인터넷을 통해 보내요. 보정이 끝나면 보정본만 받아 저장하고, 동의하지 않으면 보내지 않아요.</dd>
+              <dt>국외 이전 (AI 보정 선택 동의 시)</dt><dd>사진을 보정하기 위해 OpenAI, L.L.C.(미국)로 인터넷을 통해 보내요. 보정이 끝나면 보정본만 받아 저장하고, 동의하지 않으면 보내지 않아요</dd>
               <dt>보관 기간</dt><dd>매칭 서비스 종료 또는 삭제 요청 시까지 보관 후 바로 파기. 오픈채팅방 매니저에게 닉네임으로 말씀하시면 언제든 지워 드려요</dd>
-              <dt>동의 거부</dt><dd>동의하지 않으실 수 있으나, 이 경우 매칭을 제안해 드릴 수 없어요.</dd>
+              <dt>동의 거부</dt><dd>동의하지 않으실 수 있으나, 이 경우 매칭을 제안해 드릴 수 없어요</dd>
             </dl>
           </details>
           <p class="err" id="err2" role="alert"></p>
@@ -497,9 +498,9 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
         <p class="kk-mine">내 메시지 <code id="kkMsg"></code></p>
         <button type="button" class="btn" id="kkCopy">메시지 복사하기</button>
         <a class="btn kk-go" href="https://pf.kakao.com/_wkCzX/chat" target="_blank" rel="noopener">리턴투미 채널로 메시지 보내기</a>
-        <p class="kk-after">카카오 채널로 나만의 매칭 페이지 링크를 보내 드려요</p>
+        <p class="kk-after">카카오 채널로<br>나만의 매칭 페이지 링크를 보내 드려요</p>
       </div>
-      <p class="lead">상대에게는 이렇게 보여요</p>
+      <p class="lead" style="margin-top:16px">상대에게는 이렇게 보여요</p>
       <div class="profile" id="profile">
         <p class="pf-head"><b id="pfName"></b><span id="pfMeta"></span></p>
         <p class="pf-intro" id="pfIntro"></p>
@@ -507,8 +508,8 @@ input[type=text],input[type=tel],select,.long{font-weight:500}
         <dl class="pf-more" id="pfMore"></dl>
         <p class="pf-photo" id="pfPhoto"></p>
       </div>
-      <p class="lead">조건이 맞는 분이 새로 신청하면 매칭 페이지에 나타나요.</p>
-      <p class="hint">리턴투미는 매칭이 성사되기 전에 입금을 요청하지 않아요.<br>내 정보를 지우고 싶으면 언제든 매니저에게 닉네임으로 말씀해 주세요.</p>
+      <p class="lead">조건이 맞는 분이 새로 신청하면<br>매칭 페이지에 나타나요</p>
+      <p class="hint">리턴투미는 매칭이 성사되기 전에<br>입금을 요청하지 않아요<br>내 정보를 지우고 싶으면 언제든<br>매니저에게 닉네임으로 말씀해 주세요</p>
     </section>
     </div>
   </div>
@@ -595,7 +596,7 @@ function show(step){[1,2,3].forEach(i=>{$('step'+i).hidden=step!==i;$('h'+i).cla
 $('next').onclick=()=>{if(!ENDPOINT)return show(2);
   const miss=[!$('name').value.trim()&&'닉네임',!val('gender')&&'성별',!$('year').value&&'출생 연도',!val('job')&&'직업군',val('job')==='기타'&&!$('jobEtc').value.trim()&&'직업',!vals('region').length&&'거주 또는 근무 지역',vals('region').includes('기타')&&!$('regionDetail').value.trim()&&'지역',(!$('wantFrom').value||!$('wantTo').value)&&'상대 나이'].filter(Boolean);
   const short=!miss.length&&$('name').value.trim().length<4;
-  $('err1').textContent=miss.length?miss.join(', ')+'을(를) 입력해 주세요.':short?'닉네임은 4글자 이상으로 써 주세요.':'';
+  $('err1').textContent=miss.length?miss.join(', ')+'을(를) 입력해 주세요':short?'닉네임은 4글자 이상으로 써 주세요':'';
   if(!miss.length&&!short)show(2);};
 // 직업군 '기타'를 고르면 직접 적는 칸을 보여 줌. 상대에게는 적은 직업이 보임
 document.querySelectorAll('input[name=job]').forEach(r=>r.addEventListener('change',()=>{
@@ -606,12 +607,12 @@ document.querySelectorAll('input[name=region]').forEach(r=>r.addEventListener('c
   const on=vals('region').includes('기타');$('regionDetail').hidden=!on;if(on)$('regionDetail').focus();else $('regionDetail').value='';}));
 const regionLabel=()=>vals('region').map(r=>r==='기타'&&$('regionDetail').value.trim()||r).join(', ');
 const VALUES=['v1','v2','v3','v5'];
-// 연애 스타일: 질문 한 줄씩 "연락은? 틈날 때마다 하는 게 좋아요." (landing-easy.html·me.html 같은 내용)
+// 연애 스타일: 질문 한 줄씩 "연락은? 틈날 때마다 하는 게 좋아요" (landing-easy.html·me.html 같은 내용)
 const STYLE_Q=['연락은?','쉬는 날에는?','결혼은?','다툼이 생기면?'];
-const STYLE={'틈날 때마다':'틈날 때마다 하는 게 좋아요.','하루 몇 번':'하루에 몇 번 하는 게 좋아요.','하루 한두 번':'하루 한두 번이면 충분해요.','만날 때 몰아서':'만나서 몰아서 이야기하는 게 좋아요.',
-  '집에서 충전':'주로 집에서 충전해요.','가까운 데 산책':'주로 가까운 곳으로 산책 가요.','약속 잡고 외출':'주로 약속 잡고 밖에 나가요.','여행·액티비티':'주로 여행이나 액티비티를 즐겨요.',
-  '1~2년 안에':'1~2년 안에 하고 싶어요.','인연이면 언제든':'좋은 인연이면 언제든 하고 싶어요.','천천히 생각':'천천히 생각하고 싶어요.','아직 모르겠어요':'아직 잘 모르겠어요.',
-  '바로 대화':'바로 대화로 풀어요.','잠깐 쉬고 대화':'잠깐 쉬었다가 대화해요.','시간을 충분히':'충분히 시간을 갖고 이야기해요.','글로 정리해서':'글로 정리해서 이야기해요.'};
+const STYLE={'틈날 때마다':'틈날 때마다 하는 게 좋아요','하루 몇 번':'하루에 몇 번 하는 게 좋아요','하루 한두 번':'하루 한두 번이면 충분해요','만날 때 몰아서':'만나서 몰아서 이야기하는 게 좋아요',
+  '집에서 충전':'주로 집에서 충전해요','가까운 데 산책':'주로 가까운 곳으로 산책 가요','약속 잡고 외출':'주로 약속 잡고 밖에 나가요','여행·액티비티':'주로 여행이나 액티비티를 즐겨요',
+  '1~2년 안에':'1~2년 안에 하고 싶어요','인연이면 언제든':'좋은 인연이면 언제든 하고 싶어요','천천히 생각':'천천히 생각하고 싶어요','아직 모르겠어요':'아직 잘 모르겠어요',
+  '바로 대화':'바로 대화로 풀어요','잠깐 쉬고 대화':'잠깐 쉬었다가 대화해요','시간을 충분히':'충분히 시간을 갖고 이야기해요','글로 정리해서':'글로 정리해서 이야기해요'};
 const styleLines=vs=>vs.map((v,i)=>{const p=document.createElement('p'),b=document.createElement('b');b.textContent=STYLE_Q[i];p.append(b,' '+(STYLE[v]||v||''));return p;});
 // 닉네임·소개 글에 연락처·SNS를 적어 매칭비 없이 연결하는 걸 막음 (매칭 페이지·서버와 같은 규칙)
 const CONTACT=[/0\s*1\s*[016789](?:[\s.\-]*\d){7,8}/,/\d(?:[\s.\-]*\d){8,}/,/공\s*일\s*공|영\s*일\s*영/,
@@ -623,7 +624,7 @@ const PROFILE=['pf1','pf2','pf3','pf4'];
 const profile=()=>PROFILE.map(i=>$(i).value.trim());
 $('next2').onclick=()=>{if(!ENDPOINT)return show(3);const left=VALUES.filter(n=>!val(n)).length+profile().filter(x=>!x).length;
   const bad=[$('intro').value,...profile()].some(hasContact);
-  $('errV').textContent=left?`${left}개 문항이 남았어요.`:bad?'소개 글에는 연락처·SNS 아이디를 쓸 수 없어요.':'';if(!left&&!bad)show(3);};
+  $('errV').textContent=left?`${left}개 문항이 남았어요`:bad?'소개 글에는 연락처·SNS 아이디를 쓸 수 없어요':'';if(!left&&!bad)show(3);};
 $('back1').onclick=()=>show(1);
 $('back2').onclick=()=>show(2);
 // 사진은 끼리끼리: 올리면 사진 있는 분끼리(공개 동의 필수), 안 올리면 사진 없는 분끼리. 서버의 '상대 사진 필요'는 이걸로 채움
@@ -654,7 +655,7 @@ function autoTone(x,w,h){const d=x.getImageData(0,0,w,h),p=d.data,n=w*h,src=new 
 const shrink=f=>new Promise((ok,no)=>{const img=new Image(),u=URL.createObjectURL(f);img.onload=()=>{const k=Math.min(1,720/Math.max(img.width,img.height)),c=document.createElement('canvas');
   c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);autoTone(x,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.82));};img.onerror=()=>no();img.src=u;});
 $('photoFile').addEventListener('change',async e=>{const fs=[...e.target.files].slice(0,2);e.target.value='';$('err2').textContent='';
-  try{photos=await Promise.all(fs.map(shrink));}catch(err){photos=[];$('err2').textContent='사진을 읽지 못했어요. 다른 사진으로 골라 주세요.';}
+  try{photos=await Promise.all(fs.map(shrink));}catch(err){photos=[];$('err2').textContent='사진을 읽지 못했어요. 다른 사진으로 골라 주세요';}
   $('thumbs').replaceChildren(...photos.map(src=>Object.assign(document.createElement('img'),{src,alt:'고른 사진'})));});
 document.querySelectorAll('input[name=myPhoto]').forEach(r=>r.addEventListener('change',syncPhoto));
 // 알림톡은 휴대폰 번호로 가서 연락처는 번호 하나로 받음
@@ -683,14 +684,14 @@ $('apply').addEventListener('submit',async e=>{e.preventDefault();
   const c=$('contact').value.trim();
   const contactOk=/^01[016789]-\d{3,4}-\d{4}$/.test(c);
   const kakao=$('kakaoId').value.trim().replace(/^@/,'').toLowerCase();
-  const msg=hasContact($('name').value)?'닉네임에는 연락처·SNS 아이디를 쓸 수 없어요.'
-    :!val('myPhoto')?'사진 등록 여부를 골라 주세요.'
-    :val('myPhoto')==='등록'&&!photos.length?'등록할 사진을 골라 주세요.'
-    :val('myPhoto')==='등록'&&!$('photoShare').checked?'사진 공개에 동의해 주세요.'
-    :!contactOk?'휴대폰 번호를 다시 확인해 주세요.'
+  const msg=hasContact($('name').value)?'닉네임에는 연락처·SNS 아이디를 쓸 수 없어요'
+    :!val('myPhoto')?'사진 등록 여부를 골라 주세요'
+    :val('myPhoto')==='등록'&&!photos.length?'등록할 사진을 골라 주세요'
+    :val('myPhoto')==='등록'&&!$('photoShare').checked?'사진 공개에 동의해 주세요'
+    :!contactOk?'휴대폰 번호를 다시 확인해 주세요'
     :!/^[a-z0-9._-]{2,20}$/.test(kakao)?'카카오톡 아이디를 다시 확인해 주세요. (영문·숫자·. _ -)'
-    :!$('adult').checked?'성인만 신청할 수 있어요.':!$('unverified').checked?'검증 안내를 확인해 주세요.'
-    :!$('agree').checked?'개인정보 수집·이용에 동의해 주세요.':!$('share').checked?'상대에게 프로필을 보여 주는 데 동의해 주세요.':!$('notify').checked?'매칭 진행 알림 수신에 동의해 주세요.':'';
+    :!$('adult').checked?'성인만 신청할 수 있어요':!$('unverified').checked?'검증 안내를 확인해 주세요'
+    :!$('agree').checked?'개인정보 수집·이용에 동의해 주세요':!$('share').checked?'상대에게 프로필을 보여 주는 데 동의해 주세요':!$('notify').checked?'매칭 진행 알림 수신에 동의해 주세요':'';
   $('err2').textContent=msg;if(msg)return;
   if(!ENDPOINT)return finish();
   const btn=$('send');btn.disabled=true;btn.textContent='보내는 중…';
@@ -705,7 +706,7 @@ $('apply').addEventListener('submit',async e=>{e.preventDefault();
     if(!out.ok)throw new Error(out.error);
     finish();
   }catch(err){
-    $('err2').textContent='신청이 전송되지 않았어요. 잠시 후 다시 눌러 주세요.';
+    $('err2').textContent='신청이 전송되지 않았어요. 잠시 후 다시 눌러 주세요';
     btn.disabled=false;btn.textContent='신청하기';
   }});
 </script>
