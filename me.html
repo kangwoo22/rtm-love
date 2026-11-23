@@ -606,9 +606,9 @@ function render(d){
   // 질문을 주고받는 중(보냄·받음·답장 대기)엔 새 분을 소개하지 않음. 매칭·패스·12시간 마감으로 끝나면 다시 하루 1명
   const talking=d.waiting||d.likedMe.length||d.answered.length||d.replied.length||d.decide.length; // 상대가 패스해 끝난 대화도 내가 답할 때까진 대화 중처럼
   if(d.confirmed&&!m)v.append(sec('나와 잘 맞는 분',...(talking?[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:'지금 대화 중인 분이 있어요\n대화가 끝나면 새 인연을 소개해요'})]
-    :d.candidates.length?d.candidates.map(c=>{const b=card(noPic(c),askBtn(c));b.append(el('p',{className:'passnote',style:'white-space:pre;font-size:clamp(10px,3.4vw,12px)',textContent:'한 번 패스하면 다시는 이 프로필을 볼 수 없어요\n신중히 선택해 주세요!'}));return b;})
-    :[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:opens?`지금은 좋은 분들을 모으고 있어요\n${opens}부터 소개해 드려요`:d.doneToday?'오늘 소개는 여기까지예요\n내일 새로운 분을 소개해 드려요':'지금은 소개해 드릴 분이 없어요\n새로운 인연이 오면 알려드릴게요 :)'})]),
-    el('p',{className:'daily',style:'white-space:pre-line',textContent:'소개는 하루 1명씩, 매일 새로 업데이트돼요\n사진은 질문을 다 주고받으면 서로 보여요'})));
+    :d.candidates.length?d.candidates.map(c=>{const b=card(noPic(c),askBtn(c));if(c.near)b.prepend(el('p',{className:'passnote',style:'font-size:clamp(10px,3.4vw,12px)',textContent:'희망 조건과 가장 가까운 분을 소개해 드려요'}));b.append(el('p',{className:'passnote',style:'white-space:pre;font-size:clamp(10px,3.4vw,12px)',textContent:'한 번 패스하면 다시는 이 프로필을 볼 수 없어요\n신중히 선택해 주세요!'}));return b;})
+    :[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:opens?`지금은 좋은 분들을 모으고 있어요\n${opens}부터 소개해 드려요`:d.nextAt?`다음 분은 ${new Date(d.nextAt).toLocaleString('ko-KR',{month:'long',day:'numeric',hour:'numeric'})}에\n소개해 드려요`:'지금은 소개해 드릴 분이 없어요\n새로운 인연이 오면 알려드릴게요 :)'})]),
+    el('p',{className:'daily',style:'white-space:pre-line',textContent:'패스하시면 24시간 뒤에 다음 분을 소개해 드려요\n사진은 질문을 다 주고받으면 서로 보여요'})));
   if(d.confirmed&&!m&&talking)v.lastChild.classList.add('off'); // 대화 중엔 추천 칸을 쉬는 중처럼 흐리게
   // 내 프로필 · 사진: 접어 두되, 열면 '더 보기' 없이 사진·연애 스타일·자기소개까지 한 번에 다 보이게
   const mine=card(d.me),more=mine.querySelector('details.more');
@@ -658,6 +658,9 @@ const SCENES=[
   ['⑭ 만나보고 싶어요 뒤 상대가 패스',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],waiting:0,decide:d.answered.map(c=>({...c,ended:true,liked:true}))})],
   ['⑮ 답장 없이 끝남',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],waiting:0,noReply:true})],
   ['⑯ 상대가 먼저 입금',d=>(d.matches[0].theirPaid=true,d)],
+  ['⑰ 추천 (패스 전까지 고정)',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],decide:[],waiting:0})],
+  ['⑱ 조건 밖 가장 가까운 분',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],decide:[],waiting:0,candidates:d.candidates.map(c=>({...c,near:true}))})],
+  ['⑲ 패스 뒤 24시간',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],decide:[],waiting:0,candidates:[],nextAt:new Date(Date.now()+864e5).toISOString()})],
 ];
 // 고객 여정 페이지(journey/)가 #s0~#s9로 단계 고정해 끼워 넣음 (그땐 단계 버튼 숨김)
 const fixed=/^#s\d+$/.test(location.hash);
