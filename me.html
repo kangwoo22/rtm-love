@@ -412,7 +412,7 @@ function photoBox(me){
       if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'photo',token,photoShare:true,aiFix:aiFix.checked,photos:picked.map(p=>p.split(',')[1])})})).json();if(!r.ok)throw 0;load();}
       else{send.textContent='올렸어요 (예시)';}
     }catch(e){send.disabled=false;send.textContent='사진 올리기';$('err').textContent='올리지 못했어요\n잠시 후 다시 눌러 주세요';}};
-  return el('section',null,el('h2',{textContent:'내 사진'}),
+  return el('section',{className:'photobox'},el('h2',{textContent:'내 사진'}),
     el('p',{className:'muted',textContent:'매니저가 본인 사진인지 확인해요\n추천 카드에는 보이지 않고, 질문을 다 주고받은 상대에게만 보여요'+(me.photos.length?' 새로 올리면 매니저가 확인할 때까지 지금 사진이 그대로 보여요':'')}),
     el('label',{className:'btn',htmlFor:'photoFile',textContent:me.photos.length?'사진 바꾸기 (2장)':'사진 고르기 (2장)'}),file,thumbs,
     el('label',{className:'consent',htmlFor:'photoAgree'},agree,el('span',{textContent:'질문을 다 주고받은 상대에게 내 사진을 보여 주는 데 동의해요'})),
@@ -610,6 +610,14 @@ function render(d){
     :[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:opens?`지금은 좋은 분들을 모으고 있어요\n${opens}부터 소개해 드려요`:d.nextAt?`다음 분은 ${new Date(d.nextAt).toLocaleString('ko-KR',{month:'long',day:'numeric',hour:'numeric'})}에\n소개해 드려요`:'지금은 소개해 드릴 분이 없어요\n새로운 인연이 오면 알려드릴게요 :)'})]),
     el('p',{className:'daily',style:'white-space:pre-line',textContent:'패스하시면 24시간 뒤에 다음 분을 소개해 드려요\n사진은 질문을 다 주고받으면 서로 보여요'})));
   if(d.confirmed&&!m&&talking)v.lastChild.classList.add('off'); // 대화 중엔 추천 칸을 쉬는 중처럼 흐리게
+  // 사진 없는 회원: 사진 없는 분끼리만 소개돼 조건이 덜 맞을 수 있음 → 사진 등록 유도 (누르면 '내 프로필 · 사진'을 열고 사진 칸으로)
+  if(d.confirmed&&!m&&d.photoGroup==='none'){
+    const go=el('button',{type:'button',className:'btn',textContent:'내 사진 등록하기'});
+    go.onclick=()=>{const mine=document.querySelector('details.mine');if(mine){mine.open=true;(mine.querySelector('.photobox')||mine).scrollIntoView({behavior:'smooth',block:'center'});}};
+    v.lastChild.insertBefore(el('div',{className:'box nudge'},
+      el('p',{style:'white-space:pre-line;text-align:center;margin:0 0 10px',innerHTML:'📸 <b>회원 대부분이 사진을 등록했어요</b>\n사진이 없으면 사진이 없는 분들 중에서만 소개돼서\n<b>희망 조건과 맞지 않는 분</b>이 소개될 수 있어요'}),
+      go,el('p',{className:'passnote',style:'text-align:center;margin:8px 0 0',textContent:'사진은 질문을 다 주고받은 분께만 공개돼요'})),v.lastChild.children[1]);
+  }
   // 내 프로필 · 사진: 접어 두되, 열면 '더 보기' 없이 사진·연애 스타일·자기소개까지 한 번에 다 보이게
   const mine=card(d.me),more=mine.querySelector('details.more');
   more.replaceWith(el('div',{className:'more-open'},...[...more.children].filter(x=>x.tagName!=='SUMMARY')));
@@ -660,6 +668,7 @@ const SCENES=[
   ['⑯ 상대가 먼저 입금',d=>(d.matches[0].theirPaid=true,d)],
   ['⑰ 추천 (패스 전까지 고정)',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],decide:[],waiting:0})],
   ['⑱ 조건 밖 가장 가까운 분',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],decide:[],waiting:0,candidates:d.candidates.map(c=>({...c,near:true}))})],
+  ['⑳ 사진 없는 회원',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],decide:[],waiting:0,photoGroup:'none',me:{...d.me,photos:[],photoState:'없음'},candidates:d.candidates.map(c=>({...c,near:true}))})],
   ['⑲ 패스 뒤 24시간',d=>({...d,matches:[],likedMe:[],answered:[],replied:[],decide:[],waiting:0,candidates:[],nextAt:new Date(Date.now()+864e5).toISOString()})],
 ];
 // 고객 여정 페이지(journey/)가 #s0~#s9로 단계 고정해 끼워 넣음 (그땐 단계 버튼 숨김)
