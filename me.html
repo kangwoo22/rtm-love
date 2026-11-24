@@ -7,7 +7,7 @@
 <style>body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>리턴투미 내 매칭</title>
+<title>리턴투미 질문소개팅</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
@@ -171,10 +171,23 @@ textarea.pf-in{resize:vertical}
 .reply textarea.bad{border-color:var(--rose);background:#FFF1F5}
 .reply textarea{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;min-height:64px}
 .leave{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:8px}.leave .btn.ghost{font-size:13px;padding:6px 10px} /* 접힌 칸 안의 '내 사진' 제목은 형광펜 없이 */
+/* 아래로 당겨 새로고침 표시 (카톡 안 브라우저엔 기본 기능이 없어서 직접). 기본 당김 새로고침은 꺼서 두 번 안 돌게 */
+html{overscroll-behavior-y:contain}
+/* 탈퇴 후 감사 인사: 손글씨 같은 명조체로 크게, 브랜드 이름만 분홍 그라데이션 */
+.thanks{text-align:center;padding:6px 0 2px}
+.thanks p{margin:0;font-family:"Gowun Batang",serif}
+.thanks .t1{font-size:15px;color:var(--muted);letter-spacing:.02em}
+.thanks .t2{margin-top:6px;font-size:clamp(24px,7.4vw,30px);line-height:1.3;color:var(--ink)}
+.thanks .t2 b{font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.thanks .t3{margin-top:4px;font-size:clamp(18px,5.4vw,22px);color:var(--ink)}
+.thanks .t4{margin-top:12px;font-size:18px;color:var(--rose)}
+.ptr{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:50;transform:translate(-50%,-70px);transition:transform .2s;
+  background:var(--paper);color:var(--rose-dk);font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;box-shadow:var(--shadow);pointer-events:none}
+.ptr.drag{transition:none}
 </style>
 
 <div class="page">
-  <header><div class="script" id="hdrIco"></div><h1>내 <em>매칭</em> 페이지</h1><p class="muted">이 링크는 나만 볼 수 있어요<br>다른 사람에게 보내지 마세요</p></header>
+  <header><div class="script" id="hdrIco"></div><h1>내 <em>매칭</em> 페이지</h1><p class="muted">이 링크는 나만 볼 수 있어요<span style="display:block;margin-top:10px">링크를 다른 사람과 공유하지 마세요</span></p></header>
   <p class="muted" id="loading" style="text-align:center">불러오는 중이에요…</p>
   <div id="view" hidden></div>
   <p class="err" id="err" role="alert"></p>
@@ -269,7 +282,7 @@ function card(c,action){
     el('p',{className:'pf-head'},el('b',{textContent:c.name}),el('span',{textContent:[String(c.year).slice(2)+'년생',c.job,c.regions].filter(Boolean).join(' · ')})),
     c.intro&&el('p',{className:'pf-intro',textContent:c.intro}),more,
     // 추천·질문 카드엔 사진이 없어 '왜 사진이 없지?' 하지 않게 '더 보기' 바로 밑에 안내
-    action&&!c.answers&&!c.photoState&&!c.photos.length&&el('p',{className:'pf-photo',style:'text-align:center;margin:-4px 0 0;white-space:nowrap;font-size:clamp(10px,3.6vw,13px)',textContent:'🖼️ 사진은 질문을 다 주고받은 뒤에 공개돼요'}));
+    action&&!c.answers&&!c.photoState&&!c.photos.length&&el('p',{className:'pf-photo',style:'text-align:center;margin:2px 0 0;white-space:nowrap;font-size:clamp(12px,3.8vw,14px);font-weight:600;color:var(--rose-dk)',textContent:'🖼️ 사진은 질문이 다 오고 가면 볼 수 있어요!'}));
   if(action)box.append(action);
   if(c.until)box.prepend(timer(c.until,c.kind)); // 답장 기한은 카드 맨 위: 열자마자 12시간 안에 답해야 한다는 걸 보게
   return box;
@@ -281,7 +294,7 @@ function left(until){const ms=new Date(until)-Date.now();if(ms<=0)return '응답
 const WHY={reply:'12시간 안에 답장을 보내 주세요',last:'12시간 안에 마지막 답장을 보내 주세요',pick:"'만나보고 싶어요'나 '패스'를 골라 주세요",wait:'상대가 12시간 안에 답장하지 않으면'};
 function timer(until,kind='reply'){const t=el('b',{className:'t',textContent:left(until)});
   const p=el('p',{className:'timer'+(new Date(until)-Date.now()<2*36e5?' soon':'')},el('span',{className:'clock',innerHTML:CLOCK}),t,
-    el('span',{className:'why',textContent:WHY[kind]+(kind==='wait'?'\n':'\n시간이 지나면 ')+'마음이 닿기 전에 인연이 끝나요'}));p.dataset.until=until;return p;}
+    el('span',{className:'why',textContent:WHY[kind]+(kind==='wait'?'\n':'\n시간이 지나면 ')+'마음이 닿을 수 없어요'}));p.dataset.until=until;return p;}
 setInterval(()=>document.querySelectorAll('.timer').forEach(p=>{p.querySelector('.t').textContent=left(p.dataset.until);p.classList.toggle('soon',new Date(p.dataset.until)-Date.now()<2*36e5);}),1e3);
 function likeBtn(c){
   const b=el('button',{type:'button',className:'btn',textContent:'만나보고 싶어요'});
@@ -325,6 +338,15 @@ function tossBtn(account){
   if(!no)return null;
   const bank=/^[가-힣A-Za-z]+/.test(account)?account.match(/^[가-힣A-Za-z]+/)[0]:'토스뱅크';
   return el('a',{className:'btn toss',href:`supertoss://send?bank=${encodeURIComponent(bank)}&accountNo=${no}&amount=20000`,textContent:'토스로 2만 원 보내기'});
+}
+// 토스가 없는 분: '은행 계좌번호'를 복사 → 아무 은행 앱 송금 화면에 붙여 넣으면 은행·계좌가 같이 채워짐
+function acctCopyBtn(account){
+  const no=(String(account).match(/\d[\d-]{7,}\d/)||[''])[0].replace(/-/g,'');
+  if(!no)return null;
+  const bank=/^[가-힣A-Za-z]+/.test(account)?account.match(/^[가-힣A-Za-z]+/)[0]:'토스뱅크',v=bank+' '+no;
+  const b=el('button',{type:'button',className:'btn',style:'background:var(--paper);color:var(--ink);border:1.5px solid var(--line);box-shadow:none;margin-top:8px',textContent:'계좌번호 복사하기'});
+  b.onclick=()=>(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>{b.textContent='복사했어요! 은행 앱에서 붙여 넣으세요';},()=>{b.textContent=v+' (길게 눌러 복사)';});
+  return b;
 }
 // 내 사진 올리기·바꾸기: 긴 변 720px JPEG로 줄여 최대 2장, 올리면 매니저가 다시 확인
 // 기본 보정(올릴 때 폰에서 바로, 사진은 밖으로 안 나감). 얼굴 모양·이목구비 선은 그대로 두고 자잘한 것만:
@@ -459,7 +481,9 @@ function askBtn(c){
       try{await send({type:'ask',to:c.id,questions:qs});
         wrap.replaceChildren(el('p',{className:'sent',textContent:'질문을 보냈어요\n답장이 오면 알려 드려요'}),el('ol',{className:'qlist'},...qs.map(q=>el('li',{textContent:q}))));
         if(ENDPOINT)setTimeout(load,1500);}
-      catch(e){go.disabled=false;go.textContent=`질문 ${PICK}개 보내기`;$('err').textContent='전송되지 않았어요\n잠시 후 다시 눌러 주세요';}};
+      catch(e){go.disabled=false;go.textContent=`질문 ${PICK}개 보내기`;
+        if(e==='asked'){await load();$('err').textContent='상대분이 먼저 질문을 보냈어요\n받은 질문에 답하면서 내 질문 5개도 고를 수 있어요';return;}
+        $('err').textContent='전송되지 않았어요\n잠시 후 다시 눌러 주세요';}};
     wrap.replaceChildren(el('p',{className:'muted',style:'text-align:center',textContent:`궁금한 질문 ${PICK}개를 골라 주세요`}),pk.node,go,passBtn(c));
   };
   wrap.append(el('div',{className:'pair'},passBtn(c),open));
@@ -558,10 +582,11 @@ function render(d){
   const sorry=d.replied.concat(d.decide).some(c=>closed[c.id]==='like'||(c.ended&&c.liked));
   const keep=c=>!closed[c.id]&&!(c.ended&&c.liked);d.replied=d.replied.filter(keep);d.decide=d.decide.filter(keep); // 닫은 대화는 목록에서 빼고 // 소개가 멈춘(숨김·탈퇴) 회원은 서버가 목록을 안 줌
   const v=$('view');v.replaceChildren();viewer=d.me.name;
+  document.querySelector('header').hidden=!!d.left; // 탈퇴 뒤엔 '내 매칭 페이지·나만 볼 수 있어요' 머리말 없이 감사 인사만
   const m=d.matches[0],sec=(t,...k)=>el('section',null,el('h2',{textContent:t}),...k);
   const step=m?(m.stage==='연결 완료'?3:2):(d.likedMe.length||d.answered.length||d.replied.length||d.decide.length||d.waiting?1:0);
   const opens=d.opensAt&&new Date(d.opensAt).toLocaleDateString('ko-KR',{month:'long',day:'numeric'});
-  const todo=d.left?'탈퇴했어요\n그동안 이용해 주셔서 감사해요\n다시 이용하시려면 신청서를 새로 작성해 주세요'
+  const todo=d.left?'그동안 리턴투미 라이트를\n이용해 주셔서 감사합니다'
     :!d.confirmed?'지금은 소개가 잠시 멈춰 있어요\n리턴투미 채널로 문의해 주세요'
     :opens?`소개는 ${opens}부터 시작돼요`
     :m&&m.free&&m.stage==='상대 입금 대기'?'첫 매칭은 오픈 이벤트로 무료예요\n상대를 기다리는 중이에요'
@@ -574,14 +599,14 @@ function render(d){
     :d.waiting?'질문을 보냈어요\n답장이 오면 알려 드려요'
     :"궁금한 분께\n'더 알아보고 싶어요'를\n눌러 주세요";
   v.append(el('div',{className:'notice'},el('div',{className:'orb','aria-hidden':'true'}),
-    el('ol',{className:'steps'},...STEPS.map((t,i)=>el('li',{className:'s'+i+' '+(i<step?'done':i===step?'on':'')},el('b',{textContent:i<step?'✓':String(i+1)}),el('span',{textContent:t})))),
-    el('p',{className:'todo',textContent:todo}),!m&&d.confirmed&&d.freeFirst&&el('p',{className:'daily',textContent:'🎉 오픈 이벤트: 첫 매칭은 무료예요'}),!d.confirmed&&!d.left&&channelBtn()));
+    !d.left&&el('ol',{className:'steps'},...STEPS.map((t,i)=>el('li',{className:'s'+i+' '+(i<step?'done':i===step?'on':'')},el('b',{textContent:i<step?'✓':String(i+1)}),el('span',{textContent:t})))),
+    d.left?el('div',{className:'thanks',innerHTML:'<p class="t1">그동안</p><p class="t2"><b>리턴투미 라이트</b>를</p><p class="t3">이용해 주셔서 감사합니다</p><p class="t4" aria-hidden="true">♡</p>'}):el('p',{className:'todo',textContent:todo}),d.left&&el('p',{className:'passnote',style:'text-align:center',textContent:'다시 이용하시려면 신청서를 새로 작성해 주세요'}),!m&&d.confirmed&&d.freeFirst&&el('p',{className:'daily',textContent:'🎉 오픈 이벤트: 첫 매칭은 무료예요'}),!d.confirmed&&!d.left&&channelBtn()));
   if(d.left)return;
   if(m&&d.confirmed){
     const box=el('div',{className:'box'});
     if(m.stage==='입금 안내')box.append(el('p',{className:'nudge'+(m.theirPaid?' hot':''),style:'white-space:pre;font-size:clamp(10px,3.5vw,14px)',innerHTML:(m.theirPaid?'상대분은 이미 입금하고 <b>기다리고 있어요</b>\n지금 입금하시면 바로 연결돼요!':'상대분도 매칭 소식을 받고 <b>기다리고 있어요</b>\n먼저 입금해 주시면 그만큼 빨리 연결돼요').replace(/<b>/,`<b style="font-size:1.1em;font-weight:800;background:linear-gradient(transparent 55%,${m.theirPaid?'rgba(255,255,255,.35)':'#FFB8CA'} 55%)">`)}),
       el('p',{className:'contact acct',textContent:m.account||'계좌는 채널로 문의해 주세요'}),
-      tossBtn(m.account),
+      tossBtn(m.account),acctCopyBtn(m.account),
       el('p',{className:'payname'},el('span',{textContent:'입금자명'}),el('span',{className:'contact',textContent:viewer})),el('p',{className:'muted',style:'text-align:center'},el('span',{className:'hl',textContent:'입금자명을 꼭 닉네임으로 바꿔서 보내 주세요'})),
       el('p',{className:'muted',style:'text-align:center',innerHTML:'입금 후 조금만 기다려 주세요<br>상대방 입금이 확인되는 대로<br>카카오톡 아이디를 보내 드릴게요 :)'}));
     if(m.stage==='연결 완료')box.append(el('p',{className:'muted',style:'text-align:center',textContent:m.kakao?'상대 카카오톡 아이디':'상대 연락처'}),el('p',{className:'contact acct',textContent:m.kakao||m.contact}),copyBtn(m.contact,m.kakao),
@@ -622,9 +647,10 @@ function render(d){
   const mine=card(d.me),more=mine.querySelector('details.more');
   more.replaceWith(el('div',{className:'more-open'},...[...more.children].filter(x=>x.tagName!=='SUMMARY')));
   v.append(el('details',{className:'more mine'},el('summary',{textContent:'내 프로필 · 사진'}),
-    el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요'}),mine,editBox(d.me),photoBox(d.me)));
+    el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요'}),mine,editBox(d.me),
+    (m||talking)?el('p',{className:'muted',style:'text-align:center;white-space:pre-line',textContent:'사진은 소개 단계에서만 바꿀 수 있어요\n질문을 주고받는 중이나 매칭 중에는 바꿀 수 없어요'}):photoBox(d.me)));
   v.append(el('div',{className:'leave'},twice('탈퇴하기','정말 탈퇴할까요? 한 번 더 누르면 탈퇴돼요','leave','btn ghost'),
-    el('p',{className:'passnote',innerHTML:'탈퇴하면 더 이상 소개받지 않고,<br>다른 분께도 소개되지 않아요'})));
+    el('p',{className:'passnote',innerHTML:'탈퇴하면 더 이상 서비스를 이용하기 어려워요<br>개인정보는 확인 후 바로 삭제해 드려요'})));
 }
 // 예시 화면(ENDPOINT 비었을 때만): 실제 회원이 아닌 예시 데이터, 사진 자리는 그려 넣은 회색 칸
 // 예시 사진: 실제 사람 대신 그려 넣은 풍경(노을·바다·산) — 워터마크·흐림이 실제 사진 위에서 어떻게 보이는지 확인용
@@ -695,6 +721,15 @@ async function load(){
   }
   $('loading').hidden=true;
 }
+// 아래로 당겨 새로고침: 맨 위에서 70px 넘게 끌었다 놓으면 페이지는 그대로 두고 내용만 다시 불러옴
+(()=>{const p=el('div',{className:'ptr',textContent:'아래로 당겨 새로고침'});document.body.append(p);let y0=null,dy=0,busy=false;
+  addEventListener('touchstart',e=>{y0=scrollY<=0&&!busy?e.touches[0].clientY:null;dy=0;},{passive:true});
+  addEventListener('touchmove',e=>{if(y0===null)return;dy=Math.max(0,e.touches[0].clientY-y0);p.classList.add('drag');
+    p.style.transform=`translate(-50%,${Math.min(dy,110)*.7-70}px)`;p.textContent=dy>70?'놓으면 새로고침':'아래로 당겨 새로고침';},{passive:true});
+  addEventListener('touchend',async()=>{if(y0===null)return;y0=null;p.classList.remove('drag');
+    if(dy>70&&!busy){busy=true;p.textContent='불러오는 중…';p.style.transform='translate(-50%,0)';await load();busy=false;}
+    p.style.transform='';},{passive:true});
+})();
 load();
 </script>
 
