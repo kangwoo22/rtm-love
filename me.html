@@ -319,9 +319,12 @@ function passBtn(c){
   const b=el('button',{type:'button',className:'btn ghost',textContent:'패스'});
   b.onclick=async()=>{b.disabled=true;$('err').textContent='';
     try{
-      if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'pass',token,to:c.id})})).json();if(!r.ok)throw 0;load();}
+      b.textContent='패스하는 중…';
+      if(ENDPOINT){const r=await(await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({type:'pass',token,to:c.id})})).json();if(!r.ok)throw 0;
+        const box=b.closest('.box');if(box)box.replaceChildren(el('p',{className:'muted',style:'text-align:center',textContent:'패스했어요 · 화면을 새로 불러오는 중…'}));
+        await load();}
       else b.closest('.box').remove();
-    }catch(e){b.disabled=false;$('err').textContent='전송되지 않았어요\n잠시 후 다시 눌러 주세요';}};
+    }catch(e){b.disabled=false;b.textContent='패스';$('err').textContent='전송되지 않았어요\n잠시 후 다시 눌러 주세요';}};
   return b;
 }
 const answer=c=>el('div',{className:'pair'},passBtn(c),likeBtn(c));
@@ -597,7 +600,8 @@ function render(d){
     :d.answered.length?'답장과 함께 질문이 왔어요\n나도 답장을 보내 주세요'
     :d.likedMe.length?'나에게 질문이 왔어요\n답장하고 나도 질문해요'
     :d.waiting?'질문을 보냈어요\n답장이 오면 알려 드려요'
-    :"궁금한 분께\n'더 알아보고 싶어요'를\n눌러 주세요";
+    :d.candidates.length?"궁금한 분께\n'더 알아보고 싶어요'를\n눌러 주세요"
+    :'다음 인연을\n준비하고 있어요';
   v.append(el('div',{className:'notice'},el('div',{className:'orb','aria-hidden':'true'}),
     !d.left&&el('ol',{className:'steps'},...STEPS.map((t,i)=>el('li',{className:'s'+i+' '+(i<step?'done':i===step?'on':'')},el('b',{textContent:i<step?'✓':String(i+1)}),el('span',{textContent:t})))),
     d.left?el('div',{className:'thanks',innerHTML:'<p class="t1">그동안</p><p class="t2"><b>리턴투미 라이트</b>를</p><p class="t3">이용해 주셔서 감사합니다</p><p class="t4" aria-hidden="true">♡</p>'}):el('p',{className:'todo',textContent:todo}),d.left&&el('p',{className:'passnote',style:'text-align:center',textContent:'다시 이용하시려면 신청서를 새로 작성해 주세요'}),!m&&d.confirmed&&d.freeFirst&&el('p',{className:'daily',textContent:'🎉 오픈 이벤트: 첫 매칭은 무료예요'}),!d.confirmed&&!d.left&&channelBtn()));
@@ -632,8 +636,8 @@ function render(d){
   const talking=d.waiting||d.likedMe.length||d.answered.length||d.replied.length||d.decide.length; // 상대가 패스해 끝난 대화도 내가 답할 때까진 대화 중처럼
   if(d.confirmed&&!m)v.append(sec('나와 잘 맞는 분',...(talking?[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:'지금 대화 중인 분이 있어요\n대화가 끝나면 새 인연을 소개해요'})]
     :d.candidates.length?d.candidates.map(c=>{const b=card(noPic(c),askBtn(c));if(c.near)b.prepend(el('p',{className:'passnote',style:'font-size:clamp(10px,3.4vw,12px)',textContent:'희망 조건과 가장 가까운 분을 소개해 드려요'}));b.append(el('p',{className:'passnote',style:'white-space:pre;font-size:clamp(10px,3.4vw,12px)',textContent:'한 번 패스하면 다시는 이 프로필을 볼 수 없어요\n신중히 선택해 주세요!'}));return b;})
-    :[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:opens?`지금은 좋은 분들을 모으고 있어요\n${opens}부터 소개해 드려요`:d.nextAt?`다음 분은 ${new Date(d.nextAt).toLocaleString('ko-KR',{month:'long',day:'numeric',hour:'numeric'})}에\n소개해 드려요`:'지금은 소개해 드릴 분이 없어요\n새로운 인연이 오면 알려드릴게요 :)'})]),
-    el('p',{className:'daily',style:'white-space:pre-line',textContent:'패스하시면 24시간 뒤에 다음 분을 소개해 드려요\n사진은 질문을 다 주고받으면 서로 보여요'})));
+    :[el('p',{className:'box muted',style:'white-space:pre-line;text-align:center',textContent:opens?`지금은 좋은 분들을 모으고 있어요\n${opens}부터 소개해 드려요`:d.nextAt?'24시간 후에 다음 분을 소개해 드려요\n\n새로운 인연이 오면 알려드릴게요 :)':'지금은 소개해 드릴 분이 없어요\n새로운 인연이 오면 알려드릴게요 :)'})]),
+    el('p',{className:'daily',style:'white-space:pre-line',textContent:(d.candidates.length&&!talking?'패스하시면 24시간 뒤에 다음 분을 소개해 드려요\n':'')+'사진은 질문을 다 주고받으면 서로 보여요'})));
   if(d.confirmed&&!m&&talking)v.lastChild.classList.add('off'); // 대화 중엔 추천 칸을 쉬는 중처럼 흐리게
   // 사진 없는 회원: 사진 없는 분끼리만 소개돼 조건이 덜 맞을 수 있음 → 사진 등록 유도 (누르면 '내 프로필 · 사진'을 열고 사진 칸으로)
   if(d.confirmed&&!m&&d.photoGroup==='none'){
@@ -711,7 +715,7 @@ async function load(){
     let d=SAMPLE;
     if(ENDPOINT){
       if(!token)throw new Error('notfound');
-      d=await(await fetch(ENDPOINT+'?t='+encodeURIComponent(token))).json();
+      d=await(await fetch(ENDPOINT+'?t='+encodeURIComponent(token)+'&_='+Date.now(),{cache:'no-store'})).json();
       if(!d.ok)throw new Error(d.error);
     }
     if(!ENDPOINT)d=SCENES[scene][1](JSON.parse(JSON.stringify(SAMPLE)));
