@@ -845,7 +845,7 @@ $('apply').addEventListener('submit',async e=>{e.preventDefault();
     if(!out.ok)throw new Error(out.error);
     finish();
   }catch(err){
-    $('err2').textContent='신청이 전송되지 않았어요. 잠시 후 다시 눌러 주세요';
+    $('err2').textContent=err.message==='nickname'?'이미 사용 중인 닉네임이에요. 다른 닉네임으로 바꿔 주세요':'신청이 전송되지 않았어요. 잠시 후 다시 눌러 주세요';
     btn.disabled=false;btn.textContent='신청하기';
   }});
 </script>
