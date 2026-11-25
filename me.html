@@ -647,8 +647,8 @@ function render(d){
   const mine=card(d.me),more=mine.querySelector('details.more');
   more.replaceWith(el('div',{className:'more-open'},...[...more.children].filter(x=>x.tagName!=='SUMMARY')));
   v.append(el('details',{className:'more mine'},el('summary',{textContent:'내 프로필 · 사진'}),
-    el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요'}),mine,editBox(d.me),
-    (m||talking)?el('p',{className:'muted',style:'text-align:center;white-space:pre-line',textContent:'사진은 소개 단계에서만 바꿀 수 있어요\n질문을 주고받는 중이나 매칭 중에는 바꿀 수 없어요'}):photoBox(d.me)));
+    el('p',{className:'muted',textContent:'상대에게는 이렇게 보여요'}),mine,
+    ...((m||talking)?[el('p',{className:'muted',style:'text-align:center;white-space:pre-line',textContent:'프로필과 사진은 소개 단계에서만 바꿀 수 있어요\n질문을 주고받는 중이나 매칭 중에는 바꿀 수 없어요'})]:[editBox(d.me),photoBox(d.me)])));
   v.append(el('div',{className:'leave'},twice('탈퇴하기','정말 탈퇴할까요? 한 번 더 누르면 탈퇴돼요','leave','btn ghost'),
     el('p',{className:'passnote',innerHTML:'탈퇴하면 더 이상 서비스를 이용하기 어려워요<br>개인정보는 확인 후 바로 삭제해 드려요'})));
 }
