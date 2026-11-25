@@ -705,6 +705,7 @@ function sceneBar(){
   SCENES.forEach(([t],i)=>{const b=el('button',{type:'button',className:'btn'+(i===scene?'':' done'),style:'padding:4px 10px;font-size:13px;display:inline-block',textContent:t});b.onclick=()=>{scene=i;load();};bar.append(b);});
   return el('div',{className:'box'},el('p',{className:'muted',style:'text-align:center',textContent:'예시 화면 · 단계를 눌러 보세요'}),bar);
 }
+let jumped=false; // 사진 다시 요청 문자 링크(?photo=1)로 들어왔을 때 사진 칸으로 한 번만 이동
 async function load(){
   try{
     let d=SAMPLE;
@@ -715,6 +716,7 @@ async function load(){
     }
     if(!ENDPOINT)d=SCENES[scene][1](JSON.parse(JSON.stringify(SAMPLE)));
     render(d);$('view').hidden=false;$('err').textContent='';
+    if(!jumped&&new URLSearchParams(location.search).get('photo')==='1'){jumped=true;const mine=document.querySelector('details.mine');if(mine){mine.open=true;setTimeout(()=>(mine.querySelector('.photobox')||mine).scrollIntoView({behavior:'smooth',block:'center'}),300);}}
     if(!ENDPOINT&&!fixed)$('view').prepend(sceneBar());
   }catch(e){
     $('err').textContent=e.message==='notfound'?'링크가 올바르지 않아요\n신청 완료 화면의 링크로 다시 들어와 주시거나 리턴투미 채널로 문의해 주세요':'불러오지 못했어요\n잠시 후 새로고침해 주세요';
